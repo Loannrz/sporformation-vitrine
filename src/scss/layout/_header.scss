@@ -1,0 +1,47 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: $z-header;
+  transition:
+    background-color $transition-base,
+    box-shadow $transition-base,
+    backdrop-filter $transition-base;
+
+  &.is-scrolled,
+  &--solid {
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
+    backdrop-filter: blur(16px);
+  }
+
+  &.is-scrolled .nav__link,
+  &.is-scrolled .nav__menu-button,
+  &.is-scrolled .nav__logo-tagline,
+  &--solid .nav__link,
+  &--solid .nav__menu-button,
+  &--solid .nav__logo-tagline {
+    color: var(--color-text);
+  }
+
+  &.is-scrolled .nav__logo-title,
+  &--solid .nav__logo-title {
+    color: var(--color-primary);
+  }
+
+  &.is-scrolled .nav__logo-mark,
+  &--solid .nav__logo-mark {
+    background: var(--color-primary);
+    border-color: rgba(26, 26, 46, 0.18);
+  }
+
+  /* Menu mobile : barres visibles sur fond blanc (header solide ou après scroll) */
+  &.is-scrolled .nav__toggle,
+  &--solid .nav__toggle {
+    color: var(--color-text);
+    background: rgba(17, 24, 39, 0.06);
+    border-color: rgba(17, 24, 39, 0.14);
+  }
+}

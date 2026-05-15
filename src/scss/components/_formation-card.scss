@@ -1,0 +1,19 @@
+@use "../abstracts/variables" as *;
+
+.formation-card__meta,
+.tag-list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+
+.formation-card__details {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 20px;
+
+  strong {
+    color: var(--color-primary);
+  }
+}

@@ -1,0 +1,16 @@
+@use "../abstracts/variables" as *;
+
+.contact-card {
+  &__content {
+    strong {
+      display: block;
+      color: var(--color-primary);
+      margin-bottom: 4px;
+    }
+
+    a {
+      color: var(--color-accent);
+      font-weight: 600;
+    }
+  }
+}

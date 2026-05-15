@@ -1,0 +1,52 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.intro {
+  display: grid;
+  gap: 36px;
+  align-items: center;
+
+  &__media {
+    position: relative;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    min-height: 420px;
+  }
+
+  &__badge {
+    position: absolute;
+    left: 24px;
+    bottom: 24px;
+    padding: 16px 20px;
+    border-radius: 18px;
+    background: rgba(26, 26, 46, 0.9);
+    color: var(--color-white);
+    backdrop-filter: blur(12px);
+
+    strong {
+      display: block;
+      font-size: 1.4rem;
+      font-family: $font-heading;
+    }
+  }
+
+  &__content {
+    p + p {
+      margin-top: 16px;
+    }
+  }
+}
+
+.media-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.12), rgba(230, 57, 70, 0.14));
+}
+
+@include from($bp-md) {
+  .intro {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

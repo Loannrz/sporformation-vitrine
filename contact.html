@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact & Inscription | SporFormation</title>
+  <meta name="description" content="Déposez votre candidature ou contactez SporFormation. Notre équipe vous rappelle sous 24h pour répondre à vos questions et vous accompagner.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <script type="module" src="/src/js/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu principal</a>
+  <header class="site-header site-header--solid" id="site-header">
+    <div class="container nav">
+      <a class="nav__brand" href="index.html"><span class="nav__logo-mark">SF</span><span class="nav__logo-copy"><span class="nav__logo-title">SporFormation</span><span class="nav__logo-tagline">Formez-vous à un métier qui a du sens</span></span></a>
+      <div class="nav__desktop">
+        <nav aria-label="Navigation principale">
+          <ul class="nav__list">
+            <li class="nav__item"><a class="nav__link" href="index.html">Accueil</a></li>
+            <li class="nav__item">
+              <button class="nav__menu-button" type="button" aria-haspopup="true" aria-expanded="false">
+                Formations
+                <span aria-hidden="true">▾</span>
+              </button>
+              <div class="nav__dropdown" role="menu" aria-label="Sous-menu formations">
+                <ul class="nav__dropdown-list">
+                  <li><a class="nav__dropdown-link" href="formations.html">Voir toutes les formations <span>Tous parcours</span></a></li>
+                  <li><a class="nav__dropdown-link" href="formations.html#sport">BP JEPS Sport <span>Sport &amp; performance</span></a></li>
+                  <li><a class="nav__dropdown-link" href="formations.html#animation">Animation &amp; coordination <span>Animation &amp; projets</span></a></li>
+                  <li><a class="nav__dropdown-link" href="tep.html">Diagnostic &amp; préparation TEP <span>Entrer sereinement</span></a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav__item"><a class="nav__link" href="apprentissage.html">Apprentissage &amp; Employeurs</a></li>
+            <li class="nav__item">
+              <button class="nav__menu-button" type="button" aria-haspopup="true" aria-expanded="false">
+                À Propos
+                <span aria-hidden="true">▾</span>
+              </button>
+              <div class="nav__dropdown" role="menu" aria-label="Sous-menu à propos">
+                <ul class="nav__dropdown-list">
+                  <li><a class="nav__dropdown-link" href="a-propos.html">Qui sommes-nous ? <span>Mission &amp; valeurs</span></a></li>
+                  <li><a class="nav__dropdown-link" href="a-propos.html#resultats">Résultats <span>Chiffres &amp; insertion</span></a></li>
+                  <li><a class="nav__dropdown-link" href="a-propos.html#qualiopi">Qualiopi <span>Certification qualité</span></a></li>
+                  <li><a class="nav__dropdown-link" href="a-propos.html#couts">Coûts &amp; aides <span>Financement</span></a></li>
+                  <li><a class="nav__dropdown-link" href="a-propos.html#partenaires">Partenaires <span>Structures partenaires</span></a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav__item"><a class="nav__link" href="handicap.html">Handicap</a></li>
+            <li class="nav__item"><a class="nav__link" href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <a class="btn btn--primary nav__cta" href="contact.html">Envoyer ma candidature</a>
+      </div>
+      <button class="nav__toggle" type="button" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Ouvrir le menu"><span class="nav__toggle-line"></span><span class="nav__toggle-line"></span><span class="nav__toggle-line"></span></button>
+    </div>
+  </header>
+  <div class="mobile-nav__overlay" id="mobile-nav-overlay"></div>
+  <aside class="mobile-nav" id="mobile-nav" aria-label="Menu mobile">
+    <nav>
+      <ul class="mobile-nav__list">
+        <li><a class="mobile-nav__link" href="index.html">Accueil</a></li>
+        <li>
+          <details>
+            <summary class="mobile-nav__summary">Formations <span aria-hidden="true">+</span></summary>
+            <div class="mobile-nav__sublist">
+              <a href="formations.html">Voir toutes les formations</a>
+              <a href="formations.html#sport">Parcours sport</a>
+              <a href="formations.html#animation">Parcours animation</a>
+              <a href="tep.html">Préparation TEP</a>
+            </div>
+          </details>
+        </li>
+        <li><a class="mobile-nav__link" href="apprentissage.html">Apprentissage &amp; Employeurs</a></li>
+        <li>
+          <details>
+            <summary class="mobile-nav__summary">À Propos <span aria-hidden="true">+</span></summary>
+            <div class="mobile-nav__sublist">
+              <a href="a-propos.html">Qui sommes-nous ?</a>
+              <a href="a-propos.html#resultats">Résultats</a>
+              <a href="a-propos.html#qualiopi">Qualiopi</a>
+              <a href="a-propos.html#couts">Coûts &amp; aides</a>
+              <a href="a-propos.html#partenaires">Partenaires</a>
+            </div>
+          </details>
+        </li>
+        <li><a class="mobile-nav__link" href="handicap.html">Handicap</a></li>
+        <li><a class="mobile-nav__link" href="contact.html">Contact</a></li>
+      </ul>
+      <a class="btn btn--primary mobile-nav__cta" href="#formulaire">Envoyer ma candidature</a>
+    </nav>
+  </aside>
+
+  <main id="contenu">
+    <section class="page-hero">
+      <div class="container page-hero__grid">
+        <div class="reveal">
+          <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a><span>></span><strong>Contact</strong></nav>
+          <div class="section-heading">
+            <span class="eyebrow" style="background: rgba(255,255,255,0.12); color: #ffffff;">Inscription</span>
+            <h1>Faites le premier pas</h1>
+            <p>Remplissez le formulaire. Nous vous rappelons sous 24h pour répondre à toutes vos questions et vous accompagner dans votre candidature.</p>
+          </div>
+        </div>
+        <div class="hero-card reveal">
+          <h3>Réponse rapide</h3>
+          <p>Chaque demande est transmise à l'équipe SporFormation. Le téléphone renseigné est prioritaire pour le rappel.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="formulaire">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Candidature & contact</span>
+          <h2>Formulaire d'inscription</h2>
+          <p>Envoi sécurisé via votre serveur (Resend). En local : lancez <code>npm run dev:full</code> pour activer l’API et les mails.</p>
+        </div>
+
+        <div class="card reveal">
+          <div class="form-message" data-form-message aria-live="polite"></div>
+          <form
+            class="contact-form"
+            data-contact-form
+          >
+            <div class="form-grid form-grid--2">
+              <div class="form-group">
+                <label for="prenom">Prénom *</label>
+                <input id="prenom" name="prenom" type="text" required>
+              </div>
+              <div class="form-group">
+                <label for="nom">Nom *</label>
+                <input id="nom" name="nom" type="text" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email *</label>
+                <input id="email" name="email" type="email" required>
+              </div>
+              <div class="form-group">
+                <label for="telephone">Numéro de téléphone *</label>
+                <input id="telephone" name="telephone" type="tel" required>
+              </div>
+              <div class="form-group">
+                <label for="villeResidence">Ville de résidence</label>
+                <input id="villeResidence" name="villeResidence" type="text">
+              </div>
+              <div class="form-group">
+                <label for="formationSouhaitee">Formation souhaitée *</label>
+                <select id="formationSouhaitee" name="formationSouhaitee" required>
+                  <option value="">Choisir une formation</option>
+                  <option>BP JEPS ASPF</option>
+                  <option>BP JEPS MAPST</option>
+                  <option>BP JEPS Basket-Ball</option>
+                  <option>BP JEPS Rugby à XV</option>
+                  <option>TFP CDSSA</option>
+                  <option>BP JEPS ASEC</option>
+                  <option>Certificat complémentaire ACM</option>
+                  <option>DE JEPS ASEC</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="villeFormation">Ville de formation souhaitée</label>
+                <select id="villeFormation" name="villeFormation">
+                  <option value="">Choisir une ville</option>
+                  <option>Courbevoie</option>
+                  <option>Paris 7e</option>
+                  <option>Cergy</option>
+                  <option>Nanterre</option>
+                  <option>Coulommiers</option>
+                  <option>Ajaccio</option>
+                  <option>Arpajon-Égly</option>
+                  <option>Mortagne-au-Perche</option>
+                  <option>Drancy</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Votre situation actuelle *</label>
+              <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="situation" value="Étudiant" required><span>Étudiant</span></label>
+                <label class="radio-option"><input type="radio" name="situation" value="En reconversion professionnelle"><span>En reconversion professionnelle</span></label>
+                <label class="radio-option"><input type="radio" name="situation" value="Demandeur d'emploi"><span>Demandeur d'emploi</span></label>
+                <label class="radio-option"><input type="radio" name="situation" value="Salarié"><span>Salarié</span></label>
+                <label class="radio-option"><input type="radio" name="situation" value="Autre"><span>Autre</span></label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="motivation">Pourquoi souhaitez-vous rejoindre cette formation ? *</label>
+              <textarea id="motivation" name="motivation" minlength="100" required></textarea>
+              <p class="form-hint">Minimum 100 caractères pour nous permettre de mieux comprendre votre projet.</p>
+            </div>
+
+            <div class="form-group">
+              <label>Avez-vous déjà un employeur / structure d'accueil ? *</label>
+              <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="employeur" value="Oui" required><span>Oui</span></label>
+                <label class="radio-option"><input type="radio" name="employeur" value="Non"><span>Non</span></label>
+                <label class="radio-option"><input type="radio" name="employeur" value="Je cherche de l'aide pour en trouver un"><span>Je cherche de l'aide pour en trouver un</span></label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Comment avez-vous connu SporFormation ? *</label>
+              <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="source" value="Google" required><span>Google</span></label>
+                <label class="radio-option"><input type="radio" name="source" value="Réseaux sociaux"><span>Réseaux sociaux</span></label>
+                <label class="radio-option"><input type="radio" name="source" value="Bouche à oreille"><span>Bouche à oreille</span></label>
+                <label class="radio-option"><input type="radio" name="source" value="Partenaire"><span>Partenaire</span></label>
+                <label class="radio-option"><input type="radio" name="source" value="Autre"><span>Autre</span></label>
+              </div>
+            </div>
+
+            <div class="checkbox-group">
+              <label class="checkbox-option"><input type="checkbox" name="recontact" value="oui" required><span>J'accepte d'être recontacté par SporFormation *</span></label>
+              <label class="checkbox-option"><input type="checkbox" name="confidentialite" value="oui" required><span>J'ai lu et j'accepte la politique de confidentialité *</span></label>
+            </div>
+
+            <button class="btn btn--primary btn--block" type="submit">Envoyer ma candidature →</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--surface">
+      <div class="container grid grid--3">
+        <article class="contact-card reveal"><div class="contact-card__icon">📞</div><div class="contact-card__content"><strong>Appelez-nous</strong><p><a href="tel:+33744990699">07 44 99 06 99</a></p></div></article>
+        <article class="contact-card reveal"><div class="contact-card__icon">📍</div><div class="contact-card__content"><strong>Venez nous voir</strong><p>159/161 rue Armand Silvestre, 92400 Courbevoie</p></div></article>
+        <article class="contact-card reveal"><div class="contact-card__icon">📧</div><div class="contact-card__content"><strong>Écrivez-nous</strong><p><a href="mailto:contact@sporformation.fr">contact@sporformation.fr</a></p></div></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading reveal"><span class="eyebrow">Adresse</span><h2>Nous trouver à Courbevoie</h2><p>Carte Google Maps intégrée pour simplifier la prise de contact physique et le repérage.</p></div>
+        <div class="map-frame reveal">
+          <iframe
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=159%2F161%20rue%20Armand%20Silvestre%2C%2092400%20Courbevoie&z=15&output=embed"
+            title="Carte de SporFormation à Courbevoie"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__grid">
+      <div class="site-footer__brand"><div class="nav__brand"><span class="nav__logo-mark">SF</span><span class="nav__logo-copy"><span class="nav__logo-title">SporFormation</span><span class="nav__logo-tagline">Formez-vous à un métier qui a du sens</span></span></div><p>Un parcours clair, un contact rapide et un accompagnement humain dès votre première demande.</p></div>
+      <div><h3>Formations</h3><ul><li><a href="formations.html">Toutes les formations</a></li><li><a href="tep.html">Préparation TEP</a></li><li><a href="apprentissage.html">Apprentissage</a></li></ul></div>
+      <div><h3>Informations</h3><ul><li><a href="a-propos.html">À Propos</a></li><li><a href="handicap.html">Handicap</a></li><li><a href="mentions-legales.html">Mentions légales</a></li></ul></div>
+      <div><h3>Contact</h3><ul><li><a href="tel:+33744990699">07 44 99 06 99</a></li><li><a href="mailto:raphaelsporformation@gmail.com">raphaelsporformation@gmail.com</a></li><li>159/161 rue Armand Silvestre, 92400 Courbevoie</li></ul></div>
+    </div>
+    <div class="container site-footer__bottom"><p>© 2026 SporFormation - Tous droits réservés</p><div class="site-footer__bottom-links"><a href="mentions-legales.html">Mentions légales</a><a href="politique-de-confidentialite.html">Politique de confidentialité</a><a href="a-propos.html#qualiopi">Certification Qualiopi</a></div></div>
+  </footer>
+
+  <button class="back-to-top" id="back-to-top" type="button" aria-label="Retour en haut de page"><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+
+</body>
+</html>

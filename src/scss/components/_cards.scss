@@ -1,0 +1,152 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+// Carte générique réutilisée par toutes les pages
+.card,
+.hero-card,
+.info-card,
+.session-table,
+.contact-card,
+.stat-card,
+.partner-card,
+.aid-card,
+.step,
+.faq {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+}
+
+.card,
+.hero-card,
+.info-card,
+.contact-card,
+.stat-card,
+.partner-card,
+.aid-card,
+.step {
+  padding: 28px;
+}
+
+.card,
+.info-card,
+.contact-card,
+.stat-card,
+.partner-card,
+.aid-card,
+.step {
+  @include lift-on-hover;
+
+  &:hover,
+  &:focus-within {
+    border-color: rgba(230, 57, 70, 0.2);
+  }
+}
+
+.card__icon,
+.info-card__icon,
+.contact-card__icon,
+.step__number {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: rgba(230, 57, 70, 0.1);
+  color: var(--color-accent);
+  font-weight: 800;
+  margin-bottom: 18px;
+  font-size: 1.25rem;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+}
+
+.step__number {
+  background: rgba(26, 26, 46, 0.08);
+  color: var(--color-primary);
+}
+
+.card h3,
+.hero-card h3,
+.info-card h3,
+.contact-card h3,
+.stat-card h3,
+.partner-card h3,
+.aid-card h3,
+.step h3 {
+  font-family: $font-heading;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  color: var(--color-primary);
+  margin-bottom: 12px;
+}
+
+.card p,
+.hero-card p,
+.info-card p,
+.contact-card p,
+.stat-card p,
+.partner-card p,
+.aid-card p,
+.step p {
+  color: var(--color-text-muted);
+}
+
+// Dans le hero foncé (.page-hero), le texte hérite du blanc : on force la lisibilité sur fond carte blanche.
+.hero-card .list-check li,
+.hero-card .list-bullets li {
+  color: var(--color-text);
+}
+
+.card__list {
+  display: grid;
+  gap: 10px;
+  margin: 20px 0 24px;
+  color: var(--color-text);
+
+  li {
+    padding-left: 24px;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      box-shadow: 0 0 0 6px rgba(230, 57, 70, 0.12);
+    }
+  }
+}
+
+.card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-accent);
+  font-weight: 700;
+  transition: gap $transition-base;
+
+  &:hover {
+    gap: 12px;
+  }
+}
+
+.card__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}

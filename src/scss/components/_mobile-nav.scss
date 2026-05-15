@@ -1,0 +1,111 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.mobile-nav {
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: min(380px, 100%);
+  padding: calc(var(--nav-height) + 16px) 24px 32px;
+  background: $color-primary-soft;
+  color: var(--color-white);
+  transform: translateX(100%);
+  transition: transform 320ms ease;
+  z-index: $z-mobile-nav;
+  overflow-y: auto;
+
+  &.is-open {
+    transform: translateX(0);
+  }
+
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(17, 24, 39, 0.55);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity $transition-base,
+      visibility $transition-base;
+    z-index: $z-overlay;
+
+    &.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  &__list {
+    display: grid;
+    gap: 10px;
+  }
+
+  &__link,
+  &__summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 16px 18px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-white);
+    font-weight: 600;
+    text-align: left;
+    transition: background-color $transition-base;
+
+    @include focus-ring;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  details {
+    border-radius: 14px;
+    overflow: hidden;
+
+    &[open] .mobile-nav__summary {
+      background: rgba(230, 57, 70, 0.14);
+    }
+  }
+
+  &__summary {
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+  }
+
+  &__sublist {
+    display: grid;
+    gap: 8px;
+    padding-top: 10px;
+
+    a {
+      display: block;
+      padding: 14px 18px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      color: rgba(255, 255, 255, 0.82);
+      transition: background-color $transition-base;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+    }
+  }
+
+  &__cta {
+    width: 100%;
+    margin-top: 24px;
+  }
+}
+
+@include from($bp-lg) {
+  .mobile-nav,
+  .mobile-nav__overlay {
+    display: none;
+  }
+}

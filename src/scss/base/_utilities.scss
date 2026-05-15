@@ -1,0 +1,44 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+// Grilles génériques
+.grid {
+  display: grid;
+  gap: $space-3;
+
+  &--2,
+  &--3,
+  &--4 {
+    display: grid;
+    gap: $space-3;
+  }
+}
+
+@include from($bp-sm) {
+  .grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@include from($bp-md) {
+  .grid--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .grid--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@include from($bp-lg) {
+  .grid--4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+// Utilitaires d'espacement
+.mt-3 { margin-top: $space-3; }
+.mt-4 { margin-top: $space-4; }
+.mt-5 { margin-top: $space-5; }
+.text-center { text-align: center; }
+.is-hidden { display: none !important; }

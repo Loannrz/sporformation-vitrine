@@ -1,0 +1,107 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.site-footer {
+  background: var(--color-primary);
+  color: rgba(255, 255, 255, 0.78);
+  padding-top: 72px;
+
+  &__grid {
+    display: grid;
+    gap: 36px;
+    padding-bottom: 40px;
+  }
+
+  &__brand {
+    p {
+      margin-top: 18px;
+      max-width: 340px;
+    }
+  }
+
+  h3 {
+    font-family: $font-heading;
+    color: var(--color-white);
+    font-size: 1.05rem;
+    margin-bottom: 18px;
+  }
+
+  ul {
+    display: grid;
+    gap: 10px;
+  }
+
+  a {
+    transition: color $transition-base;
+
+    &:hover {
+      color: var(--color-white);
+    }
+  }
+
+  &__bottom {
+    padding: 20px 0 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    display: grid;
+    gap: 12px;
+    text-align: center;
+    font-size: 0.95rem;
+  }
+
+  &__bottom-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+    justify-content: center;
+  }
+}
+
+.social-links {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.social-link {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-white);
+  transition:
+    transform $transition-base,
+    background-color $transition-base;
+
+  @include focus-ring;
+
+  &:hover {
+    transform: translateY(-2px);
+    background: rgba(230, 57, 70, 0.9);
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+  }
+}
+
+@include from($bp-sm) {
+  .site-footer__bottom {
+    grid-template-columns: 1fr auto;
+    text-align: left;
+    align-items: center;
+  }
+}
+
+@include from($bp-md) {
+  .site-footer__grid {
+    grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  }
+}

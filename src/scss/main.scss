@@ -1,0 +1,44 @@
+// SporFormation - point d'entrée SCSS
+// Architecture 7-1 simplifiée avec convention BEM
+
+@use "abstracts/variables" as *;
+
+@use "base/reset";
+@use "base/typography";
+@use "base/utilities";
+@use "base/animations";
+
+@use "layout/container";
+@use "layout/sections";
+@use "layout/header";
+@use "layout/footer";
+@use "layout/page-hero";
+
+@use "components/buttons";
+@use "components/eyebrow";
+@use "components/badges";
+@use "components/cards";
+@use "components/lists";
+@use "components/navigation";
+@use "components/mobile-nav";
+@use "components/hero";
+@use "components/stats-band";
+@use "components/intro";
+@use "components/benefits";
+@use "components/tep";
+@use "components/slider";
+@use "components/gallery";
+@use "components/qualiopi-band";
+@use "components/cta-banner";
+@use "components/filters";
+@use "components/formation-card";
+@use "components/session-table";
+@use "components/comparison";
+@use "components/timeline";
+@use "components/faq";
+@use "components/logo-grid";
+@use "components/media-frame";
+@use "components/contact";
+@use "components/forms";
+@use "components/back-to-top";
+@use "components/note-panel";

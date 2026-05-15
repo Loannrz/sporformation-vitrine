@@ -1,0 +1,58 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.stats-band {
+  background: var(--color-accent);
+  color: var(--color-white);
+
+  &__grid {
+    display: grid;
+    gap: 24px;
+    padding: 32px 0;
+  }
+
+  &__item {
+    text-align: center;
+  }
+
+  &__value {
+    display: inline-flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 2px;
+    font-family: $font-heading;
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  &__label {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+  }
+}
+
+@include from($bp-sm) {
+  .stats-band__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .stats-band__item:not(:last-child) {
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+  }
+}
+
+// Stats cartes (page À Propos)
+.stats-inline {
+  display: grid;
+  gap: 18px;
+}
+
+.stat-card__value {
+  font-family: $font-heading;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1;
+  color: var(--color-accent);
+  margin-bottom: 10px;
+}

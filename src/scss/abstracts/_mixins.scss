@@ -1,0 +1,60 @@
+@use "variables" as *;
+
+// =====================================================
+// Mixins responsive (mobile-first)
+// =====================================================
+@mixin from($bp) {
+  @media (min-width: $bp) {
+    @content;
+  }
+}
+
+@mixin up-to($bp) {
+  @media (max-width: ($bp - 0.02px)) {
+    @content;
+  }
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// Conteneur centré, max-width responsive
+@mixin container {
+  width: var(--container);
+  margin-inline: auto;
+}
+
+// Élévation au survol (cartes)
+@mixin lift-on-hover {
+  transition:
+    transform $transition-base,
+    box-shadow $transition-base,
+    border-color $transition-base;
+
+  &:hover,
+  &:focus-within {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+}
+
+// Focus visible accessible et homogène
+@mixin focus-ring($color: $color-accent) {
+  &:focus-visible {
+    outline: 2px solid $color;
+    outline-offset: 3px;
+  }
+}
+
+// Titre H2 réutilisable
+@mixin heading-2 {
+  font-family: $font-heading;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1;
+  color: var(--color-primary);
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+}

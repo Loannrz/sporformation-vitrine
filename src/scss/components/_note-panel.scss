@@ -1,0 +1,9 @@
+@use "../abstracts/variables" as *;
+
+.note-panel {
+  padding: 20px 22px;
+  border-radius: 16px;
+  background: rgba(26, 26, 46, 0.04);
+  border: 1px solid rgba(26, 26, 46, 0.08);
+  color: var(--color-text-muted);
+}

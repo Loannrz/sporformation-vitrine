@@ -1,0 +1,96 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+// =====================================================
+// Animations légères (GPU-friendly : opacity + transform)
+// =====================================================
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 600ms ease,
+    transform 600ms ease;
+  will-change: opacity, transform;
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.float-in {
+  animation: floatIn 700ms ease both;
+}
+
+.fade-in {
+  animation: fadeIn 500ms ease both;
+}
+
+.pulse-soft {
+  animation: pulseSoft 2.8s ease-in-out infinite;
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulseSoft {
+  0%,
+  100% {
+    transform: translateY(0);
+    box-shadow: 0 16px 32px rgba(230, 57, 70, 0.18);
+  }
+  50% {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 40px rgba(230, 57, 70, 0.26);
+  }
+}
+
+@keyframes scrollDotBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(18px);
+    opacity: 0.5;
+  }
+}
+
+@include reduced-motion {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

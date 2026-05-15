@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentions légales | SporFormation</title>
+  <meta name="description" content="Mentions légales du site SporFormation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <script type="module" src="/src/js/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu principal</a>
+  <header class="site-header site-header--solid" id="site-header">
+    <div class="container nav">
+      <a class="nav__brand" href="index.html"><span class="nav__logo-mark">SF</span><span class="nav__logo-copy"><span class="nav__logo-title">SporFormation</span><span class="nav__logo-tagline">Formez-vous à un métier qui a du sens</span></span></a>
+      <div class="nav__desktop">
+        <nav aria-label="Navigation principale">
+          <ul class="nav__list">
+            <li class="nav__item"><a class="nav__link" href="index.html">Accueil</a></li>
+            <li class="nav__item">
+              <button class="nav__menu-button" type="button" aria-haspopup="true" aria-expanded="false">
+                Formations
+                <span aria-hidden="true">▾</span>
+              </button>
+              <div class="nav__dropdown" role="menu" aria-label="Sous-menu formations">
+                <ul class="nav__dropdown-list">
+                  <li><a class="nav__dropdown-link" href="formations.html">Voir toutes les formations <span>Tous parcours</span></a></li>
+                  <li><a class="nav__dropdown-link" href="formations.html#sport">BP JEPS Sport <span>Sport &amp; performance</span></a></li>
+                  <li><a class="nav__dropdown-link" href="formations.html#animation">Animation &amp; coordination <span>Animation &amp; projets</span></a></li>
+                  <li><a class="nav__dropdown-link" href="tep.html">Diagnostic &amp; préparation TEP <span>Entrer sereinement</span></a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav__item"><a class="nav__link" href="apprentissage.html">Apprentissage &amp; Employeurs</a></li>
+            <li class="nav__item">
+              <button class="nav__menu-button" type="button" aria-haspopup="true" aria-expanded="false">
+                À Propos
+                <span aria-hidden="true">▾</span>
+              </button>
+              <div class="nav__dropdown" role="menu" aria-label="Sous-menu à propos">
+                <ul class="nav__dropdown-list">
+                  <li><a class="nav__dropdown-link" href="a-propos.html">Qui sommes-nous ? <span>Mission &amp; valeurs</span></a></li>
+                  <li><a class="nav__dropdown-link" href="a-propos.html#resultats">Résultats <span>Chiffres &amp; insertion</span></a></li>
+                  <li><a class="nav__dropdown-link" href="a-propos.html#qualiopi">Qualiopi <span>Certification qualité</span></a></li>
+                  <li><a class="nav__dropdown-link" href="a-propos.html#couts">Coûts &amp; aides <span>Financement</span></a></li>
+                  <li><a class="nav__dropdown-link" href="a-propos.html#partenaires">Partenaires <span>Structures partenaires</span></a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav__item"><a class="nav__link" href="handicap.html">Handicap</a></li>
+            <li class="nav__item"><a class="nav__link" href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <a class="btn btn--primary nav__cta" href="contact.html">S'inscrire maintenant</a>
+      </div>
+      <button class="nav__toggle" type="button" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Ouvrir le menu"><span class="nav__toggle-line"></span><span class="nav__toggle-line"></span><span class="nav__toggle-line"></span></button>
+    </div>
+  </header>
+  <div class="mobile-nav__overlay" id="mobile-nav-overlay"></div>
+  <aside class="mobile-nav" id="mobile-nav" aria-label="Menu mobile">
+    <nav>
+      <ul class="mobile-nav__list">
+        <li><a class="mobile-nav__link" href="index.html">Accueil</a></li>
+        <li>
+          <details>
+            <summary class="mobile-nav__summary">Formations <span aria-hidden="true">+</span></summary>
+            <div class="mobile-nav__sublist">
+              <a href="formations.html">Voir toutes les formations</a>
+              <a href="formations.html#sport">Parcours sport</a>
+              <a href="formations.html#animation">Parcours animation</a>
+              <a href="tep.html">Préparation TEP</a>
+            </div>
+          </details>
+        </li>
+        <li><a class="mobile-nav__link" href="apprentissage.html">Apprentissage &amp; Employeurs</a></li>
+        <li>
+          <details>
+            <summary class="mobile-nav__summary">À Propos <span aria-hidden="true">+</span></summary>
+            <div class="mobile-nav__sublist">
+              <a href="a-propos.html">Qui sommes-nous ?</a>
+              <a href="a-propos.html#resultats">Résultats</a>
+              <a href="a-propos.html#qualiopi">Qualiopi</a>
+              <a href="a-propos.html#couts">Coûts &amp; aides</a>
+              <a href="a-propos.html#partenaires">Partenaires</a>
+            </div>
+          </details>
+        </li>
+        <li><a class="mobile-nav__link" href="handicap.html">Handicap</a></li>
+        <li><a class="mobile-nav__link" href="contact.html">Contact</a></li>
+      </ul>
+      <a class="btn btn--primary mobile-nav__cta" href="contact.html">S'inscrire maintenant</a>
+    </nav>
+  </aside>
+
+  <main id="contenu">
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a><span>></span><strong>Mentions légales</strong></nav>
+        <div class="section-heading reveal">
+          <span class="eyebrow" style="background: rgba(255,255,255,0.12); color: #ffffff;">Informations légales</span>
+          <h1>Mentions légales</h1>
+          <p>Cette page sert de base éditoriale et juridique. Les informations peuvent être ajustées avec vos données d'éditeur, d'hébergement et de représentation légale définitives.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container grid">
+        <article class="card reveal"><h3>Éditeur du site</h3><p>SporFormation<br>159/161 rue Armand Silvestre, 92400 Courbevoie<br>Téléphone : 07 44 99 06 99<br>Email : raphaelsporformation@gmail.com</p></article>
+        <article class="card reveal"><h3>Responsable de publication</h3><p>À compléter avec le nom du représentant légal ou du responsable de publication.</p></article>
+        <article class="card reveal"><h3>Hébergement</h3><p>À compléter avec le nom, l'adresse et les coordonnées de l'hébergeur du site.</p></article>
+        <article class="card reveal"><h3>Propriété intellectuelle</h3><p>L'ensemble du contenu du site, sauf mention contraire, est protégé par le droit d'auteur. Toute reproduction sans autorisation est interdite.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__grid">
+      <div class="site-footer__brand"><div class="nav__brand"><span class="nav__logo-mark">SF</span><span class="nav__logo-copy"><span class="nav__logo-title">SporFormation</span><span class="nav__logo-tagline">Formez-vous à un métier qui a du sens</span></span></div><p>Site vitrine et de candidature pour le CFA SporFormation.</p></div>
+      <div><h3>Navigation</h3><ul><li><a href="index.html">Accueil</a></li><li><a href="formations.html">Formations</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div><h3>Informations</h3><ul><li><a href="politique-de-confidentialite.html">Politique de confidentialité</a></li><li><a href="a-propos.html">À Propos</a></li></ul></div>
+      <div><h3>Contact</h3><ul><li><a href="tel:+33744990699">07 44 99 06 99</a></li><li><a href="mailto:raphaelsporformation@gmail.com">raphaelsporformation@gmail.com</a></li><li>Courbevoie</li></ul></div>
+    </div>
+    <div class="container site-footer__bottom"><p>© 2026 SporFormation - Tous droits réservés</p><div class="site-footer__bottom-links"><a href="mentions-legales.html">Mentions légales</a><a href="politique-de-confidentialite.html">Politique de confidentialité</a></div></div>
+  </footer>
+  <button class="back-to-top" id="back-to-top" type="button" aria-label="Retour en haut de page"><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+</body>
+</html>

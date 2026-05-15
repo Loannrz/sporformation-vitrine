@@ -1,0 +1,48 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.qualiopi-band {
+  background: var(--color-primary);
+  color: var(--color-white);
+
+  &__inner {
+    display: grid;
+    gap: 28px;
+    align-items: center;
+  }
+
+  .section-heading h2 {
+    color: var(--color-white);
+  }
+
+  .section-heading p {
+    color: rgba(255, 255, 255, 0.78);
+  }
+}
+
+.logo-placeholder {
+  display: grid;
+  place-items: center;
+  min-height: 180px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px dashed rgba(255, 255, 255, 0.22);
+  text-align: center;
+  padding: 24px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  &--light {
+    background: rgba(26, 26, 46, 0.04);
+    border: 1px dashed rgba(26, 26, 46, 0.16);
+    color: var(--color-text-soft);
+  }
+}
+
+@include from($bp-md) {
+  .qualiopi-band__inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

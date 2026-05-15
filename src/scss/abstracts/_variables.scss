@@ -1,0 +1,101 @@
+// =====================================================
+// Tokens de design - SporFormation
+// =====================================================
+
+// Couleurs
+$color-primary: #1A1A2E;
+$color-primary-soft: #111524;
+$color-accent: #E63946;
+$color-accent-dark: #C92C39;
+$color-white: #FFFFFF;
+$color-surface: #F8F9FA;
+$color-surface-strong: #EEF1F5;
+$color-text: #2D2D2D;
+$color-text-muted: #6B7280;
+$color-text-soft: #9CA3AF;
+$color-success: #198754;
+$color-warning: #F59E0B;
+$color-border: rgba(17, 24, 39, 0.1);
+
+// Ombres
+$shadow-soft: 0 18px 40px rgba(17, 24, 39, 0.08);
+$shadow-card: 0 14px 30px rgba(17, 24, 39, 0.08);
+$shadow-hover: 0 20px 45px rgba(17, 24, 39, 0.14);
+$shadow-accent: 0 16px 32px rgba(230, 57, 70, 0.22);
+
+// Radius
+$radius-sm: 8px;
+$radius-md: 12px;
+$radius-lg: 20px;
+$radius-xl: 28px;
+
+// Espacement (multiples de 8)
+$space-1: 8px;
+$space-2: 16px;
+$space-3: 24px;
+$space-4: 32px;
+$space-5: 48px;
+$space-6: 64px;
+$space-7: 96px;
+
+// Typographie
+$font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+$font-heading: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+$font-size-base: 16px;
+
+// Layout
+$container-max: 1200px;
+$nav-height: 104px;
+$section-space: clamp(64px, 10vw, 112px);
+
+// Transitions
+$transition-base: 240ms ease;
+$transition-slow: 380ms ease;
+
+// Breakpoints
+$bp-sm: 640px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;
+
+// Z-index
+$z-fixed: 900;
+$z-overlay: 998;
+$z-mobile-nav: 999;
+$z-header: 1000;
+$z-skip: 1001;
+
+// =====================================================
+// Variables CSS (custom properties) exposées au runtime
+// pour rester dans le contrat « variables CSS » initial.
+// =====================================================
+:root {
+  --color-primary: #{$color-primary};
+  --color-primary-soft: #{$color-primary-soft};
+  --color-accent: #{$color-accent};
+  --color-accent-dark: #{$color-accent-dark};
+  --color-white: #{$color-white};
+  --color-surface: #{$color-surface};
+  --color-surface-strong: #{$color-surface-strong};
+  --color-text: #{$color-text};
+  --color-text-muted: #{$color-text-muted};
+  --color-text-soft: #{$color-text-soft};
+  --color-success: #{$color-success};
+  --color-warning: #{$color-warning};
+  --color-border: #{$color-border};
+
+  --shadow-soft: #{$shadow-soft};
+  --shadow-card: #{$shadow-card};
+  --shadow-hover: #{$shadow-hover};
+  --shadow-accent: #{$shadow-accent};
+
+  --radius-sm: #{$radius-sm};
+  --radius-md: #{$radius-md};
+  --radius-lg: #{$radius-lg};
+  --radius-xl: #{$radius-xl};
+
+  --container: min(#{$container-max}, calc(100% - 32px));
+  --nav-height: #{$nav-height};
+  --section-space: #{$section-space};
+  --transition: #{$transition-base};
+}

@@ -1,0 +1,45 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.faq {
+  padding: 12px;
+
+  details {
+    border-radius: 14px;
+    border: 1px solid transparent;
+    transition:
+      background-color $transition-base,
+      border-color $transition-base;
+
+    & + details {
+      margin-top: 10px;
+    }
+
+    &[open] {
+      border-color: rgba(230, 57, 70, 0.12);
+      background: rgba(230, 57, 70, 0.03);
+    }
+  }
+
+  &__summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 20px;
+    color: var(--color-primary);
+    font-weight: 700;
+
+    @include focus-ring;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+  }
+
+  &__content {
+    padding: 0 20px 18px;
+    color: var(--color-text-muted);
+  }
+}

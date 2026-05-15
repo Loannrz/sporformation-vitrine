@@ -1,0 +1,53 @@
+@use "../abstracts/variables" as *;
+
+.session-table {
+  overflow: hidden;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: 18px 20px;
+    text-align: left;
+    border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+  }
+
+  th {
+    background: var(--color-surface);
+    color: var(--color-primary);
+    font-family: $font-heading;
+    font-size: 0.95rem;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+}
+
+.session-status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 700;
+
+  &--open {
+    background: rgba(25, 135, 84, 0.12);
+    color: var(--color-success);
+  }
+
+  &--soon {
+    background: rgba(245, 158, 11, 0.14);
+    color: #b45309;
+  }
+
+  &--full {
+    background: rgba(107, 114, 128, 0.14);
+    color: var(--color-text-muted);
+  }
+}

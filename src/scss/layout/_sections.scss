@@ -1,0 +1,19 @@
+@use "../abstracts/variables" as *;
+
+.section {
+  padding: var(--section-space) 0;
+
+  &--surface {
+    background: var(--color-surface);
+  }
+
+  &--dark {
+    background: var(--color-primary);
+    color: var(--color-white);
+
+    .section-heading h1,
+    .section-heading h2 {
+      color: var(--color-white);
+    }
+  }
+}

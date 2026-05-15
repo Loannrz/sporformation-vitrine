@@ -1,0 +1,43 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.comparison {
+  display: grid;
+  gap: 24px;
+
+  &__panel {
+    padding: 32px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-card);
+    transition:
+      transform $transition-base,
+      box-shadow $transition-base;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    h2 {
+      font-family: $font-heading;
+      color: var(--color-primary);
+      margin-bottom: 14px;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+    }
+
+    &--accent {
+      background: linear-gradient(135deg, rgba(230, 57, 70, 0.06), rgba(230, 57, 70, 0.02));
+    }
+
+    &--surface {
+      background: var(--color-surface);
+    }
+  }
+}
+
+@include from($bp-md) {
+  .comparison {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
