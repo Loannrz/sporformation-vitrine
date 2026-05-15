@@ -19,6 +19,7 @@ import {
   notifyPrepaTep,
   resendConfigured,
 } from "./resend-mail.js";
+import { buildAdminRouter, buildPublicContentHandler } from "./admin-routes.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, "..");
@@ -307,6 +308,16 @@ app.use(
   })
 );
 app.use(express.json({ limit: "96kb" }));
+
+app.use(
+  "/api/admin",
+  buildAdminRouter({ supabaseUrl, supabaseServiceKey, supabaseAnonKey })
+);
+
+app.get(
+  "/api/public/site-content",
+  buildPublicContentHandler({ supabaseUrl, supabaseAnonKey, supabaseServiceKey })
+);
 
 app.get("/api/health", (_req, res) => {
   res.json({

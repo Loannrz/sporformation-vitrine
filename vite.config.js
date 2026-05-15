@@ -37,6 +37,8 @@ export default defineConfig({
         confidentialite: resolve(__dirname, "politique-de-confidentialite.html"),
         certificatQualiopi: resolve(__dirname, "certificat-qualiopi.html"),
         inscriptionPrepaTep: resolve(__dirname, "inscription-prepa-tep.html"),
+        login: resolve(__dirname, "login.html"),
+        admin: resolve(__dirname, "admin.html"),
       },
     },
   },

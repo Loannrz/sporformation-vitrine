@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Console admin — SporFormation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <script type="module" src="/src/js/admin/admin.js"></script>
+</head>
+<body>
+  <header class="admin-topbar">
+    <div class="admin-topbar__brand">
+      <img src="/assets/logos/spor-formation-logo.png" alt="SporFormation">
+      <h1 class="admin-topbar__title">Console d'administration</h1>
+    </div>
+    <div class="admin-topbar__actions">
+      <span class="admin-topbar__user" id="admin-user-email">…</span>
+      <a class="admin-btn admin-btn--ghost" style="background:rgba(255,255,255,0.08);color:white;border-color:rgba(255,255,255,0.15);" href="/" target="_blank" rel="noopener">Voir le site ↗</a>
+      <button class="admin-btn admin-btn--sm" id="admin-logout" type="button">Se déconnecter</button>
+    </div>
+  </header>
+
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <a data-tab="formations" class="active">
+        <span class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+        </span>
+        Formations & villes
+      </a>
+      <a data-tab="documents">
+        <span class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>
+        </span>
+        Documents & liens
+      </a>
+      <a data-tab="tep">
+        <span class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6m0 8v6M4 12h6m4 0h6"/></svg>
+        </span>
+        Prépa TEP
+      </a>
+      <a data-tab="apropos">
+        <span class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
+        </span>
+        À propos
+      </a>
+      <a data-tab="partenaires">
+        <span class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="17" cy="7" r="4"/></svg>
+        </span>
+        Partenaires
+      </a>
+    </aside>
+
+    <main class="admin-panel">
+      <!-- Onglet: Formations -->
+      <section id="tab-formations">
+        <div class="admin-panel__header">
+          <div>
+            <h2>Formations &amp; villes</h2>
+            <p class="lead">Modifiez en un clic la date limite, la prochaine session, le taux d’obtention et les chiffres affichés sur chaque fiche. Choisissez aussi quand le bouton d’inscription doit être visible.</p>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-filter-bar">
+            <select id="formations-filter-slug" aria-label="Filtrer par formation"></select>
+            <select id="formations-filter-ville" aria-label="Filtrer par ville"></select>
+            <span class="label-inline">Astuce — videz un champ pour retomber sur la valeur par défaut.</span>
+          </div>
+          <div id="formations-list"></div>
+        </div>
+      </section>
+
+      <!-- Onglet: Documents -->
+      <section id="tab-documents" class="hidden">
+        <div class="admin-panel__header">
+          <div>
+            <h2>Documents &amp; liens utiles</h2>
+            <p class="lead">Téléversez un PDF, un visuel ou ajoutez un lien externe, puis attachez-le à une fiche formation ou à une page entière (TEP, À propos…).</p>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <h3>Ajouter un document ou un lien</h3>
+          <div class="admin-grid">
+            <div class="admin-field">
+              <label>Page concernée</label>
+              <select id="doc-scope">
+                <option value="formation">Fiche formation</option>
+                <option value="tep">Page Prépa TEP</option>
+                <option value="a-propos">Page À propos</option>
+                <option value="handicap">Page Handicap</option>
+                <option value="global">Toutes les pages</option>
+              </select>
+            </div>
+            <div class="admin-field">
+              <label>Si fiche formation — quel couple ?</label>
+              <select id="doc-scope-key"></select>
+            </div>
+            <div class="admin-field">
+              <label>Libellé affiché</label>
+              <input type="text" id="doc-label" placeholder="ex: Fiche formation PDF">
+            </div>
+          </div>
+          <div class="admin-grid" style="margin-top:6px;">
+            <div class="admin-field">
+              <label>Type</label>
+              <select id="doc-type">
+                <option value="document">Document téléversé</option>
+                <option value="lien">Lien externe</option>
+              </select>
+            </div>
+            <div class="admin-field">
+              <label>URL (auto après téléversement)</label>
+              <input type="url" id="doc-url" placeholder="https://…">
+            </div>
+            <div class="admin-field">
+              <label>Ordre d’affichage</label>
+              <input type="number" id="doc-ordre" value="100" min="0" step="10">
+            </div>
+          </div>
+          <div class="admin-grid" style="margin-top:6px;align-items:end;">
+            <div class="admin-file" style="grid-column: span 2;">
+              <label class="admin-btn" for="doc-file" style="margin:0;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                Téléverser un fichier
+              </label>
+              <input type="file" id="doc-file">
+              <span class="filename" id="doc-file-name">Aucun fichier sélectionné</span>
+            </div>
+            <button class="admin-btn admin-btn--primary admin-btn--block" id="doc-create">Créer le lien</button>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <h3>Liens enregistrés</h3>
+          <div class="admin-filter-bar">
+            <select id="doc-filter-scope">
+              <option value="">Tous les scopes</option>
+              <option value="formation">Fiche formation</option>
+              <option value="tep">TEP</option>
+              <option value="a-propos">À propos</option>
+              <option value="handicap">Handicap</option>
+              <option value="global">Global</option>
+            </select>
+            <input type="text" id="doc-filter-key" placeholder="Filtrer par scope_key (slug|ville)">
+          </div>
+          <div id="documents-list"></div>
+        </div>
+      </section>
+
+      <!-- Onglet: TEP -->
+      <section id="tab-tep" class="hidden">
+        <div class="admin-panel__header">
+          <div>
+            <h2>Prépa TEP</h2>
+            <p class="lead">Ajustez les tarifs des deux formules et les étapes de la méthode. Vous pouvez ajouter / supprimer des étapes et encadrer celle que vous voulez mettre en avant.</p>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <h3>Tarifs des deux formules</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+            <div>
+              <div class="admin-field"><label>Libellé — Inscription seule</label><input type="text" id="tep-libelle-1"></div>
+              <div class="admin-grid">
+                <div class="admin-field admin-field--suffix">
+                  <label>Montant</label>
+                  <input type="number" id="tep-montant-1" min="0" step="1">
+                  <span class="suffix">€</span>
+                </div>
+                <div class="admin-field"><label>Unité affichée</label><input type="text" id="tep-unite-1"></div>
+              </div>
+            </div>
+            <div>
+              <div class="admin-field"><label>Libellé — Préparation + inscription</label><input type="text" id="tep-libelle-2"></div>
+              <div class="admin-grid">
+                <div class="admin-field admin-field--suffix">
+                  <label>Montant</label>
+                  <input type="number" id="tep-montant-2" min="0" step="1">
+                  <span class="suffix">€</span>
+                </div>
+                <div class="admin-field"><label>Unité affichée</label><input type="text" id="tep-unite-2"></div>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:right;margin-top:8px;">
+            <button class="admin-btn admin-btn--primary" id="tep-save-prices">Enregistrer les tarifs</button>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <h3>Étapes de la méthode <span class="badge badge--muted">ajout / suppression / réordonnancement</span></h3>
+          <div id="tep-etapes-list"></div>
+          <div style="margin-top:14px;text-align:right;">
+            <button class="admin-btn" id="tep-etape-add">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              Ajouter une étape
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Onglet: À propos -->
+      <section id="tab-apropos" class="hidden">
+        <div class="admin-panel__header">
+          <div>
+            <h2>À propos — bloc « Emploi &amp; débouchés »</h2>
+            <p class="lead">Le bloc rouge « Insertion » de la page À propos peut être remplacé par votre propre texte.</p>
+          </div>
+        </div>
+        <div class="admin-card">
+          <div class="admin-grid">
+            <div class="admin-field">
+              <label>Titre du bloc</label>
+              <input type="text" id="apropos-titre">
+            </div>
+            <div class="admin-field">
+              <label>Valeur en évidence</label>
+              <input type="text" id="apropos-valeur" placeholder="ex: 92 % d'insertion">
+            </div>
+          </div>
+          <div class="admin-field">
+            <label>Description / sous-texte</label>
+            <textarea id="apropos-description" rows="3"></textarea>
+          </div>
+          <div style="text-align:right;">
+            <button class="admin-btn admin-btn--primary" id="apropos-save">Enregistrer</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Onglet: Partenaires -->
+      <section id="tab-partenaires" class="hidden">
+        <div class="admin-panel__header">
+          <div>
+            <h2>Partenaires</h2>
+            <p class="lead">Ajoutez autant de logos partenaires que vous voulez. Glissez l’ordre pour les réordonner.</p>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <h3>Ajouter un partenaire</h3>
+          <div class="admin-grid">
+            <div class="admin-field">
+              <label>Nom</label>
+              <input type="text" id="partenaire-nom" placeholder="ex: Stade Toulousain">
+            </div>
+            <div class="admin-field">
+              <label>Lien externe (optionnel)</label>
+              <input type="url" id="partenaire-lien" placeholder="https://…">
+            </div>
+            <div class="admin-field">
+              <label>Ordre</label>
+              <input type="number" id="partenaire-ordre" value="100" min="0" step="10">
+            </div>
+          </div>
+          <div class="admin-grid" style="margin-top:6px;align-items:end;">
+            <div class="admin-file" style="grid-column: span 2;">
+              <label class="admin-btn" for="partenaire-file" style="margin:0;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                Téléverser un logo
+              </label>
+              <input type="file" id="partenaire-file" accept="image/*">
+              <span class="filename" id="partenaire-file-name">Aucun fichier sélectionné</span>
+              <input type="url" id="partenaire-logo-url" placeholder="Ou colle une URL de logo">
+            </div>
+            <button class="admin-btn admin-btn--primary admin-btn--block" id="partenaire-create">Ajouter le partenaire</button>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <h3>Liste des partenaires</h3>
+          <div id="partenaires-list"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="admin-flash" id="admin-flash" role="status"></div>
+</body>
+</html>

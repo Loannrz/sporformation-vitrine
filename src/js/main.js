@@ -18,6 +18,7 @@ import {
   initPrepaTepForm,
 } from "./modules/form.js";
 import { initLiveMetrics } from "./modules/live-metrics.js";
+import { initDynamicContent } from "./modules/dynamic-content.js";
 
 const boot = async () => {
   initHeader();
@@ -33,6 +34,7 @@ const boot = async () => {
   initContactForm();
   initEmployerForm();
   initPrepaTepForm();
+  await initDynamicContent();
 };
 
 if (document.readyState === "loading") {

@@ -297,6 +297,23 @@
     min-height: 44px;
   }
 
+  /* CTA désactivé (date limite dépassée ou désactivé depuis l’admin) */
+  &__cta--disabled {
+    background: #9ca3af !important;
+    color: #fff !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    opacity: 1 !important;
+
+    &:hover,
+    &:focus-visible {
+      transform: none !important;
+      background: #9ca3af !important;
+      color: #fff !important;
+    }
+  }
+
   &__contact {
     margin: 12px 0 0;
     padding-top: 12px;

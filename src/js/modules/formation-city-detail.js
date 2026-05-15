@@ -29,7 +29,7 @@ const FORMATION_SHORT_LABELS = {
 };
 
 /** Métadonnées affichées dans la sidebar selon le couple slug|ville */
-const FORMATION_META = {
+export const FORMATION_META = {
   "bp-jeps-aspf|Courbevoie": {
     region: "Île-de-France",
     badges: [
