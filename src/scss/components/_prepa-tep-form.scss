@@ -1,0 +1,29 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.prepa-tep-form {
+  display: grid;
+  gap: 22px;
+}
+
+.prepa-tep-conditional {
+  display: none;
+  padding-top: 4px;
+
+  &.is-active {
+    display: grid;
+    gap: 12px;
+  }
+}
+
+.prepa-tep-form__legend {
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0 0 4px;
+}
+
+.prepa-tep-form__hint {
+  color: var(--color-text-muted);
+  font-size: 0.92rem;
+  margin: -4px 0 0;
+}

@@ -13,45 +13,17 @@
     align-items: center;
     gap: 14px;
     min-width: 0;
+    text-decoration: none;
+    color: inherit;
   }
 
-  &__logo-mark {
-    display: grid;
-    place-items: center;
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    color: var(--color-white);
-    font-family: $font-heading;
-    font-size: 1.1rem;
-    font-weight: 800;
+  &__logo-img {
+    display: block;
+    height: 44px;
+    width: auto;
     flex-shrink: 0;
-    transition: background-color $transition-base;
-  }
-
-  &__logo-copy {
-    min-width: 0;
-  }
-
-  &__logo-title {
-    display: block;
-    font-family: $font-heading;
-    font-weight: 700;
-    color: var(--color-white);
-    letter-spacing: -0.02em;
-    transition: color $transition-base;
-  }
-
-  &__logo-tagline {
-    display: block;
-    color: rgba(255, 255, 255, 0.74);
-    font-size: 0.875rem;
-    line-height: 1.35;
-    white-space: normal;
-    overflow-wrap: break-word;
-    transition: color $transition-base;
+    object-fit: contain;
+    object-position: left center;
   }
 
   &__desktop {

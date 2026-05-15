@@ -8,7 +8,11 @@ import { initBackToTop } from "./modules/back-to-top.js";
 import { initCounters } from "./modules/counter.js";
 import { initSlider } from "./modules/slider.js";
 import { initFilters } from "./modules/filters.js";
-import { initContactForm, initEmployerForm } from "./modules/form.js";
+import {
+  initContactForm,
+  initEmployerForm,
+  initPrepaTepForm,
+} from "./modules/form.js";
 import { initLiveMetrics } from "./modules/live-metrics.js";
 
 const boot = async () => {
@@ -22,6 +26,7 @@ const boot = async () => {
   initFilters();
   initContactForm();
   initEmployerForm();
+  initPrepaTepForm();
 };
 
 if (document.readyState === "loading") {

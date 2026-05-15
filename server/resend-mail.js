@@ -413,3 +413,153 @@ export async function notifyEmployeur(data) {
     replyTo: data.email,
   });
 }
+
+/* ─────────────────────── Réservation Prépa TEP ─────────────────────── */
+
+function formatList(values) {
+  if (!values) return "Non renseigné";
+  const arr = Array.isArray(values) ? values : [values];
+  const cleaned = arr.map((v) => String(v).trim()).filter(Boolean);
+  if (!cleaned.length) return "Non renseigné";
+  return cleaned.join(", ");
+}
+
+function formatDateFr(value) {
+  if (!value) return "Non renseignée";
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return String(value);
+  return d.toLocaleDateString("fr-FR", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+export function buildPrepaTepText(data) {
+  const echecs = Array.isArray(data.echecsTep)
+    ? data.echecsTep.join(" / ")
+    : data.echecsTep || "—";
+  const dispos = Array.isArray(data.disponibilites)
+    ? data.disponibilites.join(" / ")
+    : data.disponibilites || "—";
+  return [
+    "═══════════════════════════════",
+    "NOUVELLE RÉSERVATION DE DIAGNOSTIC — PRÉPA TEP",
+    "═══════════════════════════════",
+    `Prénom : ${data.prenom}`,
+    `Nom : ${data.nom}`,
+    `Date de naissance : ${formatDateFr(data.dateNaissance)}`,
+    `Téléphone : ${data.telephone} ← À rappeler en priorité`,
+    `Email : ${data.email}`,
+    `Lieu de résidence : ${data.lieuResidence}`,
+    "",
+    `Pratique sportive régulière : ${data.pratiqueSport || "—"}`,
+    data.pratiqueSport === "Oui"
+      ? `Détails pratique : ${data.pratiqueSportDetail || "Non précisé"}`
+      : null,
+    "",
+    `Formation visée : ${data.formationVisee}`,
+    `Structure d'alternance : ${data.structureAlternance}`,
+    `Déjà passé les TEP : ${data.dejaPasseTep}`,
+    data.dejaPasseTep === "Oui" ? `Échecs antérieurs : ${echecs}` : null,
+    `Disponibilités : ${dispos}`,
+    "═══════════════════════════════",
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+function bulletList(values) {
+  const arr = Array.isArray(values) ? values : [];
+  if (!arr.length) {
+    return `<span style="color:${BRAND.textMuted};">Aucun élément sélectionné</span>`;
+  }
+  return `<ul style="margin:6px 0 0 0;padding-left:18px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:${BRAND.text};">${arr
+    .map((v) => `<li>${escapeHtml(v)}</li>`)
+    .join("")}</ul>`;
+}
+
+export function buildPrepaTepHtml(data) {
+  const t = (x) => escapeHtml(x ?? "");
+  const phoneClean = String(data.telephone || "").replace(/\s/g, "");
+  const pratiqueOui = data.pratiqueSport === "Oui";
+  const dejaTep = data.dejaPasseTep === "Oui";
+  const detailSport = (data.pratiqueSportDetail || "").trim();
+
+  const content = `
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top:8px;">
+      ${infoRow(
+        "Candidat Prépa TEP",
+        `<strong style="color:${BRAND.primary};font-size:17px;">${t(data.prenom)} ${t(data.nom)}</strong>`
+      )}
+      ${infoRow("Date de naissance", t(formatDateFr(data.dateNaissance)))}
+      ${infoRow(
+        "Téléphone",
+        `<a href="tel:${escapeHtml(phoneClean)}" style="color:${BRAND.text};text-decoration:none;font-weight:600;">${t(data.telephone)}</a>`
+      )}
+      ${infoRow("Email", linkValue(`mailto:${data.email}`, data.email))}
+      ${infoRow("Lieu de résidence", t(data.lieuResidence))}
+      ${infoRow(
+        "Formation visée",
+        `<span style="display:inline-block;background:${BRAND.surface};color:${BRAND.primary};font-weight:600;padding:4px 10px;border-radius:6px;border:1px solid ${BRAND.border};">${t(data.formationVisee)}</span>`
+      )}
+      ${infoRow(
+        "Pratique sportive régulière",
+        pratiqueOui
+          ? `<span style="color:${BRAND.success};font-weight:700;">✓ Oui</span>${
+              detailSport
+                ? `<div style="margin-top:6px;font-weight:400;color:${BRAND.text};font-style:italic;">“${t(detailSport)}”</div>`
+                : ""
+            }`
+          : `<span style="color:${BRAND.textMuted};">${t(data.pratiqueSport)}</span>`
+      )}
+      ${infoRow(
+        "Structure d'alternance",
+        data.structureAlternance === "Oui"
+          ? `<span style="color:${BRAND.success};font-weight:700;">✓ Oui, déjà identifiée</span>`
+          : `<span style="color:${BRAND.textMuted};">Non — accompagnement souhaité</span>`
+      )}
+      ${infoRow(
+        "Déjà passé les TEP",
+        dejaTep
+          ? `<span style="color:${BRAND.accent};font-weight:700;">Oui</span>${bulletList(data.echecsTep)}`
+          : `<span style="color:${BRAND.textMuted};">Non</span>`
+      )}
+      ${infoRow("Disponibilités", bulletList(data.disponibilites), { last: true })}
+    </table>
+
+    <div style="margin-top:28px;padding:18px 22px;background:${BRAND.surface};border-radius:12px;border:1px solid ${BRAND.border};">
+      <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:${BRAND.textMuted};">
+        <strong style="color:${BRAND.primary};">Action recommandée :</strong>
+        recontacter sous 24 h pour caler le diagnostic, valider le créneau de préparation et confirmer la place réservée pour la formation
+        <em>« ${t(data.formationVisee)} »</em>.
+      </div>
+    </div>
+
+    <div style="margin-top:28px;text-align:center;">
+      <a href="tel:${escapeHtml(phoneClean)}" style="display:inline-block;background:${BRAND.primary};color:${BRAND.white};font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.4px;padding:14px 28px;border-radius:10px;text-decoration:none;">
+        Rappeler ${t(data.prenom)} →
+      </a>
+    </div>
+  `;
+
+  return renderEmailShell({
+    accentLabel: "Réservation diagnostic",
+    title: "Nouvelle réservation de diagnostic",
+    subtitle: `${data.prenom} ${data.nom} demande une Prépa TEP pour « ${data.formationVisee} ». À recontacter sous 24 h.`,
+    contentHtml: content,
+    ctaPhone: data.telephone,
+  });
+}
+
+export async function notifyPrepaTep(data) {
+  const to = resolveRecipients();
+  const subject = `Prépa TEP — ${data.prenom} ${data.nom} — ${data.formationVisee}`;
+  await sendResendEmail({
+    to,
+    subject,
+    html: buildPrepaTepHtml(data),
+    text: buildPrepaTepText(data),
+    replyTo: data.email,
+  });
+}

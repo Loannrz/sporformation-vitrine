@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact & Inscription | SporFormation</title>
-  <meta name="description" content="Déposez votre candidature ou contactez SporFormation. Notre équipe vous rappelle sous 24h pour répondre à vos questions et vous accompagner.">
+  <title>Inscription Prépa TEP | SporFormation</title>
+  <meta name="description" content="Réservez votre préparation TEP + inscription + place en école avec SporFormation. Formulaire d'inscription à la Prépa TEP.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -54,7 +54,7 @@
             <li class="nav__item"><a class="nav__link" href="contact.html">Contact</a></li>
           </ul>
         </nav>
-        <a class="btn btn--primary nav__cta" href="contact.html">Envoyer ma candidature</a>
+        <a class="btn btn--primary nav__cta" href="#formulaire">S'inscrire à la Prépa TEP</a>
       </div>
       <button class="nav__toggle" type="button" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Ouvrir le menu"><span class="nav__toggle-line"></span><span class="nav__toggle-line"></span><span class="nav__toggle-line"></span></button>
     </div>
@@ -92,7 +92,7 @@
         <li><a class="mobile-nav__link" href="handicap.html">Handicap</a></li>
         <li><a class="mobile-nav__link" href="contact.html">Contact</a></li>
       </ul>
-      <a class="btn btn--primary mobile-nav__cta" href="#formulaire">Envoyer ma candidature</a>
+      <a class="btn btn--primary mobile-nav__cta" href="#formulaire">S'inscrire à la Prépa TEP</a>
     </nav>
   </aside>
 
@@ -100,16 +100,23 @@
     <section class="page-hero">
       <div class="container page-hero__grid">
         <div class="reveal">
-          <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a><span>></span><strong>Contact</strong></nav>
+          <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a><span>&gt;</span><a href="tep.html">TEP</a><span>&gt;</span><strong>Inscription Prépa TEP</strong></nav>
           <div class="section-heading">
-            <span class="eyebrow" style="background: rgba(255,255,255,0.12); color: #ffffff;">Inscription</span>
-            <h1>Faites le premier pas</h1>
-            <p>Remplissez le formulaire. Nous vous rappelons sous 24h pour répondre à toutes vos questions et vous accompagner dans votre candidature.</p>
+            <span class="eyebrow" style="background: rgba(255,255,255,0.12); color: #ffffff;">Sécurisez votre place</span>
+            <h1>Inscription Prépa TEP</h1>
+            <p>Vous souhaitez avoir, clé en main, une <strong>préparation</strong> et une <strong>inscription au TEP</strong> ? Plus une <strong>place réservée</strong> au sein de notre école avec une <strong>opportunité d’alternance</strong> ? Répondez ci-dessous au formulaire&nbsp;: notre équipe vous recontacte sous 24&nbsp;h.</p>
           </div>
+          <a class="btn btn--secondary" href="#formulaire">Aller au formulaire ↓</a>
         </div>
         <div class="hero-card reveal">
-          <h3>Réponse rapide</h3>
-          <p>Chaque demande est transmise à l'équipe SporFormation. Le téléphone renseigné est prioritaire pour le rappel.</p>
+          <h3>Ce que comprend la Prépa TEP</h3>
+          <ul class="list-check">
+            <li>Préparation aux TEP avec un formateur dédié</li>
+            <li>Inscription officielle au TEP</li>
+            <li>Place réservée dans notre école</li>
+            <li>Opportunité d’alternance accompagnée</li>
+          </ul>
+          <p class="form-hint" style="margin-top: 12px;">Tarif&nbsp;: <strong>100&nbsp;€</strong> tout compris (vs 70&nbsp;€ inscription TEP seule).</p>
         </div>
       </div>
     </section>
@@ -117,135 +124,106 @@
     <section class="section" id="formulaire">
       <div class="container">
         <div class="section-heading reveal">
-          <span class="eyebrow">Candidature & contact</span>
-          <h2>Formulaire d'inscription</h2>
-          <p>Envoi sécurisé via votre serveur (Resend). En local : lancez <code>npm run dev:full</code> pour activer l’API et les mails.</p>
+          <span class="eyebrow">Formulaire</span>
+          <h2>Réservez votre Prépa TEP</h2>
+          <p>Les champs marqués d’une étoile (*) sont obligatoires. Vos données sont traitées par SporFormation pour étudier votre dossier.</p>
         </div>
 
         <div class="card reveal">
           <div class="form-message" data-form-message aria-live="polite"></div>
-          <form
-            class="contact-form"
-            data-contact-form
-          >
+          <form class="contact-form prepa-tep-form" data-prepa-tep-form novalidate>
+
             <div class="form-grid form-grid--2">
               <div class="form-group">
                 <label for="prenom">Prénom *</label>
-                <input id="prenom" name="prenom" type="text" required>
+                <input id="prenom" name="prenom" type="text" autocomplete="given-name" required>
               </div>
               <div class="form-group">
                 <label for="nom">Nom *</label>
-                <input id="nom" name="nom" type="text" required>
+                <input id="nom" name="nom" type="text" autocomplete="family-name" required>
               </div>
               <div class="form-group">
-                <label for="email">Email *</label>
-                <input id="email" name="email" type="email" required>
+                <label for="dateNaissance">Date de naissance *</label>
+                <input id="dateNaissance" name="dateNaissance" type="date" required>
               </div>
               <div class="form-group">
-                <label for="telephone">Numéro de téléphone *</label>
-                <input id="telephone" name="telephone" type="tel" required>
+                <label for="telephone">Téléphone *</label>
+                <input id="telephone" name="telephone" type="tel" autocomplete="tel" required>
               </div>
               <div class="form-group">
-                <label for="villeResidence">Ville de résidence</label>
-                <input id="villeResidence" name="villeResidence" type="text">
+                <label for="email">Adresse mail *</label>
+                <input id="email" name="email" type="email" autocomplete="email" required>
               </div>
               <div class="form-group">
-                <label for="formationSouhaitee">Formation souhaitée *</label>
-                <select id="formationSouhaitee" name="formationSouhaitee" required>
-                  <option value="">Choisir une formation</option>
-                  <option>BP JEPS ASPF</option>
-                  <option>BP JEPS MAPST</option>
-                  <option>BP JEPS Basket-Ball</option>
-                  <option>BP JEPS Rugby à XV</option>
-                  <option>TFP CDSSA</option>
-                  <option>BP JEPS ASEC</option>
-                  <option>Certificat complémentaire ACM</option>
-                  <option>DE JEPS ASEC</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="villeFormation">Ville de formation souhaitée</label>
-                <select id="villeFormation" name="villeFormation">
-                  <option value="">Choisir une ville</option>
-                  <option>Courbevoie</option>
-                  <option>Paris 7e</option>
-                  <option>Cergy</option>
-                  <option>Nanterre</option>
-                  <option>Coulommiers</option>
-                  <option>Ajaccio</option>
-                  <option>Arpajon-Égly</option>
-                  <option>Mortagne-au-Perche</option>
-                  <option>Drancy</option>
-                </select>
+                <label for="lieuResidence">Lieu de résidence *</label>
+                <input id="lieuResidence" name="lieuResidence" type="text" placeholder="Ville, département…" autocomplete="address-level2" required>
               </div>
             </div>
 
             <div class="form-group">
-              <label>Votre situation actuelle *</label>
+              <label class="prepa-tep-form__legend">Pratique sportive régulière&nbsp;? *</label>
               <div class="radio-group">
-                <label class="radio-option"><input type="radio" name="situation" value="Étudiant" required><span>Étudiant</span></label>
-                <label class="radio-option"><input type="radio" name="situation" value="En reconversion professionnelle"><span>En reconversion professionnelle</span></label>
-                <label class="radio-option"><input type="radio" name="situation" value="Demandeur d'emploi"><span>Demandeur d'emploi</span></label>
-                <label class="radio-option"><input type="radio" name="situation" value="Salarié"><span>Salarié</span></label>
-                <label class="radio-option"><input type="radio" name="situation" value="Autre"><span>Autre</span></label>
+                <label class="radio-option"><input type="radio" name="pratiqueSport" value="Oui" required data-toggles="pratiqueSportDetails"><span>Oui</span></label>
+                <label class="radio-option"><input type="radio" name="pratiqueSport" value="Non"><span>Non</span></label>
+              </div>
+              <div class="prepa-tep-conditional" id="pratiqueSportDetails" data-conditional-for="pratiqueSport" data-conditional-when="Oui">
+                <label for="pratiqueSportDetail">Si oui, quel sport, à quelle fréquence d’entraînement et depuis quand&nbsp;?</label>
+                <textarea id="pratiqueSportDetail" name="pratiqueSportDetail" rows="3" placeholder="Ex : musculation 4×/semaine depuis 2 ans, club de rugby le week-end…"></textarea>
               </div>
             </div>
 
             <div class="form-group">
-              <label for="motivation">Pourquoi souhaitez-vous rejoindre cette formation ? *</label>
-              <textarea id="motivation" name="motivation" minlength="100" required></textarea>
-              <p class="form-hint">Minimum 100 caractères pour nous permettre de mieux comprendre votre projet.</p>
-            </div>
-
-            <div class="form-group">
-              <label>Avez-vous déjà un employeur / structure d'accueil ? *</label>
+              <label class="prepa-tep-form__legend">Quelle formation visée&nbsp;? *</label>
               <div class="radio-group">
-                <label class="radio-option"><input type="radio" name="employeur" value="Oui" required><span>Oui</span></label>
-                <label class="radio-option"><input type="radio" name="employeur" value="Non"><span>Non</span></label>
-                <label class="radio-option"><input type="radio" name="employeur" value="Je cherche de l'aide pour en trouver un"><span>Je cherche de l'aide pour en trouver un</span></label>
+                <label class="radio-option"><input type="radio" name="formationVisee" value="BP JEPS APSF (Activités physiques et sportives de la forme)" required><span>BP JEPS APSF — Activités physiques et sportives de la forme</span></label>
+                <label class="radio-option"><input type="radio" name="formationVisee" value="BP JEPS MAPS (Multi-Activités Physiques ou Sportives pour Tous)"><span>BP JEPS MAPS — Multi-Activités Physiques ou Sportives pour Tous</span></label>
               </div>
             </div>
 
             <div class="form-group">
-              <label>Comment avez-vous connu SporFormation ? *</label>
+              <label class="prepa-tep-form__legend">Avez-vous déjà une structure d’alternance&nbsp;? *</label>
               <div class="radio-group">
-                <label class="radio-option"><input type="radio" name="source" value="Google" required><span>Google</span></label>
-                <label class="radio-option"><input type="radio" name="source" value="Réseaux sociaux"><span>Réseaux sociaux</span></label>
-                <label class="radio-option"><input type="radio" name="source" value="Bouche à oreille"><span>Bouche à oreille</span></label>
-                <label class="radio-option"><input type="radio" name="source" value="Partenaire"><span>Partenaire</span></label>
-                <label class="radio-option"><input type="radio" name="source" value="Autre"><span>Autre</span></label>
+                <label class="radio-option"><input type="radio" name="structureAlternance" value="Oui" required><span>Oui</span></label>
+                <label class="radio-option"><input type="radio" name="structureAlternance" value="Non"><span>Non</span></label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="prepa-tep-form__legend">Avez-vous déjà passé les tests TEP&nbsp;? *</label>
+              <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="dejaPasseTep" value="Oui" required data-toggles="dejaPasseTepDetails"><span>Oui</span></label>
+                <label class="radio-option"><input type="radio" name="dejaPasseTep" value="Non"><span>Non</span></label>
+              </div>
+              <div class="prepa-tep-conditional" id="dejaPasseTepDetails" data-conditional-for="dejaPasseTep" data-conditional-when="Oui">
+                <label class="prepa-tep-form__legend">Si oui, où avez-vous échoué&nbsp;?</label>
+                <p class="prepa-tep-form__hint">Plusieurs choix possibles.</p>
+                <div class="checkbox-group">
+                  <label class="checkbox-option"><input type="checkbox" name="echecsTep" value="Luc Léger (TEP MAPST)"><span>Luc Léger (TEP MAPST)</span></label>
+                  <label class="checkbox-option"><input type="checkbox" name="echecsTep" value="Luc Léger (TEP APSF)"><span>Luc Léger (TEP APSF)</span></label>
+                  <label class="checkbox-option"><input type="checkbox" name="echecsTep" value="Mouvement technique de musculation (TEP AF)"><span>Mouvement technique de musculation (TEP AF)</span></label>
+                  <label class="checkbox-option"><input type="checkbox" name="echecsTep" value="Cours collectif en musique (TEP AF)"><span>Cours collectif en musique (TEP AF)</span></label>
+                  <label class="checkbox-option"><input type="checkbox" name="echecsTep" value="Parcours Motricité (TEP MAPST)"><span>Parcours Motricité (TEP MAPST)</span></label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="prepa-tep-form__legend">Vos disponibilités pour vous préparer avec nous&nbsp;? *</label>
+              <p class="prepa-tep-form__hint">Plusieurs créneaux possibles.</p>
+              <div class="checkbox-group">
+                <label class="checkbox-option"><input type="checkbox" name="disponibilites" value="En semaine — créneau du matin"><span>En semaine — créneau du matin</span></label>
+                <label class="checkbox-option"><input type="checkbox" name="disponibilites" value="En semaine — créneau de l’après-midi"><span>En semaine — créneau de l’après-midi</span></label>
+                <label class="checkbox-option"><input type="checkbox" name="disponibilites" value="En semaine — créneau du soir"><span>En semaine — créneau du soir</span></label>
               </div>
             </div>
 
             <div class="checkbox-group">
-              <label class="checkbox-option"><input type="checkbox" name="recontact" value="oui" required><span>J'accepte d'être recontacté par SporFormation *</span></label>
-              <label class="checkbox-option"><input type="checkbox" name="confidentialite" value="oui" required><span>J'ai lu et j'accepte la politique de confidentialité *</span></label>
+              <label class="checkbox-option"><input type="checkbox" name="recontact" value="oui" required><span>J’accepte d’être recontacté par SporFormation *</span></label>
+              <label class="checkbox-option"><input type="checkbox" name="confidentialite" value="oui" required><span>J’ai lu et j’accepte la <a href="politique-de-confidentialite.html">politique de confidentialité</a> *</span></label>
             </div>
 
-            <button class="btn btn--primary btn--block" type="submit">Envoyer ma candidature →</button>
+            <button class="btn btn--primary btn--block" type="submit">Envoyer mon inscription Prépa TEP →</button>
           </form>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--surface">
-      <div class="container grid grid--3">
-        <article class="contact-card reveal"><div class="contact-card__icon">📞</div><div class="contact-card__content"><strong>Appelez-nous</strong><p><a href="tel:+33744990699">07 44 99 06 99</a></p></div></article>
-        <article class="contact-card reveal"><div class="contact-card__icon">📍</div><div class="contact-card__content"><strong>Venez nous voir</strong><p>159/161 rue Armand Silvestre, 92400 Courbevoie</p></div></article>
-        <article class="contact-card reveal"><div class="contact-card__icon">📧</div><div class="contact-card__content"><strong>Écrivez-nous</strong><p><a href="mailto:contact@sporformation.fr">contact@sporformation.fr</a></p></div></article>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="section-heading reveal"><span class="eyebrow">Adresse</span><h2>Nous trouver à Courbevoie</h2><p>Carte Google Maps intégrée pour simplifier la prise de contact physique et le repérage.</p></div>
-        <div class="map-frame reveal">
-          <iframe
-            loading="lazy"
-            allowfullscreen
-            referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps?q=159%2F161%20rue%20Armand%20Silvestre%2C%2092400%20Courbevoie&z=15&output=embed"
-            title="Carte de SporFormation à Courbevoie"></iframe>
         </div>
       </div>
     </section>
@@ -253,7 +231,7 @@
 
   <footer class="site-footer">
     <div class="container site-footer__grid">
-      <div class="site-footer__brand"><div class="nav__brand"><img class="nav__logo-img" src="/assets/logos/spor-formation-logo.png" width="728" height="343" alt="SporFormation — Formez-vous à un métier qui a du sens"></div><p>Un parcours clair, un contact rapide et un accompagnement humain dès votre première demande.</p></div>
+      <div class="site-footer__brand"><div class="nav__brand"><img class="nav__logo-img" src="/assets/logos/spor-formation-logo.png" width="728" height="343" alt="SporFormation — Formez-vous à un métier qui a du sens"></div><p>Une préparation concrète pour entrer sereinement dans votre futur parcours de formation.</p></div>
       <div><h3>Formations</h3><ul><li><a href="formations.html">Toutes les formations</a></li><li><a href="tep.html">Préparation TEP</a></li><li><a href="apprentissage.html">Apprentissage</a></li></ul></div>
       <div><h3>Informations</h3><ul><li><a href="a-propos.html">À Propos</a></li><li><a href="handicap.html">Handicap</a></li><li><a href="mentions-legales.html">Mentions légales</a></li></ul></div>
       <div><h3>Contact</h3><ul><li><a href="tel:+33744990699">07 44 99 06 99</a></li><li><a href="mailto:raphaelsporformation@gmail.com">raphaelsporformation@gmail.com</a></li><li>159/161 rue Armand Silvestre, 92400 Courbevoie</li></ul></div>
@@ -262,6 +240,5 @@
   </footer>
 
   <button class="back-to-top" id="back-to-top" type="button" aria-label="Retour en haut de page"><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
-
 </body>
 </html>

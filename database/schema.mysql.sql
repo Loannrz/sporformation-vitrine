@@ -35,6 +35,28 @@ CREATE TABLE IF NOT EXISTS formulaires_employeurs (
   INDEX idx_formulaires_employeurs_created (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS reservations_prepa_tep (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  prenom VARCHAR(120) NOT NULL,
+  nom VARCHAR(120) NOT NULL,
+  date_naissance DATE NULL,
+  telephone VARCHAR(40) NOT NULL,
+  email VARCHAR(254) NOT NULL,
+  lieu_residence VARCHAR(200) NOT NULL,
+  pratique_sport VARCHAR(20) NOT NULL,
+  pratique_sport_detail TEXT NULL,
+  formation_visee VARCHAR(200) NOT NULL,
+  structure_alternance VARCHAR(20) NOT NULL,
+  deja_passe_tep VARCHAR(20) NOT NULL,
+  echecs_tep JSON NULL,
+  disponibilites JSON NULL,
+  consentement_recontact TINYINT(1) NOT NULL DEFAULT 0,
+  consentement_politique TINYINT(1) NOT NULL DEFAULT 0,
+  origine VARCHAR(80) NOT NULL DEFAULT 'site-vitrine-prepa-tep',
+  INDEX idx_reservations_prepa_tep_created (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS indicateurs_site (
   cle VARCHAR(64) NOT NULL PRIMARY KEY,
   valeur_entier BIGINT NOT NULL DEFAULT 0,

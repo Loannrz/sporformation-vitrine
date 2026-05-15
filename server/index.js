@@ -13,8 +13,10 @@ import { createClient } from "@supabase/supabase-js";
 import {
   buildCandidatureHtml,
   buildEmployerHtml,
+  buildPrepaTepHtml,
   notifyCandidature,
   notifyEmployeur,
+  notifyPrepaTep,
   resendConfigured,
 } from "./resend-mail.js";
 
@@ -73,6 +75,29 @@ CREATE TABLE IF NOT EXISTS formulaires_employeurs (
 
 CREATE INDEX IF NOT EXISTS idx_employeurs_created ON formulaires_employeurs (created_at DESC);
 
+CREATE TABLE IF NOT EXISTS reservations_prepa_tep (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  prenom TEXT NOT NULL,
+  nom TEXT NOT NULL,
+  date_naissance TEXT,
+  telephone TEXT NOT NULL,
+  email TEXT NOT NULL,
+  lieu_residence TEXT NOT NULL,
+  pratique_sport TEXT NOT NULL,
+  pratique_sport_detail TEXT,
+  formation_visee TEXT NOT NULL,
+  structure_alternance TEXT NOT NULL,
+  deja_passe_tep TEXT NOT NULL,
+  echecs_tep TEXT,
+  disponibilites TEXT NOT NULL,
+  consentement_recontact INTEGER NOT NULL DEFAULT 0,
+  consentement_politique INTEGER NOT NULL DEFAULT 0,
+  origine TEXT NOT NULL DEFAULT 'site-vitrine-prepa-tep'
+);
+
+CREATE INDEX IF NOT EXISTS idx_prepa_tep_created ON reservations_prepa_tep (created_at DESC);
+
 CREATE TABLE IF NOT EXISTS indicateurs_site (
   cle TEXT PRIMARY KEY,
   valeur_entier INTEGER NOT NULL DEFAULT 0,
@@ -100,6 +125,20 @@ const insertEmployer = db.prepare(`
     consentement_recontact, consentement_politique, origine
   ) VALUES (
     @prenom, @nom, @email, @telephone, @formation_recherchee, @recherche_alternants,
+    @consentement_recontact, @consentement_politique, @origine
+  )
+`);
+
+const insertPrepaTep = db.prepare(`
+  INSERT INTO reservations_prepa_tep (
+    prenom, nom, date_naissance, telephone, email, lieu_residence,
+    pratique_sport, pratique_sport_detail, formation_visee, structure_alternance,
+    deja_passe_tep, echecs_tep, disponibilites,
+    consentement_recontact, consentement_politique, origine
+  ) VALUES (
+    @prenom, @nom, @date_naissance, @telephone, @email, @lieu_residence,
+    @pratique_sport, @pratique_sport_detail, @formation_visee, @structure_alternance,
+    @deja_passe_tep, @echecs_tep, @disponibilites,
     @consentement_recontact, @consentement_politique, @origine
   )
 `);
@@ -183,6 +222,34 @@ async function insertEmployerSupabase(payload) {
       telephone: payload.telephone,
       formation_recherchee: payload.formation_recherchee,
       recherche_alternants: Boolean(payload.recherche_alternants),
+      consentement_recontact: Boolean(payload.consentement_recontact),
+      consentement_politique: Boolean(payload.consentement_politique),
+      origine: payload.origine,
+    });
+  if (error) {
+    return { ok: false, reason: error.message };
+  }
+  return { ok: true };
+}
+
+async function insertPrepaTepSupabase(payload) {
+  if (!supabaseAdmin) return { ok: false, reason: "supabase non configuré" };
+  const { error } = await supabaseAdmin
+    .from("reservations_prepa_tep")
+    .insert({
+      prenom: payload.prenom,
+      nom: payload.nom,
+      date_naissance: payload.date_naissance || null,
+      telephone: payload.telephone,
+      email: payload.email,
+      lieu_residence: payload.lieu_residence,
+      pratique_sport: payload.pratique_sport,
+      pratique_sport_detail: payload.pratique_sport_detail || null,
+      formation_visee: payload.formation_visee,
+      structure_alternance: payload.structure_alternance,
+      deja_passe_tep: payload.deja_passe_tep,
+      echecs_tep: payload.echecs_tep_array || [],
+      disponibilites: payload.disponibilites_array || [],
       consentement_recontact: Boolean(payload.consentement_recontact),
       consentement_politique: Boolean(payload.consentement_politique),
       origine: payload.origine,
@@ -282,6 +349,31 @@ app.get("/api/email/preview/employeur", (_req, res) => {
   res.send(buildEmployerHtml(sampleEmployer));
 });
 
+const samplePrepaTep = {
+  prenom: "Léa",
+  nom: "Durand",
+  dateNaissance: "2004-03-12",
+  telephone: "06 22 33 44 55",
+  email: "lea.durand@example.fr",
+  lieuResidence: "Courbevoie (92)",
+  pratiqueSport: "Oui",
+  pratiqueSportDetail:
+    "Musculation 4×/semaine depuis 2 ans, club d'athlétisme le week-end (sprint 100m).",
+  formationVisee: "BP JEPS APSF (Activités physiques et sportives de la forme)",
+  structureAlternance: "Non",
+  dejaPasseTep: "Oui",
+  echecsTep: ["Luc Léger (TEP APSF)", "Mouvement technique de musculation (TEP AF)"],
+  disponibilites: [
+    "En semaine — créneau du matin",
+    "En semaine — créneau du soir",
+  ],
+};
+
+app.get("/api/email/preview/prepa-tep", (_req, res) => {
+  res.set("Content-Type", "text/html; charset=utf-8");
+  res.send(buildPrepaTepHtml(samplePrepaTep));
+});
+
 app.get("/api/metrics", async (_req, res) => {
   const [supaStudents, supaClasses] = await Promise.all([
     countStudentsSupabase(),
@@ -354,6 +446,134 @@ app.post("/api/email/candidature", async (req, res) => {
       error: e instanceof Error ? e.message : "Échec envoi Resend.",
     });
   }
+});
+
+function normalizePrepaTepBody(b) {
+  const arr = (v) =>
+    Array.isArray(v)
+      ? v.map((x) => String(x).trim()).filter(Boolean)
+      : v
+        ? [String(v).trim()].filter(Boolean)
+        : [];
+  return {
+    prenom: String(b.prenom || "").trim(),
+    nom: String(b.nom || "").trim(),
+    dateNaissance: String(b.dateNaissance || "").trim(),
+    telephone: String(b.telephone || "").trim(),
+    email: String(b.email || "").trim(),
+    lieuResidence: String(b.lieuResidence || "").trim(),
+    pratiqueSport: String(b.pratiqueSport || "").trim(),
+    pratiqueSportDetail: String(b.pratiqueSportDetail || "").trim(),
+    formationVisee: String(b.formationVisee || "").trim(),
+    structureAlternance: String(b.structureAlternance || "").trim(),
+    dejaPasseTep: String(b.dejaPasseTep || "").trim(),
+    echecsTep: arr(b.echecsTep),
+    disponibilites: arr(b.disponibilites),
+    recontact: b.recontact === "oui" || b.recontact === true,
+    confidentialite: b.confidentialite === "oui" || b.confidentialite === true,
+    origine: b.origine ? String(b.origine).slice(0, 80) : "site-vitrine-prepa-tep",
+  };
+}
+
+function validatePrepaTep(d) {
+  const requiredText = [
+    "prenom",
+    "nom",
+    "dateNaissance",
+    "telephone",
+    "email",
+    "lieuResidence",
+    "pratiqueSport",
+    "formationVisee",
+    "structureAlternance",
+    "dejaPasseTep",
+  ];
+  for (const k of requiredText) {
+    if (!d[k] || String(d[k]).trim() === "") {
+      return `Champ manquant : ${k}`;
+    }
+  }
+  if (!isValidEmail(d.email)) return "Email candidat invalide.";
+  if (!d.disponibilites.length) return "Au moins un créneau de disponibilité est requis.";
+  if (!d.recontact || !d.confidentialite) return "Consentements requis.";
+  return null;
+}
+
+app.post("/api/email/prepa-tep", async (req, res) => {
+  if (!resendConfigured()) {
+    return res.status(503).json({
+      error:
+        "Resend non configuré sur le serveur (RESEND_API_KEY, EMAIL_FROM, DIRECTOR_EMAIL dans .env.local).",
+    });
+  }
+  const data = normalizePrepaTepBody(req.body || {});
+  const err = validatePrepaTep(data);
+  if (err) return res.status(400).json({ error: err });
+  try {
+    await notifyPrepaTep(data);
+    res.status(200).json({ ok: true });
+  } catch (e) {
+    console.error("[email/prepa-tep]", e);
+    res.status(502).json({
+      error: e instanceof Error ? e.message : "Échec envoi Resend.",
+    });
+  }
+});
+
+app.post("/api/forms/prepa-tep", async (req, res) => {
+  const data = normalizePrepaTepBody(req.body || {});
+  const err = validatePrepaTep(data);
+  if (err) return res.status(400).json({ error: err });
+
+  const payload = {
+    prenom: data.prenom,
+    nom: data.nom,
+    date_naissance: data.dateNaissance || null,
+    telephone: data.telephone,
+    email: data.email,
+    lieu_residence: data.lieuResidence,
+    pratique_sport: data.pratiqueSport,
+    pratique_sport_detail: data.pratiqueSportDetail || null,
+    formation_visee: data.formationVisee,
+    structure_alternance: data.structureAlternance,
+    deja_passe_tep: data.dejaPasseTep,
+    echecs_tep_array: data.echecsTep,
+    disponibilites_array: data.disponibilites,
+    echecs_tep: data.echecsTep.join(" | "),
+    disponibilites: data.disponibilites.join(" | "),
+    consentement_recontact: data.recontact ? 1 : 0,
+    consentement_politique: data.confidentialite ? 1 : 0,
+    origine: data.origine,
+  };
+
+  let supabaseOk = false;
+  let supabaseError = null;
+  if (supabaseConfigured()) {
+    const r = await insertPrepaTepSupabase(payload);
+    supabaseOk = r.ok;
+    if (!r.ok) supabaseError = r.reason;
+  }
+
+  let sqliteOk = false;
+  try {
+    insertPrepaTep.run(payload);
+    sqliteOk = true;
+  } catch (e) {
+    console.error("[forms/prepa-tep][sqlite]", e);
+  }
+
+  if (!supabaseOk && !sqliteOk) {
+    return res.status(500).json({
+      error: "Enregistrement impossible (Supabase + SQLite KO).",
+      supabaseError,
+    });
+  }
+
+  res.status(201).json({
+    ok: true,
+    persisted: { supabase: supabaseOk, sqlite: sqliteOk },
+    supabaseError,
+  });
 });
 
 app.post("/api/email/employeur", async (req, res) => {

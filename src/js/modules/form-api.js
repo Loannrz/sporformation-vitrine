@@ -40,6 +40,11 @@ export function persistEmployerForm(data) {
   return postJson("/api/forms/employer", data);
 }
 
+/** Payload aligné sur formulaire inscription Prépa TEP */
+export function persistPrepaTepForm(data) {
+  return postJson("/api/forms/prepa-tep", data);
+}
+
 async function postEmail(path, body) {
   const origin = getFormsApiOrigin();
   if (origin === null) {
@@ -73,4 +78,8 @@ export function sendCandidatureEmail(data) {
 
 export function sendEmployeurEmail(data) {
   return postEmail("/api/email/employeur", data);
+}
+
+export function sendPrepaTepEmail(data) {
+  return postEmail("/api/email/prepa-tep", data);
 }

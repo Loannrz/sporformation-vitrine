@@ -1,0 +1,110 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.tep-pricing {
+  &__grid {
+    align-items: stretch;
+  }
+
+  &__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 32px;
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-card);
+    @include lift-on-hover;
+
+    &--featured {
+      border-color: rgba(230, 57, 70, 0.35);
+      background:
+        linear-gradient(180deg, rgba(230, 57, 70, 0.05), var(--color-white) 60%),
+        var(--color-white);
+    }
+  }
+
+  &__badge {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(26, 26, 46, 0.08);
+    color: var(--color-primary);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+
+    &--accent {
+      background: rgba(230, 57, 70, 0.12);
+      color: var(--color-accent);
+    }
+  }
+
+  &__price {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  &__amount {
+    font-family: $font-heading;
+    font-size: clamp(2.5rem, 4vw, 3rem);
+    font-weight: 800;
+    color: var(--color-primary);
+    line-height: 1;
+  }
+
+  &__unit {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  &__note {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+
+    a {
+      color: var(--color-accent);
+      font-weight: 600;
+      text-decoration: underline;
+    }
+
+    strong {
+      color: var(--color-primary);
+    }
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+  }
+
+  &__cta {
+    margin-top: auto;
+    align-self: flex-start;
+  }
+}
+
+// Cartes de la section "Notre méthode en 4 étapes"
+.tep-method-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__label {
+    margin-bottom: 4px;
+  }
+
+  h3 {
+    margin: 0;
+  }
+}
+

@@ -31,6 +31,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://sporformation.fr/inscription-prepa-tep.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://sporformation.fr/formulaire-employeur.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>

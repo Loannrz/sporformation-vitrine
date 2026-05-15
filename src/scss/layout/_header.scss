@@ -19,22 +19,9 @@
 
   &.is-scrolled .nav__link,
   &.is-scrolled .nav__menu-button,
-  &.is-scrolled .nav__logo-tagline,
   &--solid .nav__link,
-  &--solid .nav__menu-button,
-  &--solid .nav__logo-tagline {
+  &--solid .nav__menu-button {
     color: var(--color-text);
-  }
-
-  &.is-scrolled .nav__logo-title,
-  &--solid .nav__logo-title {
-    color: var(--color-primary);
-  }
-
-  &.is-scrolled .nav__logo-mark,
-  &--solid .nav__logo-mark {
-    background: var(--color-primary);
-    border-color: rgba(26, 26, 46, 0.18);
   }
 
   /* Menu mobile : barres visibles sur fond blanc (header solide ou après scroll) */

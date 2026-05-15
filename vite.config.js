@@ -34,6 +34,8 @@ export default defineConfig({
         formulaireEmployeur: resolve(__dirname, "formulaire-employeur.html"),
         mentionsLegales: resolve(__dirname, "mentions-legales.html"),
         confidentialite: resolve(__dirname, "politique-de-confidentialite.html"),
+        certificatQualiopi: resolve(__dirname, "certificat-qualiopi.html"),
+        inscriptionPrepaTep: resolve(__dirname, "inscription-prepa-tep.html"),
       },
     },
   },

@@ -13,6 +13,10 @@
   }
 
   &__brand {
+    .nav__logo-img {
+      height: 52px;
+    }
+
     p {
       margin-top: 18px;
       max-width: 340px;

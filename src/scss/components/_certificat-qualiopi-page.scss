@@ -1,0 +1,153 @@
+@use "../abstracts/variables" as *;
+
+// Page certificat Qualiopi — titre centré façon ancien site + visuel central
+$cert-teal: #0d4f5c;
+
+// Pas de bloc page-hero (fil d’Ariane + fond dégradé) : espacement sous header fixe
+.main--certificat {
+  padding-top: calc(var(--nav-height) + 32px);
+}
+
+.certificat-intro {
+  padding-top: clamp(32px, 5vw, 56px);
+  padding-bottom: clamp(24px, 4vw, 40px);
+  text-align: center;
+}
+
+.certificat-intro__rule {
+  width: 72px;
+  height: 3px;
+  margin: 0 auto $space-2;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-accent),
+    transparent
+  );
+  border-radius: 2px;
+}
+
+.certificat-intro__title {
+  font-family: $font-heading;
+  font-weight: 800;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  color: var(--color-primary);
+  letter-spacing: -0.02em;
+  margin: 0 0 $space-2;
+  line-height: 1.2;
+}
+
+.certificat-intro__legal {
+  max-width: 52rem;
+  margin: 0 auto;
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.0625rem;
+  }
+}
+
+.certificat-sheet {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 40px);
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-border);
+
+  &__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+  }
+}
+
+.certificat-details {
+  margin-top: $space-5;
+}
+
+.certificat-details__grid {
+  display: grid;
+  gap: $space-3;
+  grid-template-columns: 1fr;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.certificat-details__card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: $space-3;
+  border: 1px solid var(--color-border);
+
+  h3 {
+    font-family: $font-heading;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: $cert-teal;
+    margin: 0 0 $space-2;
+  }
+
+  p,
+  ul {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--color-text);
+  }
+
+  ul {
+    padding-left: 1.2rem;
+  }
+
+  li + li {
+    margin-top: $space-1;
+  }
+}
+
+.certificat-details__highlight {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.certificat-details__scope {
+  grid-column: 1 / -1;
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    rgba(13, 79, 92, 0.06),
+    rgba(230, 57, 70, 0.06)
+  );
+  border-color: rgba(13, 79, 92, 0.12);
+
+  p {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-accent-dark);
+  }
+}
+
+.certificat-details__legal-block {
+  grid-column: 1 / -1;
+
+  p {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+}
+
+.certificat-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+  justify-content: center;
+  margin-top: $space-4;
+  padding-bottom: $space-5;
+}

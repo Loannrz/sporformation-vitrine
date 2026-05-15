@@ -38,6 +38,30 @@ CREATE TABLE IF NOT EXISTS formulaires_employeurs (
 
 CREATE INDEX IF NOT EXISTS idx_formulaires_employeurs_created ON formulaires_employeurs (created_at DESC);
 
+-- Réservations Prépa TEP (formulaire "Réserver mon diagnostic" de tep.html → inscription-prepa-tep.html)
+CREATE TABLE IF NOT EXISTS reservations_prepa_tep (
+  id BIGSERIAL PRIMARY KEY,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  prenom VARCHAR(120) NOT NULL,
+  nom VARCHAR(120) NOT NULL,
+  date_naissance DATE,
+  telephone VARCHAR(40) NOT NULL,
+  email VARCHAR(254) NOT NULL,
+  lieu_residence VARCHAR(200) NOT NULL,
+  pratique_sport VARCHAR(20) NOT NULL,
+  pratique_sport_detail TEXT,
+  formation_visee VARCHAR(200) NOT NULL,
+  structure_alternance VARCHAR(20) NOT NULL,
+  deja_passe_tep VARCHAR(20) NOT NULL,
+  echecs_tep TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[],
+  disponibilites TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[],
+  consentement_recontact BOOLEAN NOT NULL DEFAULT FALSE,
+  consentement_politique BOOLEAN NOT NULL DEFAULT FALSE,
+  origine VARCHAR(80) NOT NULL DEFAULT 'site-vitrine-prepa-tep'
+);
+
+CREATE INDEX IF NOT EXISTS idx_reservations_prepa_tep_created ON reservations_prepa_tep (created_at DESC);
+
 -- Indicateurs publiables pour la vitrine (ex. nombre d’étudiants actifs synchronisé depuis votre BD métier)
 CREATE TABLE IF NOT EXISTS indicateurs_site (
   cle VARCHAR(64) PRIMARY KEY,
