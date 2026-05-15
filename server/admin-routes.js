@@ -13,9 +13,28 @@ import { Router } from "express";
 import { createClient } from "@supabase/supabase-js";
 import multer from "multer";
 import crypto from "node:crypto";
+import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const BUCKET = "public-uploads";
+
+let DEFAULT_FORMATION_DOCS = {};
+try {
+  const p = path.resolve(__dirname, "..", "src", "data", "formation-default-docs.json");
+  DEFAULT_FORMATION_DOCS = JSON.parse(fs.readFileSync(p, "utf8"));
+} catch (_e) {
+  DEFAULT_FORMATION_DOCS = {};
+}
+
+const DOC_BTN_VARIANTS = new Set(["outline", "primary", "light", "secondary"]);
+function normalizeDocVariant(v) {
+  const x = String(v ?? "").trim().toLowerCase();
+  return DOC_BTN_VARIANTS.has(x) ? x : "outline";
+}
 
 function buildAdminRouter({ supabaseUrl, supabaseServiceKey, supabaseAnonKey }) {
   const router = Router();
@@ -214,7 +233,9 @@ function buildAdminRouter({ supabaseUrl, supabaseServiceKey, supabaseAnonKey }) 
     const scope_key = String(req.query.scope_key || "").trim();
     let q = supabaseAdmin
       .from("documents_utiles")
-      .select("id, scope, scope_key, label, url, fichier_chemin, type, ordre, cree_at")
+      .select(
+        "id, scope, scope_key, label, url, fichier_chemin, type, bouton_variante, ordre, cree_at"
+      )
       .order("scope")
       .order("scope_key")
       .order("ordre");
@@ -226,7 +247,16 @@ function buildAdminRouter({ supabaseUrl, supabaseServiceKey, supabaseAnonKey }) 
   });
 
   router.post("/documents", requireAdmin, async (req, res) => {
-    const { scope, scope_key, label, url, fichier_chemin, type, ordre } = req.body || {};
+    const {
+      scope,
+      scope_key,
+      label,
+      url,
+      fichier_chemin,
+      type,
+      ordre,
+      bouton_variante,
+    } = req.body || {};
     if (!scope || !label || !url) {
       return res.status(400).json({ error: "scope, label et url requis." });
     }
@@ -237,6 +267,7 @@ function buildAdminRouter({ supabaseUrl, supabaseServiceKey, supabaseAnonKey }) 
       url: String(url).trim(),
       fichier_chemin: fichier_chemin ? String(fichier_chemin).trim() : null,
       type: type === "lien" ? "lien" : "document",
+      bouton_variante: normalizeDocVariant(bouton_variante),
       ordre: Number.isFinite(Number(ordre)) ? Number(ordre) : 100,
     };
     const { data, error } = await supabaseAdmin
@@ -252,9 +283,21 @@ function buildAdminRouter({ supabaseUrl, supabaseServiceKey, supabaseAnonKey }) 
     const id = Number(req.params.id);
     if (!Number.isFinite(id)) return res.status(400).json({ error: "id invalide." });
     const patch = {};
-    const fields = ["label", "url", "scope", "scope_key", "type", "ordre", "fichier_chemin"];
+    const fields = [
+      "label",
+      "url",
+      "scope",
+      "scope_key",
+      "type",
+      "ordre",
+      "fichier_chemin",
+      "bouton_variante",
+    ];
     for (const k of fields) {
-      if (req.body?.[k] !== undefined) patch[k] = req.body[k];
+      if (req.body?.[k] !== undefined) {
+        if (k === "bouton_variante") patch[k] = normalizeDocVariant(req.body[k]);
+        else patch[k] = req.body[k];
+      }
     }
     if (!Object.keys(patch).length) return res.status(400).json({ error: "Aucun champ." });
     const { data, error } = await supabaseAdmin
@@ -265,6 +308,49 @@ function buildAdminRouter({ supabaseUrl, supabaseServiceKey, supabaseAnonKey }) 
       .maybeSingle();
     if (error) return res.status(500).json({ error: error.message });
     res.json({ ok: true, item: data });
+  });
+
+  /**
+   * Seed des liens « Documents et liens utiles » par défaut (extraits du HTML
+   * `formation-detail.html`). N'écrase rien : on n'insère que pour les couples
+   * `slug|ville` qui n'ont AUCUNE ligne en base avec scope='formation'.
+   */
+  router.post("/documents/seed-formation-defaults", requireAdmin, async (req, res) => {
+    const onlyKey = String(req.body?.scope_key || "").trim();
+    const targets = Object.entries(DEFAULT_FORMATION_DOCS).filter(([key]) =>
+      onlyKey ? key === onlyKey : true
+    );
+    if (!targets.length) return res.json({ ok: true, seeded: 0, skipped: 0 });
+
+    // Liste des couples déjà non vides
+    const { data: existing, error: exErr } = await supabaseAdmin
+      .from("documents_utiles")
+      .select("scope_key")
+      .eq("scope", "formation");
+    if (exErr) return res.status(500).json({ error: exErr.message });
+    const occupied = new Set((existing || []).map((r) => r.scope_key));
+
+    let seeded = 0;
+    let skipped = 0;
+    for (const [key, defs] of targets) {
+      if (occupied.has(key)) {
+        skipped++;
+        continue;
+      }
+      const rows = defs.map((d) => ({
+        scope: "formation",
+        scope_key: key,
+        label: String(d.label).slice(0, 200),
+        url: String(d.url),
+        type: d.type === "document" ? "document" : "lien",
+        bouton_variante: normalizeDocVariant(d.bouton_variante),
+        ordre: Number.isFinite(Number(d.ordre)) ? Number(d.ordre) : 100,
+      }));
+      const { error } = await supabaseAdmin.from("documents_utiles").insert(rows);
+      if (error) return res.status(500).json({ error: error.message });
+      seeded++;
+    }
+    res.json({ ok: true, seeded, skipped, couples: targets.length });
   });
 
   router.delete("/documents/:id", requireAdmin, async (req, res) => {
@@ -476,7 +562,9 @@ function buildPublicContentHandler({ supabaseUrl, supabaseAnonKey, supabaseServi
       client.from("formation_overrides").select("slug, ville, cle, valeur, source"),
       client
         .from("documents_utiles")
-        .select("id, scope, scope_key, label, url, type, ordre")
+        .select(
+          "id, scope, scope_key, label, url, type, ordre, bouton_variante"
+        )
         .order("ordre"),
       client
         .from("partenaires")

@@ -270,6 +270,10 @@
     margin-top: 10px;
     border-radius: var(--radius-md);
     background: linear-gradient(135deg, rgba(230, 57, 70, 0.1), rgba(26, 26, 46, 0.04));
+
+    &[hidden] {
+      display: none !important;
+    }
   }
 
   &__stat-value {
@@ -575,6 +579,10 @@
       linear-gradient(135deg, rgba(26, 26, 46, 0.04), rgba(26, 26, 46, 0.01));
     margin: 16px 0;
     border: 1px solid rgba(17, 24, 39, 0.06);
+
+    &[hidden] {
+      display: none !important;
+    }
   }
 
   &__stat-value {

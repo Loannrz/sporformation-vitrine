@@ -595,12 +595,24 @@ export function initFormationDetailPage() {
           "Taux d’obtention du diplôme — session 2025‑2026";
       }
     }
+
+    // Grand encadré % sous « Indicateurs de résultats » : même règle que la sidebar (masqué si pas de taux statique).
+    const bottomStat = visibleArticle?.querySelector(".formation-detail-sheet__stat");
+    if (bottomStat) {
+      const sheetRate = meta.successRate?.trim();
+      bottomStat.hidden = !sheetRate;
+      const heroVal = bottomStat.querySelector(".formation-detail-sheet__stat-value");
+      if (heroVal && sheetRate) heroVal.textContent = sheetRate;
+    }
   } else {
     if (badgesEl) {
       badgesEl.innerHTML = "";
       badgesEl.hidden = true;
     }
     if (aside) aside.hidden = true;
+
+    const bottomStat = visibleArticle?.querySelector(".formation-detail-sheet__stat");
+    if (bottomStat) bottomStat.hidden = true;
   }
 
   if (placeholderCard) placeholderCard.hidden = sheetFound;

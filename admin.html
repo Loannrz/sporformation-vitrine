@@ -31,12 +31,6 @@
         </span>
         Formations & villes
       </a>
-      <a data-tab="documents">
-        <span class="icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>
-        </span>
-        Documents & liens
-      </a>
       <a data-tab="tep">
         <span class="icon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6m0 8v6M4 12h6m4 0h6"/></svg>
@@ -74,84 +68,12 @@
             <span class="label-inline">Astuce — videz un champ pour retomber sur la valeur par défaut.</span>
           </div>
           <div id="formations-list"></div>
-        </div>
-      </section>
 
-      <!-- Onglet: Documents -->
-      <section id="tab-documents" class="hidden">
-        <div class="admin-panel__header">
-          <div>
-            <h2>Documents &amp; liens utiles</h2>
-            <p class="lead">Téléversez un PDF, un visuel ou ajoutez un lien externe, puis attachez-le à une fiche formation ou à une page entière (TEP, À propos…).</p>
-          </div>
-        </div>
-
-        <div class="admin-card">
-          <h3>Ajouter un document ou un lien</h3>
-          <div class="admin-grid">
-            <div class="admin-field">
-              <label>Page concernée</label>
-              <select id="doc-scope">
-                <option value="formation">Fiche formation</option>
-                <option value="tep">Page Prépa TEP</option>
-                <option value="a-propos">Page À propos</option>
-                <option value="handicap">Page Handicap</option>
-                <option value="global">Toutes les pages</option>
-              </select>
-            </div>
-            <div class="admin-field">
-              <label>Si fiche formation — quel couple ?</label>
-              <select id="doc-scope-key"></select>
-            </div>
-            <div class="admin-field">
-              <label>Libellé affiché</label>
-              <input type="text" id="doc-label" placeholder="ex: Fiche formation PDF">
-            </div>
-          </div>
-          <div class="admin-grid" style="margin-top:6px;">
-            <div class="admin-field">
-              <label>Type</label>
-              <select id="doc-type">
-                <option value="document">Document téléversé</option>
-                <option value="lien">Lien externe</option>
-              </select>
-            </div>
-            <div class="admin-field">
-              <label>URL (auto après téléversement)</label>
-              <input type="url" id="doc-url" placeholder="https://…">
-            </div>
-            <div class="admin-field">
-              <label>Ordre d’affichage</label>
-              <input type="number" id="doc-ordre" value="100" min="0" step="10">
-            </div>
-          </div>
-          <div class="admin-grid" style="margin-top:6px;align-items:end;">
-            <div class="admin-file" style="grid-column: span 2;">
-              <label class="admin-btn" for="doc-file" style="margin:0;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-                Téléverser un fichier
-              </label>
-              <input type="file" id="doc-file">
-              <span class="filename" id="doc-file-name">Aucun fichier sélectionné</span>
-            </div>
-            <button class="admin-btn admin-btn--primary admin-btn--block" id="doc-create">Créer le lien</button>
-          </div>
-        </div>
-
-        <div class="admin-card">
-          <h3>Liens enregistrés</h3>
-          <div class="admin-filter-bar">
-            <select id="doc-filter-scope">
-              <option value="">Tous les scopes</option>
-              <option value="formation">Fiche formation</option>
-              <option value="tep">TEP</option>
-              <option value="a-propos">À propos</option>
-              <option value="handicap">Handicap</option>
-              <option value="global">Global</option>
-            </select>
-            <input type="text" id="doc-filter-key" placeholder="Filtrer par scope_key (slug|ville)">
-          </div>
-          <div id="documents-list"></div>
+        <details class="admin-other-pages-docs" style="margin-top:22px;padding-top:18px;border-top:1px solid rgba(26,26,46,0.08);">
+          <summary style="cursor:pointer;font-weight:800;color:#1A1A2E;font-size:15px;">Documents — pages TEP, À propos, Handicap (hors fiches formation)</summary>
+          <p class="muted" style="margin:10px 0 14px;font-size:13px;">Pour chaque <strong>ville</strong>, les boutons « Documents et liens utiles » se configurent dans la carte formation ci-dessus (section dépliante sous le tableau des résultats).</p>
+          <div id="other-pages-docs-panel"></div>
+        </details>
         </div>
       </section>
 

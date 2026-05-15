@@ -1,6 +1,6 @@
 /**
- * Console admin SporFormation — orchestre les 5 onglets :
- * Formations · Documents · TEP · À propos · Partenaires.
+ * Console admin SporFormation — orchestre les onglets :
+ * Formations & villes · Prépa TEP · À propos · Partenaires.
  *
  * Toutes les écritures passent par /api/admin/* (JWT Supabase + table admins
  * vérifiés côté serveur, écritures avec service_role uniquement).
@@ -15,6 +15,13 @@ import {
   isDefaultResultsIndicators,
   deepClone,
 } from "../modules/results-indicators.js";
+import {
+  resolveDeadlineDisplay,
+  resolveSessionDisplay,
+  resolveDurationDisplay,
+  resolveSuccessRateTrim,
+  DEFAULT_SUCCESS_LABEL,
+} from "../modules/formation-sidebar-display.js";
 
 // ───── Helpers DOM ───────────────────────────────────────────────────────────
 function el(tag, attrs = {}, ...children) {
@@ -108,7 +115,6 @@ function initTabs() {
   const links = document.querySelectorAll(".admin-sidebar a[data-tab]");
   const sections = {
     formations: document.getElementById("tab-formations"),
-    documents: document.getElementById("tab-documents"),
     tep: document.getElementById("tab-tep"),
     apropos: document.getElementById("tab-apropos"),
     partenaires: document.getElementById("tab-partenaires"),
@@ -176,6 +182,14 @@ function getOverride(slug, ville, cle) {
   return formationsState.overrides.find(
     (r) => r.slug === slug && r.ville === ville && r.cle === cle
   );
+}
+
+function formationOverridesByCle(slug, ville) {
+  const byCle = {};
+  for (const r of formationsState.overrides) {
+    if (r.slug === slug && r.ville === ville) byCle[r.cle] = r.valeur;
+  }
+  return byCle;
 }
 
 async function saveFormationField(slug, ville, cle, valeur) {
@@ -289,31 +303,19 @@ function formationSummaryRow(label, value, iconKind) {
 
 /** Réplique la sidebar droite de formation-detail.html (formation-summary). */
 function buildSidebarPreview(slug, ville) {
-  const meta = FORMATION_META[`${slug}|${ville}`] || {};
-  const deadlineIso = getOverride(slug, ville, "deadline_iso")?.valeur || "";
-  const sessionIso = getOverride(slug, ville, "session_iso")?.valeur || "";
-  const dur = getOverride(slug, ville, "duration")?.valeur || meta.duration || "—";
-  const successRaw = (
-    getOverride(slug, ville, "success_rate")?.valeur ||
-    meta.successRate ||
-    ""
-  ).trim();
+  const byCle = formationOverridesByCle(slug, ville);
+  const deadlineIso = String(byCle.deadline_iso ?? "").trim();
+  const deadlineDisplay = resolveDeadlineDisplay(byCle);
+  const sessionDisplay = resolveSessionDisplay(byCle);
+  const dur = resolveDurationDisplay(byCle);
+  const successRaw = resolveSuccessRateTrim(byCle);
   const statLabel =
-    getOverride(slug, ville, "summary_stat_label")?.valeur?.trim() ||
-    meta.summaryStatLabel?.trim() ||
-    "Taux d’obtention du diplôme — session 2025‑2026";
+    String(byCle.summary_stat_label ?? "").trim() || DEFAULT_SUCCESS_LABEL;
 
   const visibleOverride = getOverride(slug, ville, "inscription_visible")?.valeur;
   const showCta = visibleOverride !== "0";
   const closed =
     deadlineIso && /^\d{4}-\d{2}-\d{2}$/.test(deadlineIso) && deadlineIso < todayIso();
-
-  const deadlineDisplay = deadlineIso
-    ? formatHumanDate(deadlineIso)
-    : meta.deadline || "—";
-  const sessionDisplay = sessionIso
-    ? formatHumanDate(sessionIso)
-    : meta.session || "—";
 
   const root = el("div", { class: "formation-summary", role: "presentation" });
   root.appendChild(
@@ -413,9 +415,7 @@ function buildResultsTableEditor(slug, ville) {
     parseResultsIndicators(getOverride(slug, ville, RESULTS_INDICATORS_CLE)?.valeur)
   );
 
-  const meta = FORMATION_META[`${slug}|${ville}`] || {};
-  const ratePreview =
-    getOverride(slug, ville, "success_rate")?.valeur?.trim() || meta.successRate || "";
+  const ratePreview = resolveSuccessRateTrim(formationOverridesByCle(slug, ville));
 
   const wrap = el("div", { class: "admin-results-editor" });
 
@@ -429,6 +429,7 @@ function buildResultsTableEditor(slug, ville) {
   );
 
   const statOuter = el("div", { class: "formation-detail-sheet__stat" });
+  statOuter.hidden = !ratePreview;
   statOuter.appendChild(
     el("span", { class: "formation-detail-sheet__stat-value" }, ratePreview || "\u00a0")
   );
@@ -612,8 +613,813 @@ function buildResultsTableEditor(slug, ville) {
   return wrap;
 }
 
+const DOC_BTN_VARIANT_OPTIONS = [
+  ["outline", "Contour rouge"],
+  ["primary", "Rouge plein"],
+  ["light", "Blanc lumineux"],
+  ["secondary", "Contour sombre"],
+];
+
+const docsState = { items: [], defaultsSeeded: false };
+
+async function loadDocuments() {
+  const r = await apiFetch("/api/admin/documents");
+  docsState.items = r.items || [];
+}
+
+async function seedFormationDefaultsOnce() {
+  if (docsState.defaultsSeeded) return;
+  try {
+    const r = await apiFetch("/api/admin/documents/seed-formation-defaults", {
+      method: "POST",
+      body: JSON.stringify({}),
+    });
+    docsState.defaultsSeeded = true;
+    if (r?.seeded) {
+      await loadDocuments();
+      flash(`Liens existants importés (${r.seeded} fiches).`);
+    }
+  } catch (e) {
+    console.warn("[admin] seed defaults", e);
+  }
+}
+
+function sortedFormationDocs(scopeKey) {
+  return docsState.items
+    .filter((d) => d.scope === "formation" && d.scope_key === scopeKey)
+    .sort((a, b) => Number(a.ordre ?? 0) - Number(b.ordre ?? 0));
+}
+
+function buildVariantSwatches(current, onChange) {
+  const wrap = el("div", {
+    class: "admin-doc-swatches",
+    role: "radiogroup",
+    "aria-label": "Style du bouton",
+  });
+  for (const [val, lab] of DOC_BTN_VARIANT_OPTIONS) {
+    const sw = el("button", {
+      type: "button",
+      class: `admin-doc-swatch admin-doc-swatch--${val}${val === current ? " is-active" : ""}`,
+      title: lab,
+      "aria-label": lab,
+      "aria-pressed": val === current ? "true" : "false",
+      dataset: { variant: val },
+      on: {
+        click: () => {
+          wrap
+            .querySelectorAll(".admin-doc-swatch")
+            .forEach((b) => {
+              b.classList.toggle("is-active", b.dataset.variant === val);
+              b.setAttribute(
+                "aria-pressed",
+                b.dataset.variant === val ? "true" : "false"
+              );
+            });
+          onChange(val);
+        },
+      },
+    });
+    wrap.appendChild(sw);
+  }
+  return wrap;
+}
+
+function makePreviewBtn(variant, label) {
+  const btn = el("span", { class: `btn btn--${variant} admin-doc-preview-btn` }, label || "Bouton");
+  btn.setAttribute("aria-hidden", "true");
+  return btn;
+}
+
+function syncPreviewBtn(btn, variant, label) {
+  btn.className = `btn btn--${variant} admin-doc-preview-btn`;
+  btn.textContent = label || "Bouton";
+}
+
+function buildFormationDocRow(d) {
+  const row = el("div", {
+    class: "admin-doc-row admin-doc-row--card",
+    dataset: { docId: String(d.id), variant: d.bouton_variante || "outline" },
+  });
+
+  const preview = makePreviewBtn(d.bouton_variante || "outline", d.label);
+  row.appendChild(preview);
+
+  const labelInp = el("input", {
+    type: "text",
+    class: "admin-input admin-input--soft",
+    value: d.label,
+    placeholder: "Nom du bouton",
+  });
+  const urlInp = el("input", {
+    type: "url",
+    class: "admin-input admin-input--soft",
+    value: d.url,
+    placeholder: "URL ou ancre (#…)",
+  });
+  labelInp.addEventListener("input", () =>
+    syncPreviewBtn(preview, row.dataset.variant, labelInp.value)
+  );
+
+  const fields = el("div", { class: "admin-doc-row__fields" });
+  fields.appendChild(
+    el(
+      "label",
+      { class: "admin-doc-row__field" },
+      el("span", { class: "admin-doc-row__field-label" }, "Libellé"),
+      labelInp
+    )
+  );
+  fields.appendChild(
+    el(
+      "label",
+      { class: "admin-doc-row__field" },
+      el(
+        "span",
+        { class: "admin-doc-row__field-label" },
+        d.type === "document" ? "Lien du fichier" : "Lien"
+      ),
+      urlInp
+    )
+  );
+  row.appendChild(fields);
+
+  const meta = el("div", { class: "admin-doc-row__meta" });
+  meta.appendChild(
+    el(
+      "span",
+      {
+        class: `admin-doc-pill admin-doc-pill--${d.type === "document" ? "file" : "link"}`,
+      },
+      d.type === "document" ? "Fichier" : "Lien"
+    )
+  );
+
+  const swatches = buildVariantSwatches(d.bouton_variante || "outline", async (val) => {
+    row.dataset.variant = val;
+    syncPreviewBtn(preview, val, labelInp.value);
+    try {
+      await apiFetch(`/api/admin/documents/${d.id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ bouton_variante: val }),
+      });
+      await loadDocuments();
+    } catch (e) {
+      reportError("Style bouton", e);
+    }
+  });
+  meta.appendChild(swatches);
+  row.appendChild(meta);
+
+  const actions = el("div", { class: "admin-doc-row__actions" });
+  actions.appendChild(
+    el(
+      "button",
+      {
+        type: "button",
+        class: "admin-btn admin-btn--sm",
+        on: {
+          click: async () => {
+            try {
+              await apiFetch(`/api/admin/documents/${d.id}`, {
+                method: "PATCH",
+                body: JSON.stringify({
+                  label: labelInp.value.trim(),
+                  url: urlInp.value.trim(),
+                }),
+              });
+              await loadDocuments();
+              flash("Lien enregistré.");
+            } catch (e) {
+              reportError("Enregistrement", e);
+            }
+          },
+        },
+      },
+      "Enregistrer"
+    )
+  );
+  actions.appendChild(
+    el(
+      "button",
+      {
+        type: "button",
+        class: "admin-btn admin-btn--danger admin-btn--sm",
+        on: {
+          click: async () => {
+            if (!confirm(`Supprimer le bouton « ${d.label} » ?`)) return;
+            try {
+              await apiFetch(`/api/admin/documents/${d.id}`, { method: "DELETE" });
+              await loadDocuments();
+              renderFormationsList();
+              flash("Bouton supprimé.");
+            } catch (e) {
+              reportError("Suppression", e);
+            }
+          },
+        },
+      },
+      "Supprimer"
+    )
+  );
+  row.appendChild(actions);
+
+  return row;
+}
+
+/** Repère les blocs « Documents » encore ouverts avant re-render. */
+function captureOpenFormationDocsDetailKeys() {
+  const keys = new Set();
+  const host = document.getElementById("formations-list");
+  if (!host) return keys;
+  host.querySelectorAll("details.admin-formation-docs[data-scope-key]").forEach((d) => {
+    const k = d.dataset.scopeKey;
+    if (k && d.open) keys.add(k);
+  });
+  return keys;
+}
+
+function buildFormationDocsSection(slug, ville, docsDetailOpenKeys) {
+  const scopeKey = `${slug}|${ville}`;
+  const existing = sortedFormationDocs(scopeKey);
+
+  const details = el("details", {
+    class: "admin-formation-docs admin-formation-docs--fullwidth",
+    style: "margin-top:18px;",
+    dataset: { scopeKey },
+  });
+  const summary = el("summary", { class: "admin-formation-docs__summary" });
+  summary.appendChild(
+    el(
+      "span",
+      { class: "admin-formation-docs__summary-title" },
+      "Documents & liens utiles"
+    )
+  );
+  summary.appendChild(
+    el(
+      "span",
+      { class: "admin-formation-docs__summary-count" },
+      `${existing.length} bouton${existing.length > 1 ? "s" : ""}`
+    )
+  );
+  details.appendChild(summary);
+
+  const body = el("div", { class: "admin-formation-docs__body" });
+
+  body.appendChild(
+    el(
+      "p",
+      { class: "admin-formation-docs__hint" },
+      "Apparaît en bas de la fiche, section « Documents et liens utiles ». L’ordre sur le site suit celui de la liste (du haut vers le bas). Choisissez la couleur en cliquant sur une pastille."
+    )
+  );
+
+  // Liste
+  const listHost = el("div", {
+    class: "admin-docs-list",
+    dataset: { formationDocsHost: scopeKey },
+  });
+  for (const d of existing) listHost.appendChild(buildFormationDocRow(d));
+  body.appendChild(listHost);
+
+  if (!existing.length) {
+    const empty = el(
+      "div",
+      { class: "admin-formation-docs__empty" },
+      el("p", {}, "Aucun bouton — utilisez le formulaire ci-dessous pour en ajouter."),
+      el(
+        "button",
+        {
+          type: "button",
+          class: "admin-btn admin-btn--sm",
+          on: {
+            click: async () => {
+              try {
+                const r = await apiFetch(
+                  "/api/admin/documents/seed-formation-defaults",
+                  {
+                    method: "POST",
+                    body: JSON.stringify({ scope_key: scopeKey }),
+                  }
+                );
+                if (r?.seeded) {
+                  await loadDocuments();
+                  renderFormationsList();
+                  flash("Liens de la page importés.");
+                } else {
+                  flash("Aucun lien par défaut pour ce couple.", "error");
+                }
+              } catch (e) {
+                reportError("Import liens par défaut", e);
+              }
+            },
+          },
+        },
+        "Importer les liens existants de la page"
+      )
+    );
+    body.appendChild(empty);
+  }
+
+  // ── Formulaire d'ajout ───────────────────────────────────────────────────
+  const draft = { uploadCache: null, variant: "outline" };
+  const idSafe = scopeKey.replace(/[^a-zA-Z0-9]+/g, "-");
+
+  const addCard = el("div", { class: "admin-formation-docs__add" });
+  addCard.appendChild(
+    el(
+      "div",
+      { class: "admin-formation-docs__add-title" },
+      "+ Ajouter un bouton"
+    )
+  );
+
+  const labelField = el("input", {
+    type: "text",
+    class: "admin-input admin-formation-docs__input",
+    placeholder: "Nom du bouton (ex. Fiche RNCP 40423)",
+    autocomplete: "off",
+  });
+  const urlField = el("input", {
+    type: "url",
+    class: "admin-input admin-formation-docs__input",
+    placeholder: "https://… ou contact.html",
+    autocomplete: "off",
+  });
+  const urlHintId = `fdoc-url-hint-${idSafe}`;
+  const urlHint = el(
+    "p",
+    {
+      id: urlHintId,
+      class: "admin-formation-docs__url-lock-hint",
+      hidden: true,
+    },
+    "En mode fichier, l’adresse est définie automatiquement après le téléversement — elle ne peut pas être modifiée à la main."
+  );
+
+  const previewBtn = makePreviewBtn(draft.variant, "Aperçu");
+  labelField.addEventListener("input", () =>
+    syncPreviewBtn(previewBtn, draft.variant, labelField.value || "Aperçu")
+  );
+
+  const swatches = buildVariantSwatches(draft.variant, (val) => {
+    draft.variant = val;
+    syncPreviewBtn(previewBtn, val, labelField.value || "Aperçu");
+  });
+
+  const typeSwitch = el(
+    "div",
+    {
+      class: "admin-doc-typeswitch",
+      role: "radiogroup",
+      "aria-label": "Type de bouton",
+    },
+    el(
+      "label",
+      { class: "admin-doc-typeswitch__segment" },
+      el("input", { type: "radio", name: `docType-${idSafe}`, value: "lien", checked: true }),
+      el(
+        "span",
+        { class: "admin-doc-typeswitch__text" },
+        el("span", { class: "admin-doc-typeswitch__title" }, "Lien externe"),
+        el("span", { class: "admin-doc-typeswitch__hint" }, "Page du site ou URL web")
+      )
+    ),
+    el(
+      "label",
+      { class: "admin-doc-typeswitch__segment" },
+      el("input", { type: "radio", name: `docType-${idSafe}`, value: "document" }),
+      el(
+        "span",
+        { class: "admin-doc-typeswitch__text" },
+        el("span", { class: "admin-doc-typeswitch__title" }, "Fichier"),
+        el("span", { class: "admin-doc-typeswitch__hint" }, "PDF, image… téléversé")
+      )
+    )
+  );
+  const getType = () =>
+    typeSwitch.querySelector(`input[name='docType-${idSafe}']:checked`)?.value || "lien";
+
+  const fileInput = el("input", {
+    type: "file",
+    id: `fdoc-${idSafe}`,
+    style: "display:none",
+  });
+  const fileName = el(
+    "span",
+    { class: "admin-formation-docs__filename" },
+    "Aucun fichier sélectionné"
+  );
+  const filePick = el(
+    "label",
+    {
+      class: "admin-btn admin-btn--sm",
+      for: fileInput.id,
+      style: "margin:0;",
+    },
+    "Choisir un fichier"
+  );
+
+  fileInput.addEventListener("change", async () => {
+    const f = fileInput.files?.[0];
+    if (!f) return;
+    fileName.textContent = "Téléversement…";
+    try {
+      const form = new FormData();
+      form.append("file", f);
+      form.append("dossier", "documents");
+      const r = await apiFetch("/api/admin/upload", { method: "POST", body: form });
+      draft.uploadCache = r;
+      urlField.value = r.url || "";
+      fileName.textContent = f.name;
+    } catch (e) {
+      fileName.textContent = "Échec";
+      reportError("Téléversement", e);
+    }
+  });
+
+  function applyDocTypeUi() {
+    const t = getType();
+    if (t === "document") {
+      urlField.disabled = true;
+      urlField.placeholder = "Rempli automatiquement après téléversement";
+      urlField.setAttribute("aria-describedby", urlHintId);
+      urlHint.hidden = false;
+    } else {
+      urlField.disabled = false;
+      urlField.placeholder = "https://… ou contact.html";
+      urlField.removeAttribute("aria-describedby");
+      urlHint.hidden = true;
+    }
+  }
+
+  typeSwitch.querySelectorAll('input[type="radio"]').forEach((radio) => {
+    radio.addEventListener("change", () => {
+      if (getType() === "document") {
+        urlField.value = "";
+        draft.uploadCache = null;
+        fileInput.value = "";
+        fileName.textContent = "Aucun fichier sélectionné";
+      }
+      applyDocTypeUi();
+    });
+  });
+
+  const fieldsGrid = el("div", { class: "admin-formation-docs__add-grid" });
+  fieldsGrid.appendChild(
+    el(
+      "label",
+      { class: "admin-formation-docs__add-field" },
+      el("span", {}, "Type"),
+      typeSwitch
+    )
+  );
+  fieldsGrid.appendChild(
+    el(
+      "label",
+      { class: "admin-formation-docs__add-field" },
+      el("span", {}, "Libellé du bouton"),
+      labelField
+    )
+  );
+  fieldsGrid.appendChild(
+    el(
+      "label",
+      { class: "admin-formation-docs__add-field" },
+      el("span", {}, "URL"),
+      urlField,
+      urlHint
+    )
+  );
+  fieldsGrid.appendChild(
+    el(
+      "div",
+      { class: "admin-formation-docs__add-field" },
+      el("span", {}, "Fichier (si téléversé)"),
+      el(
+        "div",
+        { class: "admin-formation-docs__file-row" },
+        filePick,
+        fileInput,
+        fileName
+      )
+    )
+  );
+  fieldsGrid.appendChild(
+    el(
+      "div",
+      { class: "admin-formation-docs__add-field" },
+      el("span", {}, "Couleur du bouton"),
+      swatches
+    )
+  );
+  fieldsGrid.appendChild(
+    el(
+      "div",
+      { class: "admin-formation-docs__add-field" },
+      el("span", {}, "Aperçu"),
+      el("div", { class: "admin-formation-docs__preview" }, previewBtn)
+    )
+  );
+  addCard.appendChild(fieldsGrid);
+
+  const nextOrdre =
+    existing.reduce((m, x) => Math.max(m, Number(x.ordre || 0)), 0) + 10;
+
+  addCard.appendChild(
+    el(
+      "div",
+      { class: "admin-formation-docs__add-actions" },
+      el(
+        "button",
+        {
+          type: "button",
+          class: "admin-btn admin-btn--primary admin-btn--sm",
+          on: {
+            click: async () => {
+              const label = labelField.value.trim();
+              const url = urlField.value.trim();
+              const type = getType();
+              if (!label || !url) {
+                flash("Libellé et URL (ou fichier téléversé) obligatoires.", "error");
+                return;
+              }
+              try {
+                await apiFetch("/api/admin/documents", {
+                  method: "POST",
+                  body: JSON.stringify({
+                    scope: "formation",
+                    scope_key: scopeKey,
+                    label,
+                    url,
+                    type,
+                    ordre: nextOrdre,
+                    bouton_variante: draft.variant,
+                    fichier_chemin: draft.uploadCache?.fichier_chemin || null,
+                  }),
+                });
+                draft.uploadCache = null;
+                labelField.value = "";
+                urlField.value = "";
+                fileInput.value = "";
+                fileName.textContent = "Aucun fichier sélectionné";
+                const lienRadio = typeSwitch.querySelector(
+                  `input[name='docType-${idSafe}'][value="lien"]`
+                );
+                if (lienRadio) lienRadio.checked = true;
+                applyDocTypeUi();
+                await loadDocuments();
+                renderFormationsList();
+                flash("Bouton ajouté.");
+              } catch (e) {
+                reportError("Ajout document", e);
+              }
+            },
+          },
+        },
+        "Ajouter ce bouton"
+      )
+    )
+  );
+
+  applyDocTypeUi();
+
+  body.appendChild(addCard);
+  details.appendChild(body);
+
+  if (docsDetailOpenKeys instanceof Set && docsDetailOpenKeys.has(scopeKey)) {
+    details.open = true;
+  }
+
+  return details;
+}
+
+let otherDocsUploadCache = null;
+
+function renderOtherPagesDocs() {
+  const host = document.getElementById("other-pages-docs-panel");
+  if (!host) return;
+  host.innerHTML = "";
+
+  host.appendChild(el("h3", { style: "margin:0 0 10px;font-size:14px;" }, "Ajouter (TEP, À propos, Handicap, global)"));
+
+  const grid = el("div", { class: "admin-grid" });
+  const scopeSel = el(
+    "select",
+    { id: "other-doc-scope", class: "admin-input" },
+    el("option", { value: "tep" }, "Page Prépa TEP"),
+    el("option", { value: "a-propos" }, "Page À propos"),
+    el("option", { value: "handicap" }, "Page Handicap"),
+    el("option", { value: "global" }, "Global")
+  );
+  const keyInp = el("input", {
+    id: "other-doc-scope-key",
+    type: "text",
+    class: "admin-input",
+    placeholder: "Clé optionnelle (vide le plus souvent)",
+  });
+  const labelInp = el("input", {
+    id: "other-doc-label",
+    type: "text",
+    class: "admin-input",
+    placeholder: "Nom du bouton",
+  });
+  const typeSel = el(
+    "select",
+    { id: "other-doc-type", class: "admin-input" },
+    el("option", { value: "document" }, "Fichier téléversé"),
+    el("option", { value: "lien" }, "Lien externe")
+  );
+  const urlInp = el("input", {
+    id: "other-doc-url",
+    type: "url",
+    class: "admin-input",
+    placeholder: "https://…",
+  });
+  const varSel = buildDocVariantSelect("outline");
+  varSel.id = "other-doc-variant";
+
+  grid.appendChild(formationDocControlField("Page", scopeSel));
+  grid.appendChild(formationDocControlField("Clé", keyInp));
+  grid.appendChild(formationDocControlField("Nom", labelInp));
+  grid.appendChild(formationDocControlField("Type", typeSel));
+  grid.appendChild(formationDocControlField("URL", urlInp));
+  grid.appendChild(formationDocControlField("Style bouton", varSel));
+
+  const fileInp = el("input", { type: "file", id: "other-doc-file", style: "display:none" });
+  const fileLbl = el("span", { id: "other-doc-file-name", class: "filename" }, "Aucun fichier");
+  const pickLbl = el(
+    "label",
+    { class: "admin-btn", for: "other-doc-file", style: "margin:0;" },
+    "Téléverser"
+  );
+  const createBtn = el(
+    "button",
+    { type: "button", class: "admin-btn admin-btn--primary admin-btn--sm", id: "other-doc-create" },
+    "Créer"
+  );
+  const fileStrip = el(
+    "div",
+    {
+      class: "admin-field",
+      style: "grid-column:1/-1;display:flex;flex-wrap:wrap;gap:10px;align-items:center;",
+    },
+    pickLbl,
+    fileInp,
+    fileLbl,
+    createBtn
+  );
+  grid.appendChild(fileStrip);
+  host.appendChild(grid);
+
+  host.appendChild(el("h3", { style: "margin:18px 0 10px;font-size:14px;" }, "Liste (hors fiches formation)"));
+
+  const items = docsState.items
+    .filter((d) => d.scope !== "formation")
+    .sort((a, b) => {
+      const ak = `${a.scope}|${a.scope_key}|${String(a.ordre).padStart(6, "0")}`;
+      const bk = `${b.scope}|${b.scope_key}|${String(b.ordre).padStart(6, "0")}`;
+      return ak.localeCompare(bk);
+    });
+
+  if (!items.length) {
+    host.appendChild(el("p", { class: "admin-empty" }, "Aucune entrée."));
+    return;
+  }
+
+  const tbl = el(
+    "table",
+    { class: "admin-table" },
+    el(
+      "thead",
+      {},
+      el(
+        "tr",
+        {},
+        el("th", {}, "Scope"),
+        el("th", {}, "Clé"),
+        el("th", {}, "Nom"),
+        el("th", {}, "Style"),
+        el("th", {}, "Type"),
+        el("th", {}, "")
+      )
+    )
+  );
+  const tb = el("tbody", {});
+  for (const d of items) {
+    tb.appendChild(
+      el(
+        "tr",
+        {},
+        el("td", {}, d.scope),
+        el("td", {}, d.scope_key || "—"),
+        el("td", {}, d.label),
+        el("td", {}, d.bouton_variante || "outline"),
+        el("td", {}, d.type === "lien" ? "Lien" : "Fichier"),
+        el(
+          "td",
+          { class: "actions" },
+          el(
+            "button",
+            {
+              type: "button",
+              class: "admin-btn admin-btn--danger admin-btn--sm",
+              on: {
+                click: async () => {
+                  if (!confirm("Supprimer ?")) return;
+                  try {
+                    await apiFetch(`/api/admin/documents/${d.id}`, { method: "DELETE" });
+                    await loadDocuments();
+                    renderOtherPagesDocs();
+                    renderFormationsList();
+                    flash("Supprimé.");
+                  } catch (e) {
+                    reportError("Suppression", e);
+                  }
+                },
+              },
+            },
+            "Supprimer"
+          )
+        )
+      )
+    );
+  }
+  tbl.appendChild(tb);
+  host.appendChild(tbl);
+}
+
+function bindOtherPagesDocs() {
+  const panel = document.getElementById("other-pages-docs-panel");
+  if (!panel || panel.dataset.bound === "1") return;
+  panel.dataset.bound = "1";
+
+  panel.addEventListener("change", async (e) => {
+    const t = e.target;
+    if (t.id !== "other-doc-file") return;
+    const f = t.files?.[0];
+    const fileName = document.getElementById("other-doc-file-name");
+    if (!f) return;
+    fileName.textContent = "Envoi…";
+    try {
+      const form = new FormData();
+      form.append("file", f);
+      form.append("dossier", "documents");
+      const r = await apiFetch("/api/admin/upload", { method: "POST", body: form });
+      otherDocsUploadCache = r;
+      document.getElementById("other-doc-url").value = r.url || "";
+      fileName.textContent = f.name;
+    } catch (err) {
+      fileName.textContent = "Échec";
+      reportError("Téléversement", err);
+    }
+  });
+
+  panel.addEventListener("click", async (e) => {
+    const btn = e.target.closest("#other-doc-create");
+    if (!btn) return;
+    const scope = document.getElementById("other-doc-scope").value;
+    const scope_key = document.getElementById("other-doc-scope-key").value.trim();
+    const label = document.getElementById("other-doc-label").value.trim();
+    const type = document.getElementById("other-doc-type").value;
+    const url = document.getElementById("other-doc-url").value.trim();
+    const bouton_variante = document.getElementById("other-doc-variant").value;
+    if (!label || !url) {
+      flash("Nom et URL requis.", "error");
+      return;
+    }
+    try {
+      await apiFetch("/api/admin/documents", {
+        method: "POST",
+        body: JSON.stringify({
+          scope,
+          scope_key,
+          label,
+          url,
+          type,
+          ordre: 500,
+          bouton_variante,
+          fichier_chemin: otherDocsUploadCache?.fichier_chemin || null,
+        }),
+      });
+      otherDocsUploadCache = null;
+      document.getElementById("other-doc-label").value = "";
+      document.getElementById("other-doc-url").value = "";
+      document.getElementById("other-doc-scope-key").value = "";
+      document.getElementById("other-doc-file").value = "";
+      document.getElementById("other-doc-file-name").textContent = "Aucun fichier";
+      await loadDocuments();
+      renderOtherPagesDocs();
+      flash("Créé.");
+    } catch (err) {
+      reportError("Création", err);
+    }
+  });
+}
+
 function renderFormationsList() {
   const host = document.getElementById("formations-list");
+  const docsDetailOpenKeys = captureOpenFormationDocsDetailKeys();
   host.innerHTML = "";
   const keys = getFormationKeys().filter((k) => {
     if (formationsState.filter.slug && k.slug !== formationsState.filter.slug) return false;
@@ -718,6 +1524,7 @@ function renderFormationsList() {
 
     editorGrid.appendChild(mainCol);
     editorGrid.appendChild(previewCol);
+    editorGrid.appendChild(buildFormationDocsSection(slug, ville, docsDetailOpenKeys));
     body.appendChild(editorGrid);
 
     card.appendChild(body);
@@ -742,191 +1549,11 @@ function buildToggle(slug, ville) {
 }
 
 async function bootFormationsTab() {
-  await loadFormations();
+  await Promise.all([loadFormations(), loadDocuments()]);
+  await seedFormationDefaultsOnce();
   renderFormationsFilters();
   renderFormationsList();
-}
-
-// ═════════════════════════ Onglet Documents ════════════════════════════════
-const docsState = { items: [], scope: "", scopeKey: "", uploadCache: null };
-
-async function loadDocuments() {
-  const r = await apiFetch("/api/admin/documents");
-  docsState.items = r.items || [];
-}
-
-function fillScopeKeyOptions() {
-  const sel = document.getElementById("doc-scope-key");
-  if (!sel || sel.options.length) return;
-  sel.appendChild(el("option", { value: "" }, "— Aucune (page entière) —"));
-  getFormationKeys().forEach(({ slug, ville }) => {
-    sel.appendChild(
-      el(
-        "option",
-        { value: `${slug}|${ville}` },
-        `${FORMATION_LABELS[slug] || slug} — ${ville}`
-      )
-    );
-  });
-}
-
-function renderDocuments() {
-  const host = document.getElementById("documents-list");
-  host.innerHTML = "";
-  const items = docsState.items.filter((d) => {
-    if (docsState.scope && d.scope !== docsState.scope) return false;
-    if (docsState.scopeKey && d.scope_key !== docsState.scopeKey) return false;
-    return true;
-  });
-  if (!items.length) {
-    host.appendChild(
-      el("p", { class: "admin-empty" }, "Aucun document — créez le premier ci-dessus.")
-    );
-    return;
-  }
-  const tbl = el(
-    "table",
-    { class: "admin-table" },
-    el(
-      "thead",
-      {},
-      el(
-        "tr",
-        {},
-        el("th", {}, "Scope"),
-        el("th", {}, "Clé"),
-        el("th", {}, "Libellé"),
-        el("th", {}, "Type"),
-        el("th", {}, "URL"),
-        el("th", {}, "Ordre"),
-        el("th", {}, "")
-      )
-    )
-  );
-  const tbody = el("tbody", {});
-  for (const d of items) {
-    const tr = el(
-      "tr",
-      {},
-      el("td", {}, el("span", { class: "badge" }, d.scope)),
-      el("td", {}, d.scope_key || "—"),
-      el("td", {}, d.label),
-      el("td", {}, d.type === "lien" ? "Lien" : "Document"),
-      el(
-        "td",
-        {},
-        el("a", { href: d.url, target: "_blank", rel: "noopener" }, "Ouvrir ↗")
-      ),
-      el("td", {}, String(d.ordre)),
-      el(
-        "td",
-        { class: "actions" },
-        el(
-          "button",
-          {
-            class: "admin-btn admin-btn--danger admin-btn--sm",
-            on: {
-              click: async () => {
-                if (!confirm("Supprimer définitivement ce lien ?")) return;
-                try {
-                  await apiFetch(`/api/admin/documents/${d.id}`, { method: "DELETE" });
-                  await loadDocuments();
-                  renderDocuments();
-                  flash("Document supprimé.");
-                } catch (e) {
-                  reportError("Suppression impossible", e);
-                }
-              },
-            },
-          },
-          "Supprimer"
-        )
-      )
-    );
-    tbody.appendChild(tr);
-  }
-  tbl.appendChild(tbody);
-  host.appendChild(tbl);
-}
-
-function bindDocumentsTab() {
-  fillScopeKeyOptions();
-  const fileInput = document.getElementById("doc-file");
-  const fileName = document.getElementById("doc-file-name");
-  const urlInput = document.getElementById("doc-url");
-
-  fileInput.addEventListener("change", async () => {
-    const f = fileInput.files?.[0];
-    if (!f) {
-      fileName.textContent = "Aucun fichier sélectionné";
-      return;
-    }
-    fileName.textContent = "Téléversement…";
-    try {
-      const form = new FormData();
-      form.append("file", f);
-      form.append("dossier", "documents");
-      const r = await apiFetch("/api/admin/upload", { method: "POST", body: form });
-      docsState.uploadCache = r;
-      urlInput.value = r.url;
-      fileName.textContent = `${f.name} (envoyé)`;
-    } catch (e) {
-      fileName.textContent = "Échec.";
-      reportError("Téléversement impossible", e);
-    }
-  });
-
-  document.getElementById("doc-create").addEventListener("click", async () => {
-    const scope = document.getElementById("doc-scope").value;
-    const scope_key = document.getElementById("doc-scope-key").value.trim();
-    const label = document.getElementById("doc-label").value.trim();
-    const type = document.getElementById("doc-type").value;
-    const url = document.getElementById("doc-url").value.trim();
-    const ordre = Number(document.getElementById("doc-ordre").value || 100);
-    if (!label || !url) {
-      flash("Libellé et URL sont obligatoires.", "error");
-      return;
-    }
-    try {
-      await apiFetch("/api/admin/documents", {
-        method: "POST",
-        body: JSON.stringify({
-          scope,
-          scope_key,
-          label,
-          url,
-          type,
-          ordre,
-          fichier_chemin: docsState.uploadCache?.fichier_chemin || null,
-        }),
-      });
-      docsState.uploadCache = null;
-      document.getElementById("doc-label").value = "";
-      document.getElementById("doc-url").value = "";
-      document.getElementById("doc-scope-key").value = "";
-      fileInput.value = "";
-      fileName.textContent = "Aucun fichier sélectionné";
-      await loadDocuments();
-      renderDocuments();
-      flash("Document créé.");
-    } catch (e) {
-      reportError("Création impossible", e);
-    }
-  });
-
-  document.getElementById("doc-filter-scope").addEventListener("change", (e) => {
-    docsState.scope = e.target.value;
-    renderDocuments();
-  });
-  document.getElementById("doc-filter-key").addEventListener("input", (e) => {
-    docsState.scopeKey = e.target.value.trim();
-    renderDocuments();
-  });
-}
-
-async function bootDocumentsTab() {
-  await loadDocuments();
-  renderDocuments();
+  renderOtherPagesDocs();
 }
 
 // ═════════════════════════ Onglet TEP ═══════════════════════════════════════
@@ -1341,14 +1968,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   initTabs();
-  bindDocumentsTab();
+  bindOtherPagesDocs();
   bindTepTab();
   bindAproposTab();
   bindPartenairesTab();
 
   try {
     await bootFormationsTab();
-    await bootDocumentsTab();
     await bootTepTab();
     await bootAproposTab();
     await bootPartenairesTab();

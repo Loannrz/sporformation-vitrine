@@ -1,0 +1,835 @@
+{
+  "bp-jeps-aspf|Courbevoie": [
+    {
+      "label": "Préparation TEP APSF",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Fiche RNCP 41752",
+      "url": "https://www.francecompetences.fr/recherche/rncp/41752",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Certificat médical & pièces dossier",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Certification Qualiopi",
+      "url": "certificat-qualiopi.html",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Nous contacter",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    }
+  ],
+  "bp-jeps-basket|Courbevoie": [
+    {
+      "label": "Préparation TEP",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Fiche RNCP 40423",
+      "url": "https://www.francecompetences.fr/recherche/rncp/40423",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel diplôme",
+      "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000051272292",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Certificat médical & dossier",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Qualiopi",
+      "url": "certificat-qualiopi.html",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    }
+  ],
+  "bp-jeps-basket|Nanterre": [
+    {
+      "label": "Préparation TEP",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Fiche RNCP 40423",
+      "url": "https://www.francecompetences.fr/recherche/rncp/40423",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel diplôme",
+      "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000051272292",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Certificat médical & dossier",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Qualiopi",
+      "url": "certificat-qualiopi.html",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    }
+  ],
+  "bp-jeps-basket|Cergy": [
+    {
+      "label": "Préparation TEP",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Fiche RNCP 40423",
+      "url": "https://www.francecompetences.fr/recherche/rncp/40423",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel diplôme",
+      "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000051272292",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Certificat médical & dossier",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Qualiopi",
+      "url": "certificat-qualiopi.html",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    }
+  ],
+  "bp-jeps-asec|Courbevoie": [
+    {
+      "label": "Fiche RNCP 39926",
+      "url": "https://www.francecompetences.fr/recherche/rncp/39926",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel diplôme",
+      "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050674969",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Certificat médical & dossier",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Qualiopi",
+      "url": "certificat-qualiopi.html",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Nous contacter",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    }
+  ],
+  "bp-jeps-asec|Coulommiers": [
+    {
+      "label": "Fiche RNCP 39926",
+      "url": "https://www.francecompetences.fr/recherche/rncp/39926",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel diplôme",
+      "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050674969",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Certificat médical & dossier",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Qualiopi",
+      "url": "certificat-qualiopi.html",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Nous contacter",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    }
+  ],
+  "bp-jeps-rugby|Courbevoie": [
+    {
+      "label": "Fiche RNCP 41750",
+      "url": "https://www.francecompetences.fr/recherche/rncp/41750",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel diplôme",
+      "url": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000052034892",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Certificat médical & dossier",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Qualiopi",
+      "url": "certificat-qualiopi.html",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Nous contacter",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    }
+  ],
+  "cc-acm|Courbevoie": [
+    {
+      "label": "Fiche RS 5737",
+      "url": "https://www.francecompetences.fr/recherche/rs/5737",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel & dossier",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Qualiopi",
+      "url": "certificat-qualiopi.html",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Nous contacter",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    }
+  ],
+  "de-jeps-asec-coordination|Courbevoie": [
+    {
+      "label": "Fiche RNCP 39930",
+      "url": "https://www.francecompetences.fr/recherche/rncp/39930",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel diplôme",
+      "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050714986",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Aides apprentis & hébergement",
+      "url": "apprentissage.html",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Qualiopi",
+      "url": "certificat-qualiopi.html",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Nous contacter",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    }
+  ],
+  "tfp-cdssa|Paris 7e": [
+    {
+      "label": "Fiche RNCP 38142",
+      "url": "https://www.francecompetences.fr/recherche/rncp/38142",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel & dossier",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Modèle attestation d’expérience",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Qualiopi",
+      "url": "certificat-qualiopi.html",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Nous contacter",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    }
+  ],
+  "tfp-cdssa|Drancy": [
+    {
+      "label": "Fiche RNCP 38142",
+      "url": "https://www.francecompetences.fr/recherche/rncp/38142",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel & dossier",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Modèle attestation d’expérience",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Qualiopi",
+      "url": "certificat-qualiopi.html",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Nous contacter",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    }
+  ],
+  "tfp-cdssa|Cergy": [
+    {
+      "label": "Fiche RNCP 38142",
+      "url": "https://www.francecompetences.fr/recherche/rncp/38142",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel & dossier",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Modèle attestation d’expérience",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Qualiopi",
+      "url": "certificat-qualiopi.html",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Nous contacter",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    }
+  ],
+  "bp-jeps-mapst|Courbevoie": [
+    {
+      "label": "Préparation TEP MAPST",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Calendrier TEP Île-de-France",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel diplôme MAPST",
+      "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Fiche RNCP 40480",
+      "url": "https://www.francecompetences.fr/recherche/rncp/40480",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Informations ministère des Sports",
+      "url": "https://www.sports.gouv.fr/",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Liste des pièces à fournir",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 60,
+      "bouton_variante": "outline"
+    }
+  ],
+  "bp-jeps-mapst|Paris 7e": [
+    {
+      "label": "Préparation TEP MAPST",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Calendrier TEP Île-de-France",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel diplôme MAPST",
+      "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Fiche RNCP 40480",
+      "url": "https://www.francecompetences.fr/recherche/rncp/40480",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Informations ministère des Sports",
+      "url": "https://www.sports.gouv.fr/",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Liste des pièces à fournir",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 60,
+      "bouton_variante": "outline"
+    }
+  ],
+  "bp-jeps-mapst|Cergy": [
+    {
+      "label": "Préparation TEP MAPST",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Calendrier TEP Île-de-France",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel diplôme MAPST",
+      "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Fiche RNCP 40480",
+      "url": "https://www.francecompetences.fr/recherche/rncp/40480",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Informations ministère des Sports",
+      "url": "https://www.sports.gouv.fr/",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Liste des pièces à fournir",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 60,
+      "bouton_variante": "outline"
+    }
+  ],
+  "bp-jeps-mapst|Nanterre": [
+    {
+      "label": "Préparation TEP MAPST",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Calendrier TEP Île-de-France",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel diplôme MAPST",
+      "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Fiche RNCP 40480",
+      "url": "https://www.francecompetences.fr/recherche/rncp/40480",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Informations ministère des Sports",
+      "url": "https://www.sports.gouv.fr/",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Liste des pièces à fournir",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 60,
+      "bouton_variante": "outline"
+    }
+  ],
+  "bp-jeps-mapst|Coulommiers": [
+    {
+      "label": "Préparation TEP MAPST",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Calendrier TEP Île-de-France",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel diplôme MAPST",
+      "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Fiche RNCP 40480",
+      "url": "https://www.francecompetences.fr/recherche/rncp/40480",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Informations ministère des Sports",
+      "url": "https://www.sports.gouv.fr/",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Liste des pièces à fournir",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 60,
+      "bouton_variante": "outline"
+    }
+  ],
+  "bp-jeps-mapst|Ajaccio": [
+    {
+      "label": "Préparation TEP MAPST",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Calendrier TEP Île-de-France",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel diplôme MAPST",
+      "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Fiche RNCP 40480",
+      "url": "https://www.francecompetences.fr/recherche/rncp/40480",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Informations ministère des Sports",
+      "url": "https://www.sports.gouv.fr/",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Liste des pièces à fournir",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 60,
+      "bouton_variante": "outline"
+    }
+  ],
+  "bp-jeps-mapst|Arpajon-Égly": [
+    {
+      "label": "Préparation TEP MAPST",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Calendrier TEP Île-de-France",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel diplôme MAPST",
+      "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Fiche RNCP 40480",
+      "url": "https://www.francecompetences.fr/recherche/rncp/40480",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Informations ministère des Sports",
+      "url": "https://www.sports.gouv.fr/",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Liste des pièces à fournir",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 60,
+      "bouton_variante": "outline"
+    }
+  ],
+  "bp-jeps-mapst|Mortagne-au-Perche": [
+    {
+      "label": "Préparation TEP MAPST",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Calendrier TEP Île-de-France",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel diplôme MAPST",
+      "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Fiche RNCP 40480",
+      "url": "https://www.francecompetences.fr/recherche/rncp/40480",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Informations ministère des Sports",
+      "url": "https://www.sports.gouv.fr/",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Liste des pièces à fournir",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 60,
+      "bouton_variante": "outline"
+    }
+  ],
+  "bp-jeps-mapst|Drancy": [
+    {
+      "label": "Préparation TEP MAPST",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 10,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Calendrier TEP Île-de-France",
+      "url": "tep.html",
+      "type": "lien",
+      "ordre": 20,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Référentiel diplôme MAPST",
+      "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688",
+      "type": "lien",
+      "ordre": 30,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Fiche RNCP 40480",
+      "url": "https://www.francecompetences.fr/recherche/rncp/40480",
+      "type": "lien",
+      "ordre": 40,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Informations ministère des Sports",
+      "url": "https://www.sports.gouv.fr/",
+      "type": "lien",
+      "ordre": 50,
+      "bouton_variante": "outline"
+    },
+    {
+      "label": "Liste des pièces à fournir",
+      "url": "contact.html",
+      "type": "lien",
+      "ordre": 60,
+      "bouton_variante": "outline"
+    }
+  ]
+}

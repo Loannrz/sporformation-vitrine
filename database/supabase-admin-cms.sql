@@ -81,6 +81,7 @@ CREATE TABLE IF NOT EXISTS public.documents_utiles (
   url TEXT NOT NULL,                          -- URL publique (Supabase Storage ou externe)
   fichier_chemin TEXT,                        -- chemin dans le bucket Storage (si téléversé)
   type TEXT NOT NULL DEFAULT 'document',      -- 'document' | 'lien'
+  bouton_variante TEXT NOT NULL DEFAULT 'outline', -- outline | primary | light | secondary (site)
   ordre INT NOT NULL DEFAULT 100,
   cree_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );

@@ -7,7 +7,7 @@
  *   • remplace les étapes méthode TEP (data-tep-method-grid)
  *   • remplace le bloc « Emploi & débouchés » de a-propos.html
  *   • injecte la grille de partenaires
- *   • injecte les blocs "Documents et liens utiles" (data-docs-zone)
+ *   • injecte les boutons « Documents et liens utiles » (zones data-docs-zone sur les fiches)
  *
  * Stratégie : si l'API est indisponible, on ne casse rien — les valeurs HTML
  * statiques restent en place.
@@ -17,6 +17,13 @@ import {
   RESULTS_INDICATORS_CLE,
   parseResultsIndicators,
 } from "./results-indicators.js";
+import {
+  resolveDeadlineDisplay,
+  resolveSessionDisplay,
+  resolveDurationDisplay,
+  resolveSuccessRateTrim,
+  DEFAULT_SUCCESS_LABEL,
+} from "./formation-sidebar-display.js";
 
 const PAYLOAD_URL = "/api/public/site-content";
 let cachedPayload = null;
@@ -113,7 +120,6 @@ function applyResultsIndicatorsDom(sheet, data) {
 
 // ── Formations : injecter dans #data-formation-summary-* + gérer CTA ─────────
 function applyFormationOverrides(overrides) {
-  if (!overrides?.length && !document.querySelector("[data-formation-detail-page]")) return;
   if (!document.querySelector("[data-formation-detail-page]")) return;
 
   const params = new URLSearchParams(window.location.search);
@@ -128,30 +134,35 @@ function applyFormationOverrides(overrides) {
   const byCle = {};
   for (const it of items) byCle[it.cle] = it.valeur;
 
-  const setText = (selector, value) => {
+  const setElText = (selector, text) => {
+    const el = document.querySelector(selector);
+    if (el) el.textContent = text ?? "";
+  };
+
+  const setTextIfNonEmpty = (selector, value) => {
     const el = document.querySelector(selector);
     if (el && value && String(value).trim()) el.textContent = value;
   };
 
-  // Dates : prio à ISO si présente, sinon texte humain hérité
-  const deadlineHuman = byCle.deadline_iso
-    ? formatHumanDate(byCle.deadline_iso)
-    : byCle.deadline;
-  const sessionHuman = byCle.session_iso
-    ? formatHumanDate(byCle.session_iso)
-    : byCle.session;
-  if (deadlineHuman) setText("[data-formation-summary-deadline]", deadlineHuman);
-  if (sessionHuman) setText("[data-formation-summary-session]", sessionHuman);
-  if (byCle.duration) setText("[data-formation-summary-duration]", byCle.duration);
+  setElText("[data-formation-summary-deadline]", resolveDeadlineDisplay(byCle));
+  setElText("[data-formation-summary-session]", resolveSessionDisplay(byCle));
+  setElText("[data-formation-summary-duration]", resolveDurationDisplay(byCle));
 
-  if (byCle.success_rate) {
-    const stat = document.querySelector("[data-formation-summary-stat]");
-    const wrap = document.querySelector("[data-formation-summary-stat-wrap]");
-    if (stat) stat.textContent = byCle.success_rate;
+  const rate = resolveSuccessRateTrim(byCle);
+  const lab =
+    String(byCle.summary_stat_label ?? "").trim() || DEFAULT_SUCCESS_LABEL;
+
+  const stat = document.querySelector("[data-formation-summary-stat]");
+  const wrap = document.querySelector("[data-formation-summary-stat-wrap]");
+  const statLabelEl = document.querySelector("[data-formation-summary-stat-label]");
+  if (rate) {
+    if (stat) stat.textContent = rate;
     if (wrap) wrap.hidden = false;
-  }
-  if (byCle.summary_stat_label) {
-    setText("[data-formation-summary-stat-label]", byCle.summary_stat_label);
+    if (statLabelEl) statLabelEl.textContent = lab;
+  } else {
+    if (wrap) wrap.hidden = true;
+    if (stat) stat.textContent = "";
+    if (statLabelEl) statLabelEl.textContent = "";
   }
 
   // Indicateurs détaillés
@@ -163,29 +174,33 @@ function applyFormationOverrides(overrides) {
     ["satisfaction", "[data-formation-stat-satisfaction]"],
   ];
   for (const [cle, sel] of fields) {
-    if (byCle[cle]) setText(sel, byCle[cle]);
+    if (byCle[cle]) setTextIfNonEmpty(sel, byCle[cle]);
   }
 
   const sheet = findFormationSheet(slug, ville);
   if (sheet) {
-    // Grand % du bloc « Indicateurs de résultats » = même valeur que la colonne de droite (sidebar)
-    if (byCle.success_rate) {
-      const heroVal = sheet.querySelector(
-        ".formation-detail-sheet__stat .formation-detail-sheet__stat-value"
-      );
-      if (heroVal) heroVal.textContent = String(byCle.success_rate).trim();
-    }
     if (byCle[RESULTS_INDICATORS_CLE]) {
-      const parsed = parseResultsIndicators(byCle[RESULTS_INDICATORS_CLE]);
-      applyResultsIndicatorsDom(sheet, parsed);
-    }
-    // Légende sous le % (admin) : même texte que la sidebar + ligne sous le grand % en bas de fiche
-    if (byCle.summary_stat_label && String(byCle.summary_stat_label).trim()) {
-      const legend = String(byCle.summary_stat_label).trim();
-      const captionSpan = sheet.querySelector(
-        ".formation-detail-sheet__stat .formation-detail-sheet__stat-caption > span"
+      applyResultsIndicatorsDom(
+        sheet,
+        parseResultsIndicators(byCle[RESULTS_INDICATORS_CLE])
       );
-      if (captionSpan) captionSpan.textContent = legend;
+    }
+
+    const bottomStat = sheet.querySelector(".formation-detail-sheet__stat");
+    if (bottomStat) {
+      if (rate) {
+        bottomStat.hidden = false;
+        const heroVal = bottomStat.querySelector(
+          ".formation-detail-sheet__stat-value"
+        );
+        if (heroVal) heroVal.textContent = rate;
+        const captionSpan = bottomStat.querySelector(
+          ".formation-detail-sheet__stat-caption > span"
+        );
+        if (captionSpan) captionSpan.textContent = lab;
+      } else {
+        bottomStat.hidden = true;
+      }
     }
   }
 
@@ -370,8 +385,31 @@ function applyPartenaires(partenaires) {
   }
 }
 
+function annotateFormationDocZones() {
+  document.querySelectorAll("[data-formation-detail-sheet]").forEach((art) => {
+    const key = art.getAttribute("data-formation-detail-sheet")?.trim();
+    if (!key) return;
+    const grid = art.querySelector(".formation-detail-sheet__links-grid");
+    if (!grid) return;
+    grid.setAttribute("data-docs-zone", "");
+    grid.dataset.docsScope = "formation";
+    grid.dataset.docsScopeKey = key;
+  });
+}
+
+const DOC_BTN_VARIANTS_SITE = new Set(["outline", "primary", "light", "secondary"]);
+
+function docLinkBtnClasses(variant) {
+  const v = String(variant ?? "")
+    .trim()
+    .toLowerCase();
+  const ok = DOC_BTN_VARIANTS_SITE.has(v) ? v : "outline";
+  return `btn btn--${ok}`;
+}
+
 // ── Documents & liens utiles : insère sur les zones marquées ───────────────
 function applyDocumentZones(documents) {
+  annotateFormationDocZones();
   if (!documents?.length) return;
   const zones = document.querySelectorAll("[data-docs-zone]");
   if (!zones.length) return;
@@ -386,19 +424,17 @@ function applyDocumentZones(documents) {
       return true;
     });
     if (!docs.length) continue;
-    const grid = document.createElement("div");
-    grid.className = "formation-detail-sheet__links-grid";
+    docs.sort((a, b) => Number(a.ordre ?? 0) - Number(b.ordre ?? 0));
+    zone.innerHTML = "";
     for (const d of docs) {
       const a = document.createElement("a");
-      a.className = "btn btn--outline";
+      a.className = docLinkBtnClasses(d.bouton_variante);
       a.href = d.url;
       a.target = "_blank";
       a.rel = "noopener noreferrer";
       a.textContent = d.label;
-      grid.appendChild(a);
+      zone.appendChild(a);
     }
-    zone.innerHTML = "";
-    zone.appendChild(grid);
   }
 }
 
@@ -407,7 +443,7 @@ export async function initDynamicContent() {
   const payload = await fetchPayload();
   if (!payload) return;
   try {
-    applyFormationOverrides(payload.formation_overrides);
+    applyFormationOverrides(payload.formation_overrides ?? []);
   } catch (e) {
     console.warn("[dynamic] formation overrides", e);
   }
