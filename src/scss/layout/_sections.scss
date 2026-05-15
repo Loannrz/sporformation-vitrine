@@ -16,4 +16,10 @@
       color: var(--color-white);
     }
   }
+
+  /* Fiche formation : pas de bande blanche énorme sous le hero */
+  &--formation-detail {
+    padding-top: clamp(16px, 2.5vw, 28px);
+    padding-bottom: var(--section-space);
+  }
 }

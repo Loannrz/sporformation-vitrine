@@ -16,6 +16,37 @@ export const FORMATION_LABELS = {
     "DE JEPS - Animation Socio-Éducative ou Culturelle, mention Coordination de Projets",
 };
 
+/** Libellé court affiché dans le breadcrumb / hero de la fiche détail */
+const FORMATION_SHORT_LABELS = {
+  "bp-jeps-aspf": "BP JEPS Éducateur Sportif — APSF",
+  "bp-jeps-mapst": "BP JEPS Éducateur Sportif — MAPST",
+  "bp-jeps-basket": "BP JEPS Éducateur Sportif — Basket-Ball",
+  "bp-jeps-rugby": "BP JEPS Éducateur Sportif — Rugby à XV",
+  "tfp-cdssa": "TFP CDSSA",
+  "bp-jeps-asec": "BP JEPS Animateur — ASEC",
+  "cc-acm": "CC Direction ACM",
+  "de-jeps-asec-coordination": "DE JEPS ASEC — Coordination",
+};
+
+/** Métadonnées affichées dans la sidebar selon le couple slug|ville */
+const FORMATION_META = {
+  "bp-jeps-mapst|Courbevoie": {
+    region: "Île-de-France",
+    badges: [
+      { label: "Niveau 4", accent: true },
+      { label: "RNCP 40480" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "553 h en centre" },
+      { label: "Île-de-France" },
+    ],
+    deadline: "20 août 2026",
+    session: "21 septembre 2026",
+    duration: "12 mois — 553 h",
+    successRate: "80 %",
+  },
+};
+
 function parseCities(raw) {
   return String(raw ?? "")
     .split("|")
@@ -119,13 +150,46 @@ export function initFormationCityModal() {
   });
 }
 
+function renderBadges(container, badges) {
+  if (!container) return;
+  container.innerHTML = "";
+  if (!Array.isArray(badges) || !badges.length) {
+    container.hidden = true;
+    return;
+  }
+  container.hidden = false;
+  badges.forEach((b) => {
+    const span = document.createElement("span");
+    span.className = `formation-detail-hero__badge${b.accent ? " formation-detail-hero__badge--accent" : ""}`;
+    span.textContent = b.label;
+    container.appendChild(span);
+  });
+}
+
+function setText(selector, value) {
+  const el = document.querySelector(selector);
+  if (el) el.textContent = value || "—";
+}
+
 export function initFormationDetailPage() {
   const root = document.querySelector("[data-formation-detail-page]");
   if (!root) return;
 
   const titleEl = root.querySelector("[data-formation-detail-title]");
+  const crumbEl = root.querySelector("[data-formation-detail-crumb]");
   const cityEl = root.querySelector("[data-formation-detail-city]");
+  const badgesEl = root.querySelector("[data-formation-detail-badges]");
   const missingEl = document.querySelector("[data-formation-detail-missing]");
+  const placeholderCard = document.querySelector("[data-formation-detail-placeholder-card]");
+  const sheets = document.querySelectorAll("[data-formation-detail-sheet]");
+  const aside = document.querySelector("[data-formation-detail-aside]");
+  const metaDesc = document.querySelector('meta[name="description"]');
+
+  const hideAllSheets = () => {
+    sheets.forEach((el) => {
+      el.hidden = true;
+    });
+  };
 
   const params = new URLSearchParams(window.location.search);
   const slug = params.get(PARAM_FORMATION)?.trim();
@@ -134,15 +198,58 @@ export function initFormationDetailPage() {
   if (!slug || !ville) {
     if (titleEl) titleEl.textContent = "Fiche formation";
     if (cityEl) cityEl.textContent = "";
+    if (badgesEl) {
+      badgesEl.innerHTML = "";
+      badgesEl.hidden = true;
+    }
     if (missingEl) missingEl.hidden = false;
+    if (aside) aside.hidden = true;
+    hideAllSheets();
+    if (placeholderCard) placeholderCard.hidden = false;
     return;
   }
 
   if (missingEl) missingEl.hidden = true;
 
   const label = FORMATION_LABELS[slug] || slug;
+  const shortLabel = FORMATION_SHORT_LABELS[slug] || label;
 
   if (titleEl) titleEl.textContent = label;
-  if (cityEl) cityEl.textContent = `Ville : ${ville}`;
+  if (crumbEl) crumbEl.textContent = `${shortLabel} — ${ville}`;
+  if (cityEl) cityEl.textContent = ville;
   document.title = `${label} — ${ville} | SporFormation`;
+
+  const key = `${slug}|${ville}`;
+  let sheetFound = false;
+  sheets.forEach((el) => {
+    const match = el.getAttribute("data-formation-detail-sheet") === key;
+    el.hidden = !match;
+    if (match) sheetFound = true;
+  });
+
+  const meta = FORMATION_META[key];
+  if (sheetFound && meta) {
+    renderBadges(badgesEl, meta.badges);
+    if (aside) aside.hidden = false;
+    setText("[data-formation-summary-city]", ville);
+    setText("[data-formation-summary-deadline]", meta.deadline);
+    setText("[data-formation-summary-session]", meta.session);
+    setText("[data-formation-summary-duration]", meta.duration);
+    setText("[data-formation-summary-stat]", meta.successRate);
+  } else {
+    if (badgesEl) {
+      badgesEl.innerHTML = "";
+      badgesEl.hidden = true;
+    }
+    if (aside) aside.hidden = true;
+  }
+
+  if (placeholderCard) placeholderCard.hidden = sheetFound;
+
+  if (metaDesc) {
+    const snippet = sheetFound
+      ? `${label} à ${ville} — inscription, alternance, titre RNCP, dates et indicateurs. CFA SporFormation.`
+      : `${label} à ${ville} — informations formation et contact CFA SporFormation.`;
+    metaDesc.setAttribute("content", snippet);
+  }
 }

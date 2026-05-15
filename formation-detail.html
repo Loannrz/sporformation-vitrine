@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fiche formation | SporFormation</title>
-  <meta name="description" content="Détail d'une formation SporFormation selon la ville choisie — informations à compléter.">
+  <meta name="description" content="Fiche formation SporFormation : diplôme, lieu d’alternance, inscriptions et informations officielles.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -105,40 +105,481 @@
   </aside>
 
   <main id="contenu">
-    <section class="page-hero">
+    <section class="formation-detail-hero" data-formation-detail-page>
       <div class="container">
         <nav class="breadcrumb reveal" aria-label="Fil d'Ariane">
           <a href="index.html">Accueil</a>
           <span>&gt;</span>
           <a href="formations.html">Formations</a>
           <span>&gt;</span>
-          <strong aria-current="page">Fiche</strong>
+          <strong aria-current="page" data-formation-detail-crumb>Fiche</strong>
         </nav>
-        <div class="section-heading reveal" data-formation-detail-page>
-          <span class="eyebrow" style="background: rgba(255,255,255,0.12); color: #ffffff;">Formation</span>
-          <h1 data-formation-detail-title>Fiche formation</h1>
-          <p class="formation-detail__city-line"><span data-formation-detail-city></span></p>
+        <span class="formation-detail-hero__eyebrow">Formation diplômante</span>
+        <h1 data-formation-detail-title>Fiche formation</h1>
+        <p class="formation-detail-hero__city" data-formation-detail-city></p>
+        <div class="formation-detail-hero__badges" data-formation-detail-badges aria-label="Caractéristiques de la formation"></div>
+        <div class="formation-detail-hero__cta reveal">
+          <a class="btn btn--primary" href="contact.html">S’inscrire à cette session</a>
+          <a class="btn btn--secondary" href="#fd-resume">Voir les dates & places</a>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section--formation-detail">
       <div class="container">
-        <div class="formation-detail-missing-banner card reveal" data-formation-detail-missing hidden>
+        <div class="formation-detail-missing-banner reveal" data-formation-detail-missing hidden>
           <p><strong>Lien incomplet.</strong> Choisissez une formation et une ville depuis la liste des formations pour afficher la bonne fiche.</p>
           <a class="btn btn--primary" href="formations.html">Voir toutes les formations</a>
         </div>
 
-        <div class="card formation-detail-placeholder reveal">
-          <p data-formation-detail-placeholder>
-            Les informations détaillées (calendrier local, contacts site, spécificités du lieu…) seront ajoutées ici selon la formation et la ville sélectionnées.
-          </p>
+        <div class="formation-detail-layout" data-formation-detail-sheets aria-live="polite">
+
+          <!-- ====== Colonne principale ====== -->
+          <div class="formation-detail-main">
+            <article
+              class="formation-detail-sheet"
+              data-formation-detail-sheet="bp-jeps-mapst|Courbevoie"
+              hidden
+            >
+              <section class="formation-detail-section reveal" id="fd-mapst-cvq-quoi">
+                <header class="formation-detail-section__header">
+                  <span class="formation-detail-section__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="9"/>
+                      <path d="M12 8v4l3 2"/>
+                    </svg>
+                  </span>
+                  <h2 class="formation-detail-section__title">Présentation du diplôme</h2>
+                </header>
+
+                <p class="formation-detail-sheet__intro">
+                  Le titulaire du <strong>BP JEPS «&nbsp;Multi-Activités Physiques ou Sportives pour tous&nbsp;» (MAPST)</strong>
+                  assure en autonomie pédagogique&nbsp;:
+                </p>
+                <ul>
+                  <li>
+                    <strong>L’animation auprès de différents publics</strong>, par la découverte et l’initiation à des activités physiques et sportives diversifiées
+                    (activités et jeux sportifs, activités physiques en espace naturel, activités physiques d’entretien corporel)&nbsp;: élaboration et mise en œuvre de séances et de cycles pédagogiques.
+                  </li>
+                  <li><strong>L’entretien des capacités physiques générales</strong>, dans une perspective santé.</li>
+                  <li>
+                    La participation à <strong>l’élaboration et à la mise en œuvre de projets d’animation</strong> dans le champ MAPST.
+                  </li>
+                </ul>
+                <p>
+                  Ce diplôme permet d’intervenir principalement auprès d’<strong>associations sportives</strong> ou
+                  <strong>socioculturelles</strong>, de <strong>collectivités territoriales</strong>, de <strong>groupements d’employeurs</strong>,
+                  d’<strong>établissements scolaires du premier degré</strong>, de <strong>structures de loisirs et de tourisme</strong>,
+                  de structures <strong>périscolaires</strong>.
+                </p>
+              </section>
+
+              <section class="formation-detail-section reveal" id="fd-mapst-cvq-org">
+                <header class="formation-detail-section__header">
+                  <span class="formation-detail-section__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 4h16v4H4z"/>
+                      <path d="M4 12h10v8H4z"/>
+                      <path d="M18 12h2v8h-2z"/>
+                    </svg>
+                  </span>
+                  <h2 class="formation-detail-section__title">Titre, RNCP & référentiel</h2>
+                </header>
+
+                <p><strong>Dénomination du titre&nbsp;:</strong> BP JEPS MAPST (anciennement BP JEPS «&nbsp;Activités physiques pour tous&nbsp;»).</p>
+                <p>
+                  Certification de <strong>niveau 4</strong> «&nbsp;BP – jeunesse, éducation populaire et sport&nbsp;», spécialité «&nbsp;Éducateur sportif&nbsp;»,
+                  enregistrée au <abbr title="Répertoire national des certifications professionnelles">RNCP</abbr>
+                  sous le numéro <strong>40480</strong> &mdash; code NSF <strong>335</strong>, délivrée par le ministère des Sports et des Jeux olympiques et paralympiques.
+                </p>
+                <div class="formation-detail-sheet__meta-grid" aria-label="Références officielles">
+                  <div class="formation-detail-sheet__meta-item">
+                    <strong>Publication RNCP</strong>
+                    <span>10 avril 2025</span>
+                  </div>
+                  <div class="formation-detail-sheet__meta-item">
+                    <strong>Échéance RNCP</strong>
+                    <span>1<sup>er</sup> décembre 2029</span>
+                  </div>
+                  <div class="formation-detail-sheet__meta-item">
+                    <strong>Code NSF</strong>
+                    <span>335</span>
+                  </div>
+                  <div class="formation-detail-sheet__meta-item">
+                    <strong>Mise à jour page</strong>
+                    <span>20 mars 2026</span>
+                  </div>
+                </div>
+                <p>
+                  <a href="https://www.francecompetences.fr/recherche/rncp/40480" rel="noopener noreferrer">Consulter la fiche RNCP&nbsp;40480</a>
+                  &nbsp;&middot;&nbsp;
+                  <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688" rel="noopener noreferrer">Référentiel diplôme (JORF)</a>
+                </p>
+              </section>
+
+              <section class="formation-detail-section reveal" id="fd-mapst-cvq-alt">
+                <header class="formation-detail-section__header">
+                  <span class="formation-detail-section__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M3 12h18"/>
+                      <path d="M7 8l-4 4 4 4"/>
+                      <path d="M17 8l4 4-4 4"/>
+                    </svg>
+                  </span>
+                  <h2 class="formation-detail-section__title">Une formation en alternance</h2>
+                </header>
+
+                <p>
+                  Durée indicative&nbsp;: <strong>12&nbsp;mois</strong>, avec en organisme de formation un volume de <strong>553&nbsp;heures</strong>.
+                  Alternance organisme de formation / structure employeuse. Contrat d’apprentissage à temps plein
+                  (référence&nbsp;: <strong>35&nbsp;h</strong> hebdomadaires si votre convention le prévoit ainsi).
+                </p>
+                <p>
+                  <strong>Rubans pédagogiques mentionnés&nbsp;:</strong> entretien corporel, sports collectifs, tir à l’arc, course d’orientation,
+                  activités de pleine nature, jeux ludiques.
+                </p>
+                <p>
+                  Le diplôme s’obtient après la certification de <strong>trois blocs de compétences</strong> (BC)&nbsp;;
+                  il est possible de s’inscrire à un ou plusieurs blocs.
+                </p>
+
+                <h3>Méthodes pédagogiques</h3>
+                <ul>
+                  <li><strong>Pédagogie active&nbsp;:</strong> mise en situation, résolution de problèmes, études de cas, jeux de rôle, échanges en groupe.</li>
+                  <li><strong>Apprentissage expérientiel&nbsp;:</strong> pratiques terrain, observations et stages en milieu professionnel, analyse des situations.</li>
+                  <li><strong>Approche différenciée&nbsp;:</strong> adaptation aux profils, aux supports et au feedback individualisé.</li>
+                  <li><strong>Usage des TIC&nbsp;:</strong> plateformes, ressources numériques et outils collaboratifs lorsque pertinent.</li>
+                </ul>
+              </section>
+
+              <section class="formation-detail-section reveal" id="fd-mapst-cvq-eval">
+                <header class="formation-detail-section__header">
+                  <span class="formation-detail-section__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9 12l2 2 4-4"/>
+                      <rect x="3" y="4" width="18" height="16" rx="2"/>
+                    </svg>
+                  </span>
+                  <h2 class="formation-detail-section__title">Modalités d’évaluation</h2>
+                </header>
+
+                <div class="formation-detail-sheet__eval-block">
+                  <h4>Bloc&nbsp;1</h4>
+                  <div class="formation-detail-sheet__eval-quote">
+                    Évaluation via l’épreuve «&nbsp;projet de formation&nbsp;» au sein du centre de formation.
+                  </div>
+                </div>
+
+                <div class="formation-detail-sheet__eval-block">
+                  <h4>Bloc&nbsp;2</h4>
+                  <div class="formation-detail-sheet__eval-quote">
+                    <ul>
+                      <li>Présentation de <strong>deux supports de communication</strong> valorisant <strong>deux activités ou projets</strong> réalisés en structure auprès de <strong>deux publics</strong>. Durée totale de l’épreuve&nbsp;: <strong>25&nbsp;minutes maximum</strong>.</li>
+                      <li>
+                        Entretien en deux temps&nbsp;:
+                        <ul>
+                          <li>présentation orale illustrée par le candidat&nbsp;: <strong>10&nbsp;minutes maximum</strong>&nbsp;;</li>
+                          <li>échange avec le jury&nbsp;: <strong>15&nbsp;minutes maximum</strong>.</li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="formation-detail-sheet__eval-block">
+                  <h4>Bloc&nbsp;3</h4>
+                  <div class="formation-detail-sheet__eval-quote">
+                    <ol>
+                      <li>
+                        <strong>Épreuve «&nbsp;pédagogie pratique&nbsp;» en structure&nbsp;:</strong> encadrement d’une séance de <strong>45&nbsp;à 90&nbsp;minutes</strong>,
+                        suivie d’un entretien d’une <strong>durée maximale d’une heure</strong>, comprenant&nbsp;:
+                        <ul>
+                          <li><strong>1<sup>er</sup> temps&nbsp;:</strong> jusqu’à <strong>10&nbsp;minutes</strong> de présentation orale du candidat (bilan de séance, analyse, choix pédagogiques et sécuritaires)&nbsp;;</li>
+                          <li><strong>2<sup>e</sup> temps&nbsp;:</strong> dans la limite de la durée totale d’entretien fixée par le référentiel.</li>
+                        </ul>
+                      </li>
+                      <li>
+                        <strong>Épreuve «&nbsp;oral sur nouvelles APS&nbsp;»&nbsp;:</strong> deux activités physiques et sportives au minimum (durée de présentation contrainte par le référentiel)&nbsp;;
+                        entretien de <strong>30&nbsp;minutes maximum</strong> avec le jury, dont <strong>10&nbsp;minutes maximum</strong> de présentation orale du candidat.
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </section>
+
+              <section class="formation-detail-section reveal" id="fd-mapst-cvq-fin">
+                <header class="formation-detail-section__header">
+                  <span class="formation-detail-section__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="9"/>
+                      <path d="M12 6v12"/>
+                      <path d="M15 9a3 3 0 0 0-6 0v0a3 3 0 0 0 3 3"/>
+                      <path d="M9 15a3 3 0 0 0 6 0v0a3 3 0 0 0-3-3"/>
+                    </svg>
+                  </span>
+                  <h2 class="formation-detail-section__title">Rémunération et prise en charge</h2>
+                </header>
+
+                <div class="formation-detail-sheet__highlight">
+                  <p>
+                    Dans le cadre d’un <strong>contrat d’apprentissage</strong> pour les moins de <strong>29&nbsp;ans révolus</strong>,
+                    la formation est <strong>rémunérée</strong>. Les frais de formation sont pris en charge par l’
+                    <abbr title="Opérateur de compétences">OPCO</abbr> de l’employeur (secteur privé), ou par l’employeur public et le
+                    <abbr title="Centre national de la fonction publique territoriale">CNFPT</abbr> dans les conditions prévues pour les employeurs publics
+                    (prise en charge jusqu’à concurrence du barème CNFPT pour la part prévue, le complément éventuel restant à la charge de l’employeur public).
+                  </p>
+                  <p>
+                    <strong>Cette formation est accessible aux personnes en situation de handicap.</strong>
+                    Pour les aménagements et l’accompagnement&nbsp;: voir notre <a href="handicap.html">page dédiée</a> ou <a href="contact.html">contactez-nous</a>.
+                  </p>
+                </div>
+              </section>
+
+              <section class="formation-detail-section reveal" id="fd-mapst-cvq-obj">
+                <header class="formation-detail-section__header">
+                  <span class="formation-detail-section__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="9"/>
+                      <circle cx="12" cy="12" r="5"/>
+                      <circle cx="12" cy="12" r="1"/>
+                    </svg>
+                  </span>
+                  <h2 class="formation-detail-section__title">Objectifs et conditions d’accès</h2>
+                </header>
+
+                <h3>Objectifs de la formation</h3>
+                <ul>
+                  <li>Mettre en œuvre un projet d’animation cohérent avec le projet de la structure.</li>
+                  <li>Encadrer tous publics, dans tous lieux adaptés.</li>
+                  <li>Concevoir une séance ou un cycle dans les trois domaines d’activités du diplôme.</li>
+                  <li>Conduire des actions de découverte, sensibilisation ou initiation aux APS.</li>
+                  <li>Assurer la sécurité des pratiquants, des pratiques et des lieux.</li>
+                  <li>Participer au fonctionnement de la structure.</li>
+                </ul>
+                <h3>Candidature</h3>
+                <p>
+                  Vous pouvez <strong>déposer votre candidature</strong> puis participer à la <strong>prochaine session de sélection</strong>
+                  selon le calendrier du centre et les conditions du titre.
+                </p>
+              </section>
+
+              <section class="formation-detail-section reveal" id="fd-mapst-cvq-deb">
+                <header class="formation-detail-section__header">
+                  <span class="formation-detail-section__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M3 17l6-6 4 4 8-8"/>
+                      <path d="M14 7h7v7"/>
+                    </svg>
+                  </span>
+                  <h2 class="formation-detail-section__title">Débouchés et poursuites d’études</h2>
+                </header>
+
+                <p>
+                  Le BP JEPS MAPST permet d’exercer comme éducateur sportif dans les clubs, comités, ligues, ainsi que dans les structures sociales,
+                  d’animation ou les collectivités. Ce secteur compte souvent des postes à temps partiel&nbsp;: les <strong>groupements d’employeurs</strong>
+                  permettent de cumuler plusieurs missions pour tendre vers un temps plein.
+                </p>
+                <p>
+                  Vous pouvez également vous orienter vers les concours de la fonction publique territoriale, notamment le concours
+                  <abbr title="Éducateur territorial des activités physiques et sportives">ETAPS</abbr>
+                  (<a href="https://www.collectivites-locales.gouv.fr/fiches-metiers/educateur-territorial-des-activites-physiques-et-sportives-etaps-" rel="noopener noreferrer">informations sur la filière ETAPS</a>).
+                </p>
+                <p>
+                  Pour compléter votre parcours, il est possible d’envisager le <strong>Titre professionnel CDSSA</strong>
+                  (chargé de développement d’une structure sportive associative) ou un
+                  <strong>DE JEPS</strong> en mention adaptée à votre projet professionnel
+                  (<a href="formations.html">voir nos formations</a>).
+                </p>
+              </section>
+
+              <section class="formation-detail-section reveal" id="fd-mapst-cvq-res">
+                <header class="formation-detail-section__header">
+                  <span class="formation-detail-section__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M3 3v18h18"/>
+                      <path d="M7 14l4-4 3 3 6-6"/>
+                    </svg>
+                  </span>
+                  <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
+                </header>
+
+                <div class="formation-detail-sheet__stat">
+                  <span class="formation-detail-sheet__stat-value">80&nbsp;%</span>
+                  <div class="formation-detail-sheet__stat-caption">
+                    <strong>Taux d’obtention du diplôme</strong>
+                    <span>Session 2025‑2026 — donnée communiquée à titre indicatif.</span>
+                    <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
+                  </div>
+                </div>
+
+                <div class="formation-detail-sheet__table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Indicateurs</th>
+                        <th scope="col">Session&nbsp;2025</th>
+                        <th scope="col">Session&nbsp;2026</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Nombre d’apprenants</td>
+                        <td><strong>23</strong></td>
+                        <td><strong>15</strong></td>
+                      </tr>
+                      <tr>
+                        <td>Taux d’apprentis</td>
+                        <td><strong>100&nbsp;%</strong></td>
+                        <td><strong>67&nbsp;%</strong></td>
+                      </tr>
+                      <tr>
+                        <td>Taux d’interruption de formation</td>
+                        <td><strong>9&nbsp;%</strong></td>
+                        <td><strong>27&nbsp;%</strong></td>
+                      </tr>
+                      <tr>
+                        <td>Taux de rupture de contrat d’apprentissage</td>
+                        <td><strong>13&nbsp;%</strong></td>
+                        <td><strong>13&nbsp;%</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="formation-detail-sheet__footnote">
+                  *&nbsp;Chiffres sous réserve de nouvelles signatures de contrat — donnée indicative au <strong>18&nbsp;mars&nbsp;2026</strong>.
+                </p>
+              </section>
+
+              <section class="formation-detail-section reveal" id="fd-mapst-cvq-docs">
+                <header class="formation-detail-section__header">
+                  <span class="formation-detail-section__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+                      <path d="M14 3v6h6"/>
+                    </svg>
+                  </span>
+                  <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
+                </header>
+
+                <div class="formation-detail-sheet__links-grid">
+                  <a class="btn btn--outline" href="tep.html">Préparation TEP MAPST</a>
+                  <a class="btn btn--outline" href="tep.html">Calendrier TEP Île-de-France</a>
+                  <a class="btn btn--outline" href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688" rel="noopener noreferrer">Référentiel diplôme MAPST</a>
+                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/40480" rel="noopener noreferrer">Fiche RNCP&nbsp;40480</a>
+                  <a class="btn btn--outline" href="https://www.sports.gouv.fr/" rel="noopener noreferrer">Informations ministère des Sports</a>
+                  <a class="btn btn--outline" href="contact.html">Liste des pièces à fournir</a>
+                </div>
+
+                <div class="formation-detail-sheet__qualiopi-band">
+                  <p>
+                    <strong>Qualiopi&nbsp;:</strong> la certification qualité a été délivrée au titre des catégories
+                    «&nbsp;<strong>Action de formation</strong>&nbsp;» et «&nbsp;<strong>Action de formation par apprentissage</strong>&nbsp;».
+                  </p>
+                  <a class="btn btn--outline" href="certificat-qualiopi.html">Consulter notre certificat</a>
+                </div>
+              </section>
+
+              <aside class="formation-detail-cta reveal">
+                <h2>Prêt à rejoindre la prochaine promotion&nbsp;?</h2>
+                <p>
+                  Notre équipe vous rappelle sous 24&nbsp;h pour valider votre dossier, vous présenter les sites partenaires et
+                  vous accompagner dans toutes vos démarches d’inscription.
+                </p>
+                <div class="formation-detail-cta__actions">
+                  <a class="btn btn--primary" href="contact.html">Démarrer mon inscription</a>
+                  <a class="btn btn--secondary" href="tel:+33744990699">07 44 99 06 99</a>
+                </div>
+              </aside>
+            </article>
+          </div>
+
+          <!-- ====== Sidebar collante ====== -->
+          <aside class="formation-detail-aside reveal" data-formation-detail-aside hidden>
+            <div class="formation-summary" id="fd-resume">
+              <div class="formation-summary__header">
+                <p class="formation-summary__eyebrow">Site de formation</p>
+                <p class="formation-summary__title" data-formation-summary-city>Ville</p>
+              </div>
+              <div class="formation-summary__body">
+                <div class="formation-summary__row">
+                  <span class="formation-summary__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="5" width="18" height="16" rx="2"/>
+                      <path d="M16 3v4M8 3v4M3 11h18"/>
+                    </svg>
+                  </span>
+                  <div class="formation-summary__row-text">
+                    <strong>Date limite d’inscription</strong>
+                    <span data-formation-summary-deadline>—</span>
+                  </div>
+                </div>
+                <div class="formation-summary__row">
+                  <span class="formation-summary__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="9"/>
+                      <path d="M12 7v5l3 2"/>
+                    </svg>
+                  </span>
+                  <div class="formation-summary__row-text">
+                    <strong>Prochaine session</strong>
+                    <span data-formation-summary-session>—</span>
+                  </div>
+                </div>
+                <div class="formation-summary__row">
+                  <span class="formation-summary__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 19V5"/>
+                      <path d="M20 19V11"/>
+                      <path d="M12 19V8"/>
+                    </svg>
+                  </span>
+                  <div class="formation-summary__row-text">
+                    <strong>Durée</strong>
+                    <span data-formation-summary-duration>—</span>
+                  </div>
+                </div>
+
+                <div class="formation-summary__stat">
+                  <span class="formation-summary__stat-value" data-formation-summary-stat>—</span>
+                  <span class="formation-summary__stat-label">Taux d’obtention du diplôme — session 2025‑2026</span>
+                </div>
+
+                <a class="btn btn--primary formation-summary__cta" href="contact.html">Démarrer mon inscription</a>
+
+                <p class="formation-summary__contact">
+                  Une question&nbsp;?<br>
+                  <a href="tel:+33744990699">07 44 99 06 99</a>
+                </p>
+              </div>
+            </div>
+
+            <nav class="formation-toc" aria-label="Sommaire de la fiche" data-formation-toc>
+              <h3>Sommaire</h3>
+              <ol>
+                <li><a href="#fd-mapst-cvq-quoi">Présentation</a></li>
+                <li><a href="#fd-mapst-cvq-org">Titre & RNCP</a></li>
+                <li><a href="#fd-mapst-cvq-alt">Alternance</a></li>
+                <li><a href="#fd-mapst-cvq-eval">Évaluation</a></li>
+                <li><a href="#fd-mapst-cvq-fin">Financement</a></li>
+                <li><a href="#fd-mapst-cvq-obj">Objectifs & accès</a></li>
+                <li><a href="#fd-mapst-cvq-deb">Débouchés</a></li>
+                <li><a href="#fd-mapst-cvq-res">Résultats</a></li>
+                <li><a href="#fd-mapst-cvq-docs">Documents utiles</a></li>
+              </ol>
+            </nav>
+          </aside>
         </div>
 
-        <p class="formation-detail__actions reveal">
-          <a class="btn btn--outline" href="formations.html">← Retour aux formations</a>
-          <a class="btn btn--primary" href="contact.html">Nous contacter</a>
-        </p>
+        <div class="formation-detail-placeholder reveal" data-formation-detail-placeholder-card>
+          <p data-formation-detail-placeholder>
+            Les informations détaillées pour cette formation et cette ville seront publiées prochainement.
+            En attendant, utilisez les liens ci-dessous pour nous écrire ou parcourir le catalogue.
+          </p>
+          <p class="formation-detail__actions" style="justify-content: center; margin-top: 16px;">
+            <a class="btn btn--outline" href="formations.html">← Retour aux formations</a>
+            <a class="btn btn--primary" href="contact.html">Nous contacter</a>
+          </p>
+        </div>
       </div>
     </section>
   </main>
