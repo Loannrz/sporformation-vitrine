@@ -30,6 +30,196 @@ const FORMATION_SHORT_LABELS = {
 
 /** Métadonnées affichées dans la sidebar selon le couple slug|ville */
 const FORMATION_META = {
+  "bp-jeps-aspf|Courbevoie": {
+    region: "Île-de-France",
+    badges: [
+      { label: "Niveau 4", accent: true },
+      { label: "RNCP 41752" },
+      { label: "Alternance / autofinancement" },
+      { label: "12 mois" },
+      { label: "553 h (jeu. & ven.)" },
+      { label: "Courbevoie" },
+    ],
+    deadline: "19 septembre 2026",
+    session: "19 octobre 2026",
+    duration: "12 mois — 553 h",
+    successRate: "60 %",
+    summaryStatLabel: "Taux d’obtention du diplôme — session 2025",
+  },
+  "bp-jeps-basket|Courbevoie": {
+    region: "Île-de-France",
+    badges: [
+      { label: "Niveau 4", accent: true },
+      { label: "RNCP 40423" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "610 h en centre" },
+      { label: "Courbevoie" },
+    ],
+    deadline: "21 août 2026",
+    session: "21 septembre 2026",
+    duration: "12 mois — 610 h",
+    successRate: "50 %",
+    summaryStatLabel: "Taux d’obtention du diplôme — session 2024‑2025",
+  },
+  "bp-jeps-basket|Nanterre": {
+    region: "Île-de-France",
+    badges: [
+      { label: "Niveau 4", accent: true },
+      { label: "RNCP 40423" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "610 h en centre" },
+      { label: "Nanterre" },
+    ],
+    deadline: "21 août 2026",
+    session: "21 septembre 2026",
+    duration: "12 mois — 610 h",
+    successRate: "72 %",
+    summaryStatLabel: "Taux d’obtention du diplôme — session 2024‑2025",
+  },
+  "bp-jeps-basket|Cergy": {
+    region: "Île-de-France",
+    badges: [
+      { label: "Niveau 4", accent: true },
+      { label: "RNCP 40423" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "610 h en centre" },
+      { label: "Cergy" },
+    ],
+    deadline: "21 août 2026",
+    session: "21 septembre 2026",
+    duration: "12 mois — 610 h",
+    successRate: "",
+    summaryStatLabel: "",
+  },
+  "bp-jeps-asec|Courbevoie": {
+    region: "Île-de-France",
+    badges: [
+      { label: "Niveau 4", accent: true },
+      { label: "RNCP 39926" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "610 h en centre" },
+      { label: "Courbevoie" },
+    ],
+    deadline: "19 septembre 2026",
+    session: "19 octobre 2026",
+    duration: "12 mois — 610 h",
+    successRate: "87,50 %",
+    summaryStatLabel: "Taux d’obtention du diplôme — session 2023‑2024",
+  },
+  "bp-jeps-asec|Coulommiers": {
+    region: "Île-de-France",
+    badges: [
+      { label: "Niveau 4", accent: true },
+      { label: "RNCP 39926" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "610 h en centre" },
+      { label: "Coulommiers" },
+    ],
+    deadline: "À communiquer",
+    session: "À communiquer",
+    duration: "12 mois — 610 h",
+    successRate: "",
+    summaryStatLabel: "",
+  },
+  "bp-jeps-rugby|Courbevoie": {
+    region: "Île-de-France",
+    badges: [
+      { label: "Niveau 4", accent: true },
+      { label: "RNCP 41750" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "585 h en centre" },
+      { label: "Courbevoie" },
+    ],
+    deadline: "21 août 2026",
+    session: "21 septembre 2026",
+    duration: "12 mois — 585 h",
+    successRate: "84 %",
+    summaryStatLabel: "Taux d’obtention du diplôme — session 2024‑2025",
+  },
+  "cc-acm|Courbevoie": {
+    region: "Île-de-France",
+    badges: [
+      { label: "RS 5737", accent: true },
+      { label: "Certificat complémentaire" },
+      { label: "154 h en centre" },
+      { label: "Courbevoie" },
+    ],
+    deadline: "8 février 2027",
+    session: "8 mars 2027",
+    duration: "154 h en centre + temps en structure",
+    successRate: "",
+    summaryStatLabel: "",
+  },
+  "de-jeps-asec-coordination|Courbevoie": {
+    region: "Île-de-France",
+    badges: [
+      { label: "Niveau 5", accent: true },
+      { label: "RNCP 39930" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "700 h en centre" },
+      { label: "Courbevoie" },
+    ],
+    deadline: "19 août 2026",
+    session: "19 octobre 2026",
+    duration: "12 mois — 700 h",
+    successRate: "",
+    summaryStatLabel: "",
+  },
+  "tfp-cdssa|Paris 7e": {
+    region: "Île-de-France",
+    badges: [
+      { label: "Niveau 5", accent: true },
+      { label: "RNCP 38142" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "612 h en centre" },
+      { label: "Paris 7e" },
+    ],
+    deadline: "À communiquer",
+    session: "À communiquer",
+    duration: "12 mois — 612 h",
+    successRate: "",
+    summaryStatLabel: "",
+  },
+  "tfp-cdssa|Drancy": {
+    region: "Île-de-France",
+    badges: [
+      { label: "Niveau 5", accent: true },
+      { label: "RNCP 38142" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "612 h en centre" },
+      { label: "Drancy" },
+    ],
+    deadline: "À communiquer",
+    session: "À communiquer",
+    duration: "12 mois — 612 h",
+    successRate: "",
+    summaryStatLabel: "",
+  },
+  "tfp-cdssa|Cergy": {
+    region: "Île-de-France",
+    badges: [
+      { label: "Niveau 5", accent: true },
+      { label: "RNCP 38142" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "612 h en centre" },
+      { label: "Cergy" },
+    ],
+    deadline: "À communiquer",
+    session: "À communiquer",
+    duration: "12 mois — 612 h",
+    successRate: "100 %",
+    summaryStatLabel: "Taux d’obtention du diplôme — session 2025",
+  },
   "bp-jeps-mapst|Courbevoie": {
     region: "Île-de-France",
     badges: [
@@ -44,6 +234,135 @@ const FORMATION_META = {
     session: "21 septembre 2026",
     duration: "12 mois — 553 h",
     successRate: "80 %",
+    summaryStatLabel: "Taux d’obtention du diplôme — session 2025‑2026",
+  },
+  "bp-jeps-mapst|Paris 7e": {
+    region: "Île-de-France",
+    badges: [
+      { label: "Niveau 4", accent: true },
+      { label: "RNCP 40480" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "553 h en centre" },
+      { label: "Île-de-France" },
+    ],
+    deadline: "23 août 2026",
+    session: "24 septembre 2026",
+    duration: "12 mois — 553 h",
+    successRate: "83 %",
+    summaryStatLabel: "Taux d’obtention du diplôme — session 2024‑2025",
+  },
+  "bp-jeps-mapst|Cergy": {
+    region: "Île-de-France",
+    badges: [
+      { label: "Niveau 4", accent: true },
+      { label: "RNCP 40480" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "553 h en centre" },
+      { label: "Île-de-France" },
+    ],
+    deadline: "À communiquer",
+    session: "À communiquer",
+    duration: "12 mois — 553 h",
+    successRate: "",
+    summaryStatLabel: "",
+  },
+  "bp-jeps-mapst|Nanterre": {
+    region: "Île-de-France",
+    badges: [
+      { label: "Niveau 4", accent: true },
+      { label: "RNCP 40480" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "553 h en centre" },
+      { label: "Île-de-France" },
+    ],
+    deadline: "20 août 2026",
+    session: "21 septembre 2026",
+    duration: "12 mois — 553 h",
+    successRate: "94 %",
+    summaryStatLabel: "Taux d’obtention du diplôme — session 2024‑2025",
+  },
+  "bp-jeps-mapst|Coulommiers": {
+    region: "Île-de-France",
+    badges: [
+      { label: "Niveau 4", accent: true },
+      { label: "RNCP 40480" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "553 h en centre" },
+      { label: "Île-de-France" },
+    ],
+    deadline: "20 août 2026",
+    session: "21 septembre 2026",
+    duration: "12 mois — 553 h",
+    successRate: "100 %",
+    summaryStatLabel: "Taux d’obtention du diplôme — session 2024‑2025",
+  },
+  "bp-jeps-mapst|Ajaccio": {
+    region: "Corse",
+    badges: [
+      { label: "Niveau 4", accent: true },
+      { label: "RNCP 40480" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "609 h en centre" },
+      { label: "Corse" },
+    ],
+    deadline: "20 août 2026",
+    session: "21 septembre 2026",
+    duration: "12 mois — 609 h",
+    successRate: "",
+    summaryStatLabel: "",
+  },
+  "bp-jeps-mapst|Arpajon-Égly": {
+    region: "Île-de-France",
+    badges: [
+      { label: "Niveau 4", accent: true },
+      { label: "RNCP 40480" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "553 h en centre" },
+      { label: "Île-de-France" },
+    ],
+    deadline: "20 août 2026",
+    session: "21 septembre 2026",
+    duration: "12 mois — 553 h",
+    successRate: "",
+    summaryStatLabel: "",
+  },
+  "bp-jeps-mapst|Mortagne-au-Perche": {
+    region: "Normandie",
+    badges: [
+      { label: "Niveau 4", accent: true },
+      { label: "RNCP 40480" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "553 h en centre" },
+      { label: "Normandie" },
+    ],
+    deadline: "20 août 2026",
+    session: "21 septembre 2026",
+    duration: "12 mois — 553 h",
+    successRate: "",
+    summaryStatLabel: "",
+  },
+  "bp-jeps-mapst|Drancy": {
+    region: "Île-de-France",
+    badges: [
+      { label: "Niveau 4", accent: true },
+      { label: "RNCP 40480" },
+      { label: "Alternance" },
+      { label: "12 mois" },
+      { label: "553 h en centre" },
+      { label: "Île-de-France" },
+    ],
+    deadline: "20 août 2026",
+    session: "21 septembre 2026",
+    duration: "12 mois — 553 h",
+    successRate: "",
+    summaryStatLabel: "",
   },
 };
 
@@ -171,6 +490,22 @@ function setText(selector, value) {
   if (el) el.textContent = value || "—";
 }
 
+const TOC_SECTION_SUFFIXES = ["quoi", "org", "alt", "eval", "fin", "obj", "deb", "res", "docs"];
+
+function updateFormationTocAnchors(visibleArticle) {
+  const toc = document.querySelector("[data-formation-toc]");
+  if (!toc || !visibleArticle) return;
+  const prefix = visibleArticle.dataset.sheetAnchorPrefix?.trim();
+  if (!prefix) return;
+  const links = toc.querySelectorAll("ol li a");
+  links.forEach((a, i) => {
+    const suf = TOC_SECTION_SUFFIXES[i];
+    if (suf) {
+      a.setAttribute("href", `#${prefix}-${suf}`);
+    }
+  });
+}
+
 export function initFormationDetailPage() {
   const root = document.querySelector("[data-formation-detail-page]");
   if (!root) return;
@@ -221,11 +556,17 @@ export function initFormationDetailPage() {
 
   const key = `${slug}|${ville}`;
   let sheetFound = false;
+  let visibleArticle = null;
   sheets.forEach((el) => {
     const match = el.getAttribute("data-formation-detail-sheet") === key;
     el.hidden = !match;
-    if (match) sheetFound = true;
+    if (match) {
+      sheetFound = true;
+      visibleArticle = el;
+    }
   });
+
+  updateFormationTocAnchors(visibleArticle);
 
   const meta = FORMATION_META[key];
   if (sheetFound && meta) {
@@ -235,7 +576,25 @@ export function initFormationDetailPage() {
     setText("[data-formation-summary-deadline]", meta.deadline);
     setText("[data-formation-summary-session]", meta.session);
     setText("[data-formation-summary-duration]", meta.duration);
-    setText("[data-formation-summary-stat]", meta.successRate);
+    const statEl = document.querySelector("[data-formation-summary-stat]");
+    const statWrap = document.querySelector("[data-formation-summary-stat-wrap]");
+    const rate = meta.successRate?.trim();
+    if (statWrap) {
+      statWrap.hidden = !rate;
+    }
+    if (statEl) {
+      statEl.textContent = rate || "—";
+    }
+    const statLabelEl = document.querySelector("[data-formation-summary-stat-label]");
+    if (statLabelEl) {
+      if (!rate) {
+        statLabelEl.textContent = "";
+      } else {
+        statLabelEl.textContent =
+          meta.summaryStatLabel?.trim() ||
+          "Taux d’obtention du diplôme — session 2025‑2026";
+      }
+    }
   } else {
     if (badgesEl) {
       badgesEl.innerHTML = "";
