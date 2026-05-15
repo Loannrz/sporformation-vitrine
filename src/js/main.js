@@ -9,6 +9,10 @@ import { initCounters } from "./modules/counter.js";
 import { initSlider } from "./modules/slider.js";
 import { initFilters } from "./modules/filters.js";
 import {
+  initFormationCityModal,
+  initFormationDetailPage,
+} from "./modules/formation-city-detail.js";
+import {
   initContactForm,
   initEmployerForm,
   initPrepaTepForm,
@@ -24,6 +28,8 @@ const boot = async () => {
   initCounters();
   initSlider();
   initFilters();
+  initFormationCityModal();
+  initFormationDetailPage();
   initContactForm();
   initEmployerForm();
   initPrepaTepForm();

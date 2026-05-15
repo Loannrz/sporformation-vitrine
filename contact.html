@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact & Inscription | SporFormation</title>
-  <meta name="description" content="Déposez votre candidature ou contactez SporFormation. Notre équipe vous rappelle sous 24h pour répondre à vos questions et vous accompagner.">
+  <title>Contact | SporFormation</title>
+  <meta name="description" content="Une question sur nos formations ou sur l’alternance ? Écrivez à SporFormation : notre équipe vous rappelle sous 24&nbsp;h.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -54,7 +54,7 @@
             <li class="nav__item"><a class="nav__link" href="contact.html">Contact</a></li>
           </ul>
         </nav>
-        <a class="btn btn--primary nav__cta" href="contact.html">Envoyer ma candidature</a>
+        <a class="btn btn--primary nav__cta" href="#formulaire">Poser une question</a>
       </div>
       <button class="nav__toggle" type="button" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Ouvrir le menu"><span class="nav__toggle-line"></span><span class="nav__toggle-line"></span><span class="nav__toggle-line"></span></button>
     </div>
@@ -92,7 +92,7 @@
         <li><a class="mobile-nav__link" href="handicap.html">Handicap</a></li>
         <li><a class="mobile-nav__link" href="contact.html">Contact</a></li>
       </ul>
-      <a class="btn btn--primary mobile-nav__cta" href="#formulaire">Envoyer ma candidature</a>
+      <a class="btn btn--primary mobile-nav__cta" href="#formulaire">Poser une question</a>
     </nav>
   </aside>
 
@@ -102,9 +102,9 @@
         <div class="reveal">
           <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a><span>></span><strong>Contact</strong></nav>
           <div class="section-heading">
-            <span class="eyebrow" style="background: rgba(255,255,255,0.12); color: #ffffff;">Inscription</span>
-            <h1>Faites le premier pas</h1>
-            <p>Remplissez le formulaire. Nous vous rappelons sous 24h pour répondre à toutes vos questions et vous accompagner dans votre candidature.</p>
+            <span class="eyebrow" style="background: rgba(255,255,255,0.12); color: #ffffff;">Contact</span>
+            <h1>Une question ? Écrivez-nous</h1>
+            <p>Remplissez le formulaire pour nous faire part de vos questions ou du contexte de votre projet. Nous vous rappelons sous 24&nbsp;h pour vous répondre et vous orienter si besoin.</p>
           </div>
         </div>
         <div class="hero-card reveal">
@@ -117,9 +117,8 @@
     <section class="section" id="formulaire">
       <div class="container">
         <div class="section-heading reveal">
-          <span class="eyebrow">Candidature & contact</span>
-          <h2>Formulaire d'inscription</h2>
-          <p>Envoi sécurisé via votre serveur (Resend). En local : lancez <code>npm run dev:full</code> pour activer l’API et les mails.</p>
+          <span class="eyebrow">Formulaire</span>
+          <h2>Votre demande de contact</h2>
         </div>
 
         <div class="card reveal">
@@ -150,7 +149,7 @@
                 <input id="villeResidence" name="villeResidence" type="text">
               </div>
               <div class="form-group">
-                <label for="formationSouhaitee">Formation souhaitée *</label>
+                <label for="formationSouhaitee">Formation évoquée dans votre message *</label>
                 <select id="formationSouhaitee" name="formationSouhaitee" required>
                   <option value="">Choisir une formation</option>
                   <option>BP JEPS ASPF</option>
@@ -192,9 +191,9 @@
             </div>
 
             <div class="form-group">
-              <label for="motivation">Pourquoi souhaitez-vous rejoindre cette formation ? *</label>
-              <textarea id="motivation" name="motivation" minlength="100" required></textarea>
-              <p class="form-hint">Minimum 100 caractères pour nous permettre de mieux comprendre votre projet.</p>
+              <label for="motivation">Votre message ou vos questions *</label>
+              <textarea id="motivation" name="motivation" minlength="30" required></textarea>
+              <p class="form-hint">Minimum 30 caractères pour que nous puissions vous répondre utilement.</p>
             </div>
 
             <div class="form-group">
@@ -222,7 +221,7 @@
               <label class="checkbox-option"><input type="checkbox" name="confidentialite" value="oui" required><span>J'ai lu et j'accepte la politique de confidentialité *</span></label>
             </div>
 
-            <button class="btn btn--primary btn--block" type="submit">Envoyer ma candidature →</button>
+            <button class="btn btn--primary btn--block" type="submit">Envoyer mon message →</button>
           </form>
         </div>
       </div>

@@ -129,7 +129,7 @@
           <h3>Pourquoi choisir un parcours SporFormation ?</h3>
           <ul class="list-check">
             <li>Parcours en apprentissage rémunéré</li>
-            <li>Implantations en Île-de-France et hors IDF</li>
+            <li>Plusieurs villes d’implantation</li>
             <li>Accompagnement vers l'alternance</li>
             <li>Diplômes reconnus et professionnalisants</li>
           </ul>
@@ -139,23 +139,51 @@
 
     <section class="section">
       <div class="container">
-        <div class="filter-bar reveal" aria-label="Filtres des formations">
-          <button class="filter-button is-active" type="button" data-filter-button="all">Tout voir</button>
-          <button class="filter-button" type="button" data-filter-button="sport">Sport</button>
-          <button class="filter-button" type="button" data-filter-button="animation">Animation</button>
-          <button class="filter-button" type="button" data-filter-button="idf">Île-de-France</button>
-          <button class="filter-button" type="button" data-filter-button="hors-idf">Hors IDF</button>
-          <button class="filter-button" type="button" data-filter-button="multi-ville">Toutes villes</button>
+        <div
+          class="filter-bar reveal"
+          data-formations-filter-root
+          aria-label="Filtres des formations"
+        >
+          <div class="filter-bar__chips">
+            <button class="filter-button is-active" type="button" data-filter-button="all">Tout voir</button>
+            <button class="filter-button" type="button" data-filter-button="sport">Sport</button>
+            <button class="filter-button" type="button" data-filter-button="animation">Animation</button>
+          </div>
+          <div class="filter-bar__tools">
+            <label class="filter-search">
+              <span class="visually-hidden">Rechercher une formation</span>
+              <svg class="filter-search__icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35M10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z"/>
+              </svg>
+              <input
+                type="search"
+                name="formation-search"
+                data-filter-search
+                placeholder="Rechercher une formation, une ville, un mot-clé…"
+                autocomplete="off"
+                spellcheck="false"
+              >
+            </label>
+            <label class="filter-city-wrap">
+              <span class="visually-hidden">Filtrer par ville</span>
+              <select class="filter-city" data-filter-city aria-label="Filtrer par ville">
+                <option value="">Toutes les villes</option>
+              </select>
+            </label>
+          </div>
         </div>
 
         <div class="grid grid--2">
-          <article class="card reveal" data-filter-item="sport idf">
+          <article
+            class="card reveal"
+            data-filter-item="sport"
+            data-formation-slug="bp-jeps-aspf"
+            data-cities="Courbevoie"
+          >
             <span class="badge badge--sport">Sport</span>
             <h3>BP JEPS - Activités Physiques et Sportives de la Forme (ASPF)</h3>
             <div class="formation-card__meta">
               <span class="tag">Courbevoie</span>
-              <span class="tag">12 mois</span>
-              <span class="tag">Alternance</span>
             </div>
             <div class="formation-card__details">
               <p><strong>Niveau d'entrée :</strong> Niveau 4 recommandé, projet professionnel validé.</p>
@@ -163,12 +191,17 @@
               <p><strong>Rythme :</strong> Alternance centre / structure d'accueil.</p>
             </div>
             <div class="card__actions">
-              <a class="btn btn--outline" href="contact.html">Voir le détail</a>
+              <button type="button" class="btn btn--outline" data-formation-detail-trigger>Voir le détail</button>
               <a class="btn btn--primary" href="contact.html">Postuler →</a>
             </div>
           </article>
 
-          <article class="card reveal" data-filter-item="sport idf hors-idf multi-ville">
+          <article
+            class="card reveal"
+            data-filter-item="sport"
+            data-formation-slug="bp-jeps-mapst"
+            data-cities="Courbevoie|Paris 7e|Cergy|Nanterre|Coulommiers|Ajaccio|Arpajon-Égly|Mortagne-au-Perche|Drancy"
+          >
             <span class="badge badge--sport">Sport</span>
             <h3>BP JEPS - Multi Activités Physiques ou Sportives pour Tous (MAPST)</h3>
             <div class="formation-card__meta">
@@ -188,12 +221,17 @@
               <p><strong>Rythme :</strong> Alternance professionnalisante en structure.</p>
             </div>
             <div class="card__actions">
-              <a class="btn btn--outline" href="contact.html">Voir le détail</a>
+              <button type="button" class="btn btn--outline" data-formation-detail-trigger>Voir le détail</button>
               <a class="btn btn--primary" href="contact.html">Postuler →</a>
             </div>
           </article>
 
-          <article class="card reveal" data-filter-item="sport idf multi-ville">
+          <article
+            class="card reveal"
+            data-filter-item="sport"
+            data-formation-slug="bp-jeps-basket"
+            data-cities="Courbevoie|Nanterre|Cergy"
+          >
             <span class="badge badge--sport">Sport</span>
             <h3>BP JEPS - Activités du Basket-Ball</h3>
             <div class="formation-card__meta">
@@ -207,17 +245,21 @@
               <p><strong>Rythme :</strong> Alternance avec présence terrain régulière.</p>
             </div>
             <div class="card__actions">
-              <a class="btn btn--outline" href="contact.html">Voir le détail</a>
+              <button type="button" class="btn btn--outline" data-formation-detail-trigger>Voir le détail</button>
               <a class="btn btn--primary" href="contact.html">Postuler →</a>
             </div>
           </article>
 
-          <article class="card reveal" data-filter-item="sport idf">
+          <article
+            class="card reveal"
+            data-filter-item="sport"
+            data-formation-slug="bp-jeps-rugby"
+            data-cities="Courbevoie"
+          >
             <span class="badge badge--sport">Sport</span>
             <h3>BP JEPS - Activités du Rugby à XV</h3>
             <div class="formation-card__meta">
               <span class="tag">Courbevoie</span>
-              <span class="tag">12 mois</span>
             </div>
             <div class="formation-card__details">
               <p><strong>Niveau d'entrée :</strong> Expérience rugby ou immersion club recommandée.</p>
@@ -225,12 +267,17 @@
               <p><strong>Rythme :</strong> Alternance adaptée au calendrier sportif.</p>
             </div>
             <div class="card__actions">
-              <a class="btn btn--outline" href="contact.html">Voir le détail</a>
+              <button type="button" class="btn btn--outline" data-formation-detail-trigger>Voir le détail</button>
               <a class="btn btn--primary" href="contact.html">Postuler →</a>
             </div>
           </article>
 
-          <article class="card reveal" data-filter-item="sport idf multi-ville">
+          <article
+            class="card reveal"
+            data-filter-item="sport"
+            data-formation-slug="tfp-cdssa"
+            data-cities="Paris 7e|Drancy|Cergy"
+          >
             <span class="badge badge--sport">Sport</span>
             <h3>TFP CDSSA - Chargé de Développement d'une Structure Sportive Associative</h3>
             <div class="formation-card__meta">
@@ -244,12 +291,17 @@
               <p><strong>Rythme :</strong> Parcours structuré entre stratégie et terrain.</p>
             </div>
             <div class="card__actions">
-              <a class="btn btn--outline" href="contact.html">Voir le détail</a>
+              <button type="button" class="btn btn--outline" data-formation-detail-trigger>Voir le détail</button>
               <a class="btn btn--primary" href="contact.html">Postuler →</a>
             </div>
           </article>
 
-          <article class="card reveal" data-filter-item="animation idf">
+          <article
+            class="card reveal"
+            data-filter-item="animation"
+            data-formation-slug="bp-jeps-asec"
+            data-cities="Courbevoie|Coulommiers"
+          >
             <span class="badge badge--animation">Animation</span>
             <h3>BP JEPS - Animation Socio-Éducative ou Culturelle (ASEC)</h3>
             <div class="formation-card__meta">
@@ -262,17 +314,21 @@
               <p><strong>Rythme :</strong> Alternance centre / structure jeunesse ou associative.</p>
             </div>
             <div class="card__actions">
-              <a class="btn btn--outline" href="contact.html">Voir le détail</a>
+              <button type="button" class="btn btn--outline" data-formation-detail-trigger>Voir le détail</button>
               <a class="btn btn--primary" href="contact.html">Postuler →</a>
             </div>
           </article>
 
-          <article class="card reveal" data-filter-item="animation idf">
+          <article
+            class="card reveal"
+            data-filter-item="animation"
+            data-formation-slug="cc-acm"
+            data-cities="Courbevoie"
+          >
             <span class="badge badge--animation">Animation</span>
             <h3>Certificat Complémentaire - Direction d'un Accueil Collectif de Mineurs (ACM)</h3>
             <div class="formation-card__meta">
               <span class="tag">Courbevoie</span>
-              <span class="tag">Complément de qualification</span>
             </div>
             <div class="formation-card__details">
               <p><strong>Niveau d'entrée :</strong> Professionnels souhaitant diriger un ACM.</p>
@@ -280,17 +336,21 @@
               <p><strong>Rythme :</strong> Format complémentaire ciblé.</p>
             </div>
             <div class="card__actions">
-              <a class="btn btn--outline" href="contact.html">Voir le détail</a>
+              <button type="button" class="btn btn--outline" data-formation-detail-trigger>Voir le détail</button>
               <a class="btn btn--primary" href="contact.html">Postuler →</a>
             </div>
           </article>
 
-          <article class="card reveal" data-filter-item="animation idf">
+          <article
+            class="card reveal"
+            data-filter-item="animation"
+            data-formation-slug="de-jeps-asec-coordination"
+            data-cities="Courbevoie"
+          >
             <span class="badge badge--animation">Animation</span>
             <h3>DE JEPS - Animation Socio-Éducative ou Culturelle, mention Coordination de Projets</h3>
             <div class="formation-card__meta">
               <span class="tag">Courbevoie</span>
-              <span class="tag">Coordination</span>
             </div>
             <div class="formation-card__details">
               <p><strong>Niveau d'entrée :</strong> Expérience souhaitée dans l'animation ou la conduite de projet.</p>
@@ -298,7 +358,7 @@
               <p><strong>Rythme :</strong> Parcours de montée en responsabilité.</p>
             </div>
             <div class="card__actions">
-              <a class="btn btn--outline" href="contact.html">Voir le détail</a>
+              <button type="button" class="btn btn--outline" data-formation-detail-trigger>Voir le détail</button>
               <a class="btn btn--primary" href="contact.html">Postuler →</a>
             </div>
           </article>
@@ -367,6 +427,26 @@
       </div>
     </section>
   </main>
+
+  <div id="formation-city-modal" class="formation-modal" hidden aria-hidden="true">
+    <div class="formation-modal__backdrop" data-formation-modal-close tabindex="-1"></div>
+    <div
+      class="formation-modal__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="formation-modal-title"
+      tabindex="-1"
+    >
+      <button type="button" class="formation-modal__close" data-formation-modal-close aria-label="Fermer">
+        ×
+      </button>
+      <span class="formation-modal__eyebrow">Formation</span>
+      <h2 id="formation-modal-title" class="formation-modal__title">Dans quelle ville&nbsp;?</h2>
+      <p class="formation-modal__subtitle" data-formation-modal-subtitle></p>
+      <div class="formation-modal__divider" aria-hidden="true"></div>
+      <div class="formation-modal__cities" data-formation-modal-cities></div>
+    </div>
+  </div>
 
   <footer class="site-footer">
     <div class="container site-footer__grid">

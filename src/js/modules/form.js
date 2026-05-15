@@ -1,4 +1,4 @@
-// Formulaires candidature ([data-contact-form]), employeurs ([data-employer-form])
+// Formulaire de contact ([data-contact-form]), employeurs ([data-employer-form])
 // et inscription Prépa TEP ([data-prepa-tep-form]).
 // Notifications équipe via Resend, déclenchées par le serveur Node (/api/email/*).
 import {
@@ -49,10 +49,10 @@ export const initContactForm = () => {
       return;
     }
 
-    if ((data.motivation || "").trim().length < 100) {
+    if ((data.motivation || "").trim().length < 30) {
       showMessage(
         "error",
-        "Merci de détailler votre motivation sur au moins 100 caractères."
+        "Merci de préciser votre message ou vos questions sur au moins 30 caractères."
       );
       return;
     }
@@ -82,12 +82,12 @@ export const initContactForm = () => {
       }
 
       if (dbOutcome.status === "rejected") {
-        console.warn("[forms-api] candidature non enregistrée en base locale", dbOutcome.reason);
+        console.warn("[forms-api] formulaire contact non enregistré en base", dbOutcome.reason);
       }
 
       showMessage(
         "success",
-        `Merci ${data.prenom} ! Votre candidature a bien été reçue. Notre équipe vous contacte sous 24h au ${data.telephone}.`
+        `Merci ${data.prenom} ! Votre message a bien été envoyé. Notre équipe vous contacte sous 24h au ${data.telephone}.`
       );
       form.reset();
     } catch (error) {

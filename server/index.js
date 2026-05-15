@@ -26,6 +26,9 @@ const rootDir = path.resolve(__dirname, "..");
 dotenv.config({ path: path.resolve(rootDir, ".env") });
 dotenv.config({ path: path.resolve(rootDir, ".env.local"), override: true });
 
+/** Longueur minimale du champ « message » du formulaire de contact (colonne motivation en base). */
+const CONTACT_MESSAGE_MIN_LENGTH = 30;
+
 const PORT = Number(process.env.FORMS_API_PORT || 3001);
 const dbPath = path.resolve(
   rootDir,
@@ -434,8 +437,8 @@ app.post("/api/email/candidature", async (req, res) => {
   if (!isValidEmail(b.email)) {
     return res.status(400).json({ error: "Email candidat invalide." });
   }
-  if (String(b.motivation).trim().length < 100) {
-    return res.status(400).json({ error: "Motivation trop courte." });
+  if (String(b.motivation).trim().length < CONTACT_MESSAGE_MIN_LENGTH) {
+    return res.status(400).json({ error: "Message trop court." });
   }
   try {
     await notifyCandidature(b);
@@ -642,8 +645,8 @@ app.post("/api/forms/student", async (req, res) => {
       return res.status(400).json({ error: `Champ manquant : ${k}` });
     }
   }
-  if (String(b.motivation).trim().length < 100) {
-    return res.status(400).json({ error: "Motivation trop courte." });
+  if (String(b.motivation).trim().length < CONTACT_MESSAGE_MIN_LENGTH) {
+    return res.status(400).json({ error: "Message trop court." });
   }
 
   const payload = {

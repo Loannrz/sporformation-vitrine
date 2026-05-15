@@ -26,6 +26,7 @@ export default defineConfig({
       input: {
         index: resolve(__dirname, "index.html"),
         formations: resolve(__dirname, "formations.html"),
+        formationDetail: resolve(__dirname, "formation-detail.html"),
         apprentissage: resolve(__dirname, "apprentissage.html"),
         aPropos: resolve(__dirname, "a-propos.html"),
         handicap: resolve(__dirname, "handicap.html"),

@@ -30,7 +30,7 @@ async function postJson(path, body) {
   }
 }
 
-/** Payload aligné sur les champs du formulaire HTML candidat */
+/** Payload aligné sur le formulaire de contact site (étudiants / visiteurs) */
 export function persistStudentForm(data) {
   return postJson("/api/forms/student", data);
 }
@@ -71,7 +71,7 @@ async function postEmail(path, body) {
   }
 }
 
-/** Envoi notification équipe via Resend (serveur lit RESEND_* depuis .env.local) */
+/** Notification équipe pour une demande issue du formulaire de contact */
 export function sendCandidatureEmail(data) {
   return postEmail("/api/email/candidature", data);
 }

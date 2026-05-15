@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Politique de confidentialité | SporFormation</title>
-  <meta name="description" content="Politique de confidentialité du site SporFormation et informations relatives au traitement des données personnelles.">
+  <title>Fiche formation | SporFormation</title>
+  <meta name="description" content="Détail d'une formation SporFormation selon la ville choisie — informations à compléter.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -12,9 +12,12 @@
 </head>
 <body>
   <a class="skip-link" href="#contenu">Aller au contenu principal</a>
+
   <header class="site-header site-header--solid" id="site-header">
     <div class="container nav">
-      <a class="nav__brand" href="index.html"><img class="nav__logo-img" src="/assets/logos/spor-formation-logo.png" width="728" height="343" alt="SporFormation — Retour à l'accueil"></a>
+      <a class="nav__brand" href="index.html">
+        <img class="nav__logo-img" src="/assets/logos/spor-formation-logo.png" width="728" height="343" alt="SporFormation — Retour à l'accueil">
+      </a>
       <div class="nav__desktop">
         <nav aria-label="Navigation principale">
           <ul class="nav__list">
@@ -56,9 +59,14 @@
         </nav>
         <a class="btn btn--primary nav__cta" href="contact.html">S'inscrire maintenant</a>
       </div>
-      <button class="nav__toggle" type="button" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Ouvrir le menu"><span class="nav__toggle-line"></span><span class="nav__toggle-line"></span><span class="nav__toggle-line"></span></button>
+      <button class="nav__toggle" type="button" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Ouvrir le menu">
+        <span class="nav__toggle-line"></span>
+        <span class="nav__toggle-line"></span>
+        <span class="nav__toggle-line"></span>
+      </button>
     </div>
   </header>
+
   <div class="mobile-nav__overlay" id="mobile-nav-overlay"></div>
   <aside class="mobile-nav" id="mobile-nav" aria-label="Menu mobile">
     <nav>
@@ -99,36 +107,88 @@
   <main id="contenu">
     <section class="page-hero">
       <div class="container">
-        <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a><span>></span><strong>Politique de confidentialité</strong></nav>
-        <div class="section-heading reveal">
-          <span class="eyebrow" style="background: rgba(255,255,255,0.12); color: #ffffff;">Données personnelles</span>
-          <h1>Politique de confidentialité</h1>
-          <p>Ce document peut être complété avec vos informations RGPD définitives. Il décrit les traitements de données liés au formulaire de contact et à la navigation sur le site.</p>
+        <nav class="breadcrumb reveal" aria-label="Fil d'Ariane">
+          <a href="index.html">Accueil</a>
+          <span>&gt;</span>
+          <a href="formations.html">Formations</a>
+          <span>&gt;</span>
+          <strong aria-current="page">Fiche</strong>
+        </nav>
+        <div class="section-heading reveal" data-formation-detail-page>
+          <span class="eyebrow" style="background: rgba(255,255,255,0.12); color: #ffffff;">Formation</span>
+          <h1 data-formation-detail-title>Fiche formation</h1>
+          <p class="formation-detail__city-line"><span data-formation-detail-city></span></p>
         </div>
       </div>
     </section>
 
     <section class="section">
-      <div class="container grid">
-        <article class="card reveal"><h3>Données collectées</h3><p>Nom, prénom, email, téléphone, ville, formation évoquée, situation, message ou questions, source d’acquisition et informations utiles pour répondre à votre demande.</p></article>
-        <article class="card reveal"><h3>Finalité du traitement</h3><p>Ces données sont utilisées pour traiter votre demande de contact, vous recontacter et vous orienter vers les informations ou formations adaptées.</p></article>
-        <article class="card reveal"><h3>Base légale</h3><p>Le traitement repose sur votre consentement explicite lors de l'envoi du formulaire et sur l'intérêt légitime d'assurer le suivi de votre demande.</p></article>
-        <article class="card reveal"><h3>Durée de conservation</h3><p>À préciser selon votre politique interne. Cette base peut être ajustée avec une durée claire et validée juridiquement.</p></article>
-        <article class="card reveal"><h3>Prestataires</h3><p>Le formulaire utilise EmailJS pour l'envoi des données. Vérifiez que votre configuration respecte vos obligations contractuelles et informatives.</p></article>
-        <article class="card reveal"><h3>Vos droits</h3><p>Vous pouvez demander l'accès, la rectification, l'effacement ou la limitation du traitement de vos données en écrivant à raphaelsporformation@gmail.com.</p></article>
+      <div class="container">
+        <div class="formation-detail-missing-banner card reveal" data-formation-detail-missing hidden>
+          <p><strong>Lien incomplet.</strong> Choisissez une formation et une ville depuis la liste des formations pour afficher la bonne fiche.</p>
+          <a class="btn btn--primary" href="formations.html">Voir toutes les formations</a>
+        </div>
+
+        <div class="card formation-detail-placeholder reveal">
+          <p data-formation-detail-placeholder>
+            Les informations détaillées (calendrier local, contacts site, spécificités du lieu…) seront ajoutées ici selon la formation et la ville sélectionnées.
+          </p>
+        </div>
+
+        <p class="formation-detail__actions reveal">
+          <a class="btn btn--outline" href="formations.html">← Retour aux formations</a>
+          <a class="btn btn--primary" href="contact.html">Nous contacter</a>
+        </p>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="container site-footer__grid">
-      <div class="site-footer__brand"><div class="nav__brand"><img class="nav__logo-img" src="/assets/logos/spor-formation-logo.png" width="728" height="343" alt="SporFormation — Formez-vous à un métier qui a du sens"></div><p>Base de politique de confidentialité à compléter et valider juridiquement si besoin.</p></div>
-      <div><h3>Navigation</h3><ul><li><a href="index.html">Accueil</a></li><li><a href="formations.html">Formations</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-      <div><h3>Informations</h3><ul><li><a href="mentions-legales.html">Mentions légales</a></li><li><a href="a-propos.html">À Propos</a></li></ul></div>
-      <div><h3>Contact</h3><ul><li><a href="tel:+33744990699">07 44 99 06 99</a></li><li><a href="mailto:raphaelsporformation@gmail.com">raphaelsporformation@gmail.com</a></li><li>Courbevoie</li></ul></div>
+      <div class="site-footer__brand">
+        <div class="nav__brand">
+          <img class="nav__logo-img" src="/assets/logos/spor-formation-logo.png" width="728" height="343" alt="SporFormation — Formez-vous à un métier qui a du sens">
+        </div>
+        <p>Le CFA dédié aux métiers du sport et de l'animation, avec des parcours reconnus, concrets et professionnalisants.</p>
+      </div>
+      <div>
+        <h3>Formations</h3>
+        <ul>
+          <li><a href="formations.html">Toutes les formations</a></li>
+          <li><a href="tep.html">Préparation TEP</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Informations</h3>
+        <ul>
+          <li><a href="a-propos.html">À Propos</a></li>
+          <li><a href="handicap.html">Handicap</a></li>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <ul>
+          <li><a href="tel:+33744990699">07 44 99 06 99</a></li>
+          <li><a href="mailto:raphaelsporformation@gmail.com">raphaelsporformation@gmail.com</a></li>
+          <li>159/161 rue Armand Silvestre, 92400 Courbevoie</li>
+        </ul>
+      </div>
     </div>
-    <div class="container site-footer__bottom"><p>© 2026 SporFormation - Tous droits réservés</p><div class="site-footer__bottom-links"><a href="mentions-legales.html">Mentions légales</a><a href="politique-de-confidentialite.html">Politique de confidentialité</a></div></div>
+    <div class="container site-footer__bottom">
+      <p>© 2026 SporFormation - Tous droits réservés</p>
+      <div class="site-footer__bottom-links">
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="politique-de-confidentialite.html">Politique de confidentialité</a>
+        <a href="a-propos.html#qualiopi">Certification Qualiopi</a>
+      </div>
+    </div>
   </footer>
-  <button class="back-to-top" id="back-to-top" type="button" aria-label="Retour en haut de page"><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+
+  <button class="back-to-top" id="back-to-top" type="button" aria-label="Retour en haut de page">
+    <svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  </button>
+
 </body>
 </html>

@@ -194,7 +194,7 @@ function linkValue(href, text) {
 export function buildCandidatureText(data) {
   return [
     "═══════════════════════════════",
-    "NOUVELLE CANDIDATURE SPORFORMATION",
+    "NOUVELLE DEMANDE DE CONTACT — SPORFORMATION",
     "═══════════════════════════════",
     `Prénom : ${data.prenom}`,
     `Nom : ${data.nom}`,
@@ -202,14 +202,14 @@ export function buildCandidatureText(data) {
     `Email : ${data.email}`,
     `Ville : ${data.villeResidence || "Non renseignée"}`,
     "",
-    `Formation souhaitée : ${data.formationSouhaitee}`,
+    `Formation évoquée : ${data.formationSouhaitee}`,
     `Ville de formation : ${data.villeFormation || "Non renseignée"}`,
     "",
     `Situation : ${data.situation}`,
     `Employeur / structure : ${data.employeur}`,
     `Source : ${data.source}`,
     "",
-    "Motivation :",
+    "Message / questions :",
     data.motivation,
     "═══════════════════════════════",
   ].join("\n");
@@ -224,7 +224,7 @@ export function buildCandidatureHtml(data) {
   const content = `
     <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top:8px;">
       ${infoRow(
-        "Candidat",
+        "Demandeur",
         `<strong style="color:${BRAND.primary};font-size:17px;">${t(data.prenom)} ${t(data.nom)}</strong>`
       )}
       ${infoRow(
@@ -234,7 +234,7 @@ export function buildCandidatureHtml(data) {
       ${infoRow("Email", linkValue(`mailto:${data.email}`, data.email))}
       ${infoRow("Ville de résidence", t(data.villeResidence || "Non renseignée"))}
       ${infoRow(
-        "Formation souhaitée",
+        "Formation évoquée",
         `<span style="display:inline-block;background:${BRAND.surface};color:${BRAND.primary};font-weight:600;padding:4px 10px;border-radius:6px;border:1px solid ${BRAND.border};">${t(data.formationSouhaitee)}</span>`
       )}
       ${infoRow("Ville de formation", t(data.villeFormation || "Non renseignée"))}
@@ -245,7 +245,7 @@ export function buildCandidatureHtml(data) {
 
     <div style="margin-top:28px;padding:20px 22px;background:${BRAND.surface};border-left:4px solid ${BRAND.accent};border-radius:0 12px 12px 0;">
       <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:${BRAND.accent};margin-bottom:10px;">
-        Motivation du candidat
+        Message et questions
       </div>
       <div style="font-family:'Segoe UI',Georgia,serif;font-size:15px;line-height:1.7;color:${BRAND.text};font-style:italic;">
         “${motivation}”
@@ -260,9 +260,9 @@ export function buildCandidatureHtml(data) {
   `;
 
   return renderEmailShell({
-    accentLabel: "Nouvelle candidature",
-    title: `Nouvelle candidature reçue`,
-    subtitle: `${data.prenom} ${data.nom} souhaite intégrer « ${data.formationSouhaitee} ». À recontacter sous 24 h.`,
+    accentLabel: "Demande de contact",
+    title: `Nouvelle demande de contact`,
+    subtitle: `${data.prenom} ${data.nom} vous écrit au sujet de « ${data.formationSouhaitee} ». À recontacter sous 24 h.`,
     contentHtml: content,
     ctaPhone: data.telephone,
   });
@@ -392,7 +392,7 @@ async function sendResendEmail({ to, subject, html, text, replyTo }) {
 
 export async function notifyCandidature(data) {
   const to = resolveRecipients();
-  const subject = `Candidature — ${data.prenom} ${data.nom} — ${data.formationSouhaitee}`;
+  const subject = `Contact — ${data.prenom} ${data.nom} — ${data.formationSouhaitee}`;
   await sendResendEmail({
     to,
     subject,

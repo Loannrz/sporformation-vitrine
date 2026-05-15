@@ -1,0 +1,298 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+body.formation-modal-open {
+  overflow: hidden;
+}
+
+@keyframes formationModalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes formationModalRise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.formation-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  animation: formationModalFadeIn 200ms ease both;
+
+  &[hidden] {
+    display: none !important;
+  }
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(120% 60% at 50% 0%, rgba(230, 57, 70, 0.18), transparent 70%),
+      rgba(13, 17, 30, 0.62);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    cursor: pointer;
+  }
+
+  &__dialog {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 480px;
+    padding: 32px 28px 28px;
+    border-radius: 22px;
+    background: var(--color-white);
+    box-shadow:
+      0 30px 60px rgba(17, 24, 39, 0.28),
+      0 6px 18px rgba(17, 24, 39, 0.08);
+    outline: none;
+    animation: formationModalRise 280ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(
+        90deg,
+        var(--color-accent) 0%,
+        #ff7a85 50%,
+        var(--color-accent) 100%
+      );
+    }
+
+    @include focus-ring;
+  }
+
+  &__close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 38px;
+    height: 38px;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    background: var(--color-surface, #f8f9fa);
+    color: var(--color-text-muted);
+    font-size: 22px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition:
+      background-color $transition-base,
+      color $transition-base,
+      border-color $transition-base,
+      transform $transition-base;
+
+    &:hover,
+    &:focus-visible {
+      background: var(--color-white);
+      border-color: rgba(230, 57, 70, 0.35);
+      color: var(--color-accent);
+      transform: rotate(90deg);
+    }
+
+    @include focus-ring;
+  }
+
+  &__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    margin-bottom: 12px;
+    border-radius: 999px;
+    background: rgba(230, 57, 70, 0.1);
+    color: var(--color-accent);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    font-family: var(--font-heading, "Poppins", sans-serif);
+    font-size: 1.45rem;
+    line-height: 1.25;
+    margin: 0 36px 6px 0;
+    color: var(--color-primary, #1a1a2e);
+  }
+
+  &__subtitle {
+    margin: 0 0 22px;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  &__divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(17, 24, 39, 0.12),
+      transparent
+    );
+    margin-bottom: 18px;
+  }
+
+  &__cities {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 320px;
+    overflow-y: auto;
+    padding-right: 4px;
+
+    /* scrollbar discrète */
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(17, 24, 39, 0.12);
+      border-radius: 999px;
+    }
+  }
+
+  &__city-btn {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    min-height: 56px;
+    border-radius: 14px;
+    border: 1px solid rgba(17, 24, 39, 0.08);
+    background: var(--color-white);
+    color: var(--color-primary);
+    font-family: inherit;
+    font-size: 0.98rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: 0 1px 0 rgba(17, 24, 39, 0.02);
+    transition:
+      transform $transition-base,
+      border-color $transition-base,
+      background-color $transition-base,
+      box-shadow $transition-base,
+      color $transition-base;
+
+    @include focus-ring;
+  }
+
+  &__city-pin {
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(230, 57, 70, 0.1);
+    color: var(--color-accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background-color $transition-base,
+      color $transition-base,
+      transform $transition-base;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &__city-label {
+    flex: 1 1 auto;
+    line-height: 1.2;
+  }
+
+  &__city-arrow {
+    flex: 0 0 auto;
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    transition:
+      transform $transition-base,
+      color $transition-base;
+  }
+
+  &__city-btn:hover,
+  &__city-btn:focus-visible {
+    border-color: rgba(230, 57, 70, 0.45);
+    background: linear-gradient(
+      135deg,
+      rgba(230, 57, 70, 0.06) 0%,
+      rgba(230, 57, 70, 0.02) 100%
+    );
+    transform: translateY(-2px);
+    box-shadow: 0 12px 22px rgba(230, 57, 70, 0.12);
+    color: var(--color-accent-dark);
+
+    .formation-modal__city-pin {
+      background: var(--color-accent);
+      color: var(--color-white);
+      transform: scale(1.05);
+    }
+
+    .formation-modal__city-arrow {
+      color: var(--color-accent);
+      transform: translateX(4px);
+    }
+  }
+}
+
+.formation-detail__city-line {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.formation-detail-placeholder {
+  margin-bottom: 24px;
+}
+
+.formation-detail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.formation-detail-missing-banner {
+  margin-bottom: 24px;
+  padding: 22px 24px;
+  border: 1px dashed var(--color-border);
+  background: var(--color-surface);
+
+  p {
+    margin: 0;
+    color: var(--color-text);
+    line-height: 1.5;
+  }
+
+  .btn {
+    margin-top: 12px;
+  }
+}
