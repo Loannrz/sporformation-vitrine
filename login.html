@@ -22,7 +22,26 @@
     .login-card h1 { font-family: "Poppins", sans-serif; font-size: 24px; margin: 0 0 6px; letter-spacing: -0.01em; }
     .login-card p.subtitle { margin: 0 0 28px; color: var(--muted); font-size: 14px; }
     label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: rgba(255,255,255,0.8); }
-    input[type="email"], input[type="password"] { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.25); color: var(--text); font-size: 15px; font-family: inherit; transition: border-color 0.15s, box-shadow 0.15s; }
+    input[type="email"] { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.25); color: var(--text); font-size: 15px; font-family: inherit; transition: border-color 0.15s, box-shadow 0.15s; }
+    .login-password-wrap { position: relative; display: block; }
+    .login-password-wrap input {
+      width: 100%; padding: 12px 44px 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(0,0,0,0.25); color: var(--text); font-size: 15px; font-family: inherit;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .login-password-wrap input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(249,65,68,0.25); }
+    .login-password-toggle {
+      position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+      width: 36px; height: 36px; padding: 0; border: none; border-radius: 8px;
+      background: transparent; color: rgba(255,255,255,0.5); cursor: pointer;
+      display: grid; place-items: center; transition: color 0.15s, background 0.15s;
+    }
+    .login-password-toggle:hover { color: rgba(255,255,255,0.92); background: rgba(255,255,255,0.06); }
+    .login-password-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .login-password-toggle svg { display: block; }
+    .login-password-toggle__hide { display: none; }
+    .login-password-toggle.is-revealed .login-password-toggle__show { display: none; }
+    .login-password-toggle.is-revealed .login-password-toggle__hide { display: block; }
     input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(249,65,68,0.25); }
     .field { margin-bottom: 18px; }
     button[type="submit"] { width: 100%; padding: 13px; background: var(--accent); color: #fff; border: 0; border-radius: 10px; font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; transition: transform 0.05s, filter 0.15s; }
@@ -56,7 +75,13 @@
         </div>
         <div class="field">
           <label for="login-password">Mot de passe</label>
-          <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+          <div class="login-password-wrap">
+            <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+            <button type="button" class="login-password-toggle" id="login-password-toggle" aria-label="Afficher le mot de passe" aria-pressed="false">
+              <svg class="login-password-toggle__show" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg class="login-password-toggle__hide" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+          </div>
         </div>
         <button type="submit" id="login-submit">Se connecter</button>
         <p class="error" id="login-error" role="alert"></p>

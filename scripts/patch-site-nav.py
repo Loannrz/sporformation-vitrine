@@ -1,19 +1,30 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Accessibilité & Handicap | SporFormation</title>
-  <meta name="description" content="SporFormation s'engage pour l'inclusion et l'accessibilité des personnes en situation de handicap. Découvrez les aménagements et ressources disponibles.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-  <script type="module" src="/src/js/main.js"></script>
-</head>
-<body>
-  <a class="skip-link" href="#contenu">Aller au contenu principal</a>
-  <header class="site-header site-header--solid" id="site-header">
-    <div class="container nav">
+#!/usr/bin/env python3
+"""Réinjecte la navigation complète dans les HTML vitrine (une passe)."""
+
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+
+HTML_FILES = [
+    ROOT / "index.html",
+    ROOT / "a-propos.html",
+    ROOT / "apprentissage.html",
+    ROOT / "certificat-qualiopi.html",
+    ROOT / "contact.html",
+    ROOT / "formation-detail.html",
+    ROOT / "formations.html",
+    ROOT / "formulaire-employeur.html",
+    ROOT / "handicap.html",
+    ROOT / "inscription-prepa-tep.html",
+    ROOT / "mentions-legales.html",
+    ROOT / "politique-de-confidentialite.html",
+    ROOT / "tep.html",
+]
+
+
+def fragment(cta_href_attr: str, cta_label: str) -> str:
+    # cta_href_attr ex: 'href="/contact.html"' ou 'href="#formulaire"'
+    return f"""    <div class="container nav">
       <a class="nav__brand" href="/">
         <img class="nav__logo-img" src="/assets/logos/spor-formation-logo.png" width="728" height="343" alt="SporFormation — Retour à l'accueil">
       </a>
@@ -72,7 +83,7 @@
             <li class="nav__item"><a class="nav__link" href="/contact.html">Contact</a></li>
           </ul>
         </nav>
-        <a class="btn btn--primary nav__cta" href="/contact.html">S'inscrire maintenant</a>
+        <a class="btn btn--primary nav__cta" {cta_href_attr}>{cta_label}</a>
       </div>
       <button class="nav__toggle" type="button" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Ouvrir le menu">
         <span class="nav__toggle-line"></span>
@@ -137,81 +148,50 @@
         <li><a class="mobile-nav__link" href="/handicap.html">Handicap</a></li>
         <li><a class="mobile-nav__link" href="/contact.html">Contact</a></li>
       </ul>
-      <a class="btn btn--primary mobile-nav__cta" href="/contact.html">S'inscrire maintenant</a>
+      <a class="btn btn--primary mobile-nav__cta" {cta_href_attr}>{cta_label}</a>
     </nav>
   </aside>
-  <main id="contenu">
-    <section class="page-hero">
-      <div class="container page-hero__grid">
-        <div class="reveal">
-          <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a><span>></span><strong>Handicap</strong></nav>
-          <div class="section-heading">
-            <span class="eyebrow" style="background: rgba(255,255,255,0.12); color: #ffffff;">Inclusion</span>
-            <h1>Accessibilité et Handicap</h1>
-            <p>SporFormation s'engage pour l'inclusion. Nous adaptons nos formations aux personnes en situation de handicap, avec une écoute individualisée et des solutions concrètes.</p>
-          </div>
-        </div>
-        <div class="hero-card reveal">
-          <h3>Notre engagement</h3>
-          <p>Un référent handicap est disponible pour étudier votre situation, anticiper les besoins d'aménagement et sécuriser votre parcours de formation.</p>
-        </div>
-      </div>
-    </section>
+"""
 
-    <section class="section">
-      <div class="container comparison">
-        <div class="reveal">
-          <div class="section-heading">
-            <span class="eyebrow">Accompagnement</span>
-            <h2>Un parcours adapté à votre situation</h2>
-            <p>Nous analysons vos besoins en amont pour mettre en place les aménagements nécessaires et fluidifier votre intégration dans la formation.</p>
-          </div>
-          <ul class="list-check">
-            <li>Étude personnalisée de votre situation</li>
-            <li>Aménagement du parcours ou des modalités pédagogiques</li>
-            <li>Coordination avec les partenaires compétents si nécessaire</li>
-            <li>Suivi régulier pendant la formation</li>
-          </ul>
-        </div>
-        <div class="faq reveal">
-          <details open>
-            <summary class="faq__summary">Quand faut-il nous parler de votre situation ? <span>+</span></summary>
-            <div class="faq__content">Le plus tôt possible, idéalement avant l'entrée en formation, afin d'anticiper les ajustements nécessaires.</div>
-          </details>
-          <details>
-            <summary class="faq__summary">Les formations sont-elles toutes adaptables ? <span>+</span></summary>
-            <div class="faq__content">Chaque situation est étudiée individuellement selon le diplôme, le terrain d'alternance et les contraintes pédagogiques.</div>
-          </details>
-          <details>
-            <summary class="faq__summary">Qui contacter ? <span>+</span></summary>
-            <div class="faq__content">Notre référent handicap peut être sollicité via le formulaire de contact ou par téléphone pour un échange confidentiel.</div>
-          </details>
-        </div>
-      </div>
-    </section>
 
-    <section class="section section--surface">
-      <div class="container grid grid--3">
-        <article class="contact-card reveal"><div class="contact-card__icon">♿</div><div class="contact-card__content"><strong>Référent handicap</strong><p>Accompagnement, écoute, adaptation du parcours et coordination des besoins.</p></div></article>
-        <article class="contact-card reveal"><div class="contact-card__icon">📞</div><div class="contact-card__content"><strong>07 44 99 06 99</strong><p>Un premier échange pour comprendre votre situation et les aménagements envisageables.</p></div></article>
-        <article class="contact-card reveal"><div class="contact-card__icon">📧</div><div class="contact-card__content"><strong>raphaelsporformation@gmail.com</strong><p>Demandez un rendez-vous confidentiel ou une étude de faisabilité de votre parcours.</p></div></article>
-      </div>
-      <div class="container" style="margin-top: 24px;">
-        <div class="note-panel reveal">Ressources utiles : MDPH, Agefiph, Cap Emploi, OPCO et partenaires d'accompagnement. Vous pourrez remplacer cette zone par des liens institutionnels précis.</div>
-      </div>
-    </section>
-  </main>
+def patch_file(path: Path) -> None:
+    raw = path.read_text(encoding="utf-8")
+    if path.name == "contact.html":
+        cta_attr = 'href="#formulaire"'
+        cta_label = "Poser une question"
+    else:
+        cta_attr = 'href="/contact.html"'
+        cta_label = "S'inscrire maintenant"
 
-  <footer class="site-footer">
-    <div class="container site-footer__grid">
-      <div class="site-footer__brand"><div class="nav__brand"><img class="nav__logo-img" src="/assets/logos/spor-formation-logo.png" width="728" height="343" alt="SporFormation — Formez-vous à un métier qui a du sens"></div><p>Une formation exigeante, accessible et pensée pour faire réussir chaque profil.</p></div>
-      <div><h3>Formations</h3><ul><li><a href="formations.html">Toutes les formations</a></li><li><a href="tep.html">Préparation TEP</a></li><li><a href="contact.html">Postuler</a></li></ul></div>
-      <div><h3>Informations</h3><ul><li><a href="apprentissage.html">Apprentissage</a></li><li><a href="mentions-legales.html">Mentions légales</a></li></ul></div>
-      <div><h3>Contact</h3><ul><li><a href="tel:+33744990699">07 44 99 06 99</a></li><li><a href="mailto:raphaelsporformation@gmail.com">raphaelsporformation@gmail.com</a></li><li>159/161 rue Armand Silvestre, 92400 Courbevoie</li></ul></div>
-    </div>
-    <div class="container site-footer__bottom"><p>© 2026 SporFormation - Tous droits réservés</p><div class="site-footer__bottom-links"><a href="mentions-legales.html">Mentions légales</a><a href="politique-de-confidentialite.html">Politique de confidentialité</a><a href="a-propos.html#qualiopi">Certification Qualiopi</a></div></div>
-  </footer>
+    frag = fragment(cta_attr, cta_label)
 
-  <button class="back-to-top" id="back-to-top" type="button" aria-label="Retour en haut de page"><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
-</body>
-</html>
+    header_start = raw.find("<header")
+    if header_start == -1:
+        raise SystemExit(f"Pas de <header dans {path}")
+    header_open_end = raw.find(">", header_start) + 1
+
+    container_start = raw.find('<div class="container nav">', header_start)
+    if container_start == -1:
+        raise SystemExit(f"Pas de .container nav dans {path}")
+
+    aside_end = raw.find("</aside>", container_start)
+    if aside_end == -1:
+        raise SystemExit(f"Pas de </aside> après le menu dans {path}")
+    aside_end += len("</aside>")
+    while aside_end < len(raw) and raw[aside_end] in "\r\n":
+        aside_end += 1
+
+    new_body = raw[:header_open_end] + "\n" + frag + raw[aside_end:]
+    path.write_text(new_body, encoding="utf-8")
+    print(f"OK {path.relative_to(ROOT)}")
+
+
+def main() -> None:
+    for p in HTML_FILES:
+        if not p.is_file():
+            raise SystemExit(f"Manquant: {p}")
+        patch_file(p)
+
+
+if __name__ == "__main__":
+    main()

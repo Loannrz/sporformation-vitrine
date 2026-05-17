@@ -16,8 +16,8 @@ export const FORMATION_LABELS = {
     "DE JEPS - Animation Socio-Éducative ou Culturelle, mention Coordination de Projets",
 };
 
-/** Libellé court affiché dans le breadcrumb / hero de la fiche détail */
-const FORMATION_SHORT_LABELS = {
+/** Libellé court affiché dans le breadcrumb / hero de la fiche détail et tableaux */
+export const FORMATION_SHORT_LABELS = {
   "bp-jeps-aspf": "BP JEPS Éducateur Sportif — APSF",
   "bp-jeps-mapst": "BP JEPS Éducateur Sportif — MAPST",
   "bp-jeps-basket": "BP JEPS Éducateur Sportif — Basket-Ball",

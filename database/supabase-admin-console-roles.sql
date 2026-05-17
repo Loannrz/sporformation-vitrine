@@ -1,0 +1,9 @@
+-- Rôles console (public.admins.role) — appliqués par le serveur Node + console admin
+--
+--   super-admin              → CMS complet + liste des utilisateurs + attribution des rôles
+--   site-editor              → CMS vitrine (formations, équipe, partenaires, TEP…) sans liste utilisateurs
+--   gestion-candidatures     → connexion console ; modules candidatures / contrats à venir (pas de CMS)
+--   admin                    → legacy, traité comme site-editor côté application
+--
+-- Optionnel : homogénéiser les anciennes lignes
+-- UPDATE public.admins SET role = 'site-editor' WHERE role = 'admin';

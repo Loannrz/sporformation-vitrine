@@ -1,18 +1,33 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import { resolve } from "node:path";
 
-export default defineConfig({
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+  const apiPort = String(env.FORMS_API_PORT || "3001").trim() || "3001";
+
+  return {
   root: ".",
   publicDir: "public",
   /* Permet d'utiliser les mêmes noms que Next.js (NEXT_PUBLIC_SUPABASE_*) dans .env.local */
   envPrefix: ["VITE_", "NEXT_PUBLIC_"],
+  /** Évite les erreurs de résolution / pré-bundle incomplets sur @supabase/supabase-js (postgrest, realtime…). */
+  optimizeDeps: {
+    include: [
+      "@supabase/supabase-js",
+      "@supabase/postgrest-js",
+      "@supabase/realtime-js",
+      "@supabase/storage-js",
+      "@supabase/functions-js",
+      "@supabase/auth-js",
+    ],
+  },
   server: {
     host: true,
     port: 5173,
     open: true,
     proxy: {
       "/api": {
-        target: "http://127.0.0.1:3001",
+        target: `http://127.0.0.1:${apiPort}`,
         changeOrigin: true,
       },
     },
@@ -50,4 +65,5 @@ export default defineConfig({
       },
     },
   },
+};
 });

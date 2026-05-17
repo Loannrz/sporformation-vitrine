@@ -8,7 +8,8 @@
 --   • formation_overrides (override par couple formation × ville)
 --   • documents_utiles (liens & documents par "scope" — page ou fiche)
 --   • partenaires (logos + lien + ordre, nb illimité)
---   • tep_etapes (les "étapes" de la méthode TEP, nombre dynamique)
+--   • tep_etapes (étapes de la méthode TEP, nombre dynamique)
+--   • equipe_pedagogique — cadres page Qui sommes-nous (voir database/supabase-equipe-pedagogique.sql)
 --
 -- + Bucket Storage public-uploads pour les fichiers téléversés (docs / logos).
 -- ─────────────────────────────────────────────────────────────────────────────
@@ -17,7 +18,7 @@
 CREATE TABLE IF NOT EXISTS public.admins (
   user_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
   email TEXT NOT NULL,
-  role TEXT NOT NULL DEFAULT 'admin',         -- 'admin' | 'super-admin'
+  role TEXT NOT NULL DEFAULT 'site-editor',   -- super-admin | site-editor | gestion-candidatures | admin (legacy)
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 ALTER TABLE public.admins ENABLE ROW LEVEL SECURITY;

@@ -23,6 +23,8 @@
   --admin-shadow-md: 0 4px 12px rgba(15, 16, 32, 0.06), 0 2px 6px rgba(15, 16, 32, 0.04);
   --admin-shadow-lg: 0 24px 60px rgba(15, 16, 32, 0.12);
   --admin-radius: 14px;
+  /* Hauteur sticky header — à garder alignée avec .admin-topbar */
+  --admin-topbar-height: 64px;
 }
 
 * { box-sizing: border-box; }
@@ -41,6 +43,8 @@ button, input, select, textarea { font-family: inherit; font-size: inherit; colo
   position: sticky; top: 0; z-index: 50;
   display: flex; align-items: center; justify-content: space-between;
   padding: 14px 28px;
+  min-height: var(--admin-topbar-height);
+  box-sizing: border-box;
   background: linear-gradient(135deg, #1A1A2E 0%, #232544 100%);
   color: white;
   box-shadow: 0 2px 8px rgba(0,0,0,0.18);
@@ -63,13 +67,98 @@ button, input, select, textarea { font-family: inherit; font-size: inherit; colo
 .admin-layout {
   display: grid;
   grid-template-columns: 260px 1fr;
-  min-height: calc(100vh - 64px);
+  min-height: calc(100vh - var(--admin-topbar-height));
 }
+/* Colonne gauche collée sous le header : le pied reste au bas de l’écran pendant le scroll */
 .admin-sidebar {
+  position: sticky;
+  top: var(--admin-topbar-height);
+  align-self: start;
+  z-index: 40;
+  height: calc(100vh - var(--admin-topbar-height));
+  max-height: calc(100vh - var(--admin-topbar-height));
   background: var(--admin-surface);
   border-right: 1px solid var(--admin-line);
   padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
 }
+.admin-sidebar__main {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* évite que la scrollbar colle au trait du footer */
+  padding-bottom: 4px;
+}
+.admin-sidebar__divider {
+  margin: 12px 14px 10px;
+  border: none;
+  border-top: 1px solid var(--admin-line);
+  flex-shrink: 0;
+}
+.admin-sidebar__footer {
+  flex-shrink: 0;
+  margin-top: 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--admin-line);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--admin-surface);
+}
+.admin-sidebar__footer-link {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  color: var(--admin-muted);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  box-sizing: border-box;
+}
+.admin-sidebar__footer-link:hover {
+  background: var(--admin-surface-2);
+  color: var(--admin-text);
+}
+.admin-sidebar__footer-link.active {
+  background: rgba(249,65,68,0.12);
+  color: var(--admin-accent);
+}
+.admin-sidebar__footer-btn {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  color: var(--admin-muted);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  border: 1px solid transparent;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  box-sizing: border-box;
+}
+.admin-sidebar__footer-btn:hover {
+  background: var(--admin-surface-2);
+  color: var(--admin-text);
+}
+.admin-sidebar__footer-btn .icon,
+.admin-sidebar__footer-link .icon {
+  width: 18px; height: 18px;
+  display: inline-flex; align-items: center; justify-content: center;
+  opacity: 0.85;
+}
+.admin-sidebar__footer-link.active .icon { opacity: 1; }
 .admin-sidebar a {
   display: flex; align-items: center; gap: 12px;
   padding: 11px 14px;
@@ -558,20 +647,6 @@ button, input, select, textarea { font-family: inherit; font-size: inherit; colo
       cursor: default;
     }
   }
-}
-
-.tep-step-editor {
-  background: var(--admin-surface);
-  border: 1px solid var(--admin-line);
-  border-radius: 14px;
-  padding: 18px 20px;
-  margin-bottom: 12px;
-  transition: border-color 0.15s, background 0.15s;
-}
-.tep-step-editor.accent {
-  border-color: var(--admin-accent);
-  background: linear-gradient(180deg, rgba(249,65,68,0.04), white);
-  box-shadow: 0 0 0 2px rgba(249,65,68,0.08);
 }
 
 /* Logo preview pour partenaires */
@@ -1190,4 +1265,121 @@ button, input, select, textarea { font-family: inherit; font-size: inherit; colo
   &__segment:has(input:focus-visible) {
     box-shadow: 0 0 0 2px var(--admin-surface), 0 0 0 4px rgba(249, 65, 68, 0.35);
   }
+}
+
+/* ── Profil / liste utilisateurs (bas de sidebar) ───────────────────────────── */
+.admin-users-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.admin-users-toolbar .muted {
+  font-size: 13px;
+  margin-left: auto;
+}
+@media (max-width: 720px) {
+  .admin-users-toolbar .muted {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+.admin-users-search {
+  flex: 1;
+  min-width: 180px;
+  max-width: 280px;
+  padding: 8px 12px;
+}
+.admin-users-sort {
+  min-width: 11rem;
+  padding: 8px 12px;
+}
+
+.admin-profile-email {
+  margin: 0;
+  padding: 10px 12px;
+  background: var(--admin-surface-2);
+  border-radius: 10px;
+  font-weight: 600;
+  color: var(--admin-text);
+}
+
+.admin-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.admin-modal.hidden {
+  display: none;
+}
+.admin-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 26, 46, 0.45);
+}
+.admin-modal__panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  background: var(--admin-surface);
+  border-radius: var(--admin-radius);
+  border: 1px solid var(--admin-line);
+  box-shadow: var(--admin-shadow-lg);
+  padding: 26px 28px;
+}
+.admin-modal__title {
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  margin: 0 0 6px;
+}
+.admin-modal__lead {
+  margin: 0 0 18px;
+  font-size: 13px;
+}
+.admin-modal__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+
+.admin-role-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(249, 65, 68, 0.12);
+  color: var(--admin-accent-dark);
+}
+.admin-role-pill--muted {
+  background: var(--admin-surface-2);
+  color: var(--admin-muted);
+  font-weight: 600;
+}
+
+.admin-table input[type="checkbox"].admin-user-admin-cb {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--admin-accent);
+  cursor: pointer;
+}
+.admin-table input[type="checkbox"].admin-user-admin-cb:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.admin-console-role-select {
+  min-width: 12.5rem;
+  max-width: 100%;
+  padding: 8px 10px;
 }

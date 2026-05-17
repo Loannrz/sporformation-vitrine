@@ -4,9 +4,14 @@ import { supabase, apiFetch } from "./supabase-client.js";
 async function ensureAdmin() {
   try {
     const me = await apiFetch("/api/admin/me");
-    return Boolean(me?.ok);
-  } catch (_e) {
-    return false;
+    return { ok: Boolean(me?.ok) };
+  } catch (e) {
+    const status = typeof e?.status === "number" ? e.status : null;
+    const msg = e instanceof Error ? e.message : String(e);
+    const networkFault =
+      status == null &&
+      (e instanceof TypeError || /failed to fetch|networkerror|load failed/i.test(msg));
+    return { ok: false, networkFault, httpStatus: status };
   }
 }
 
@@ -17,8 +22,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!form || !errorEl || !submitBtn) return;
 
   // Si déjà connecté et déjà admin, redirige directement
-  const already = await ensureAdmin();
-  if (already) {
+  const sessionGate = await ensureAdmin();
+  if (sessionGate.ok) {
     window.location.replace("/admin.html");
     return;
   }
@@ -31,6 +36,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     errorEl.textContent = "";
     errorEl.classList.remove("visible");
   };
+
+  const pwdInput = document.getElementById("login-password");
+  const pwdToggle = document.getElementById("login-password-toggle");
+
+  pwdToggle?.addEventListener("click", () => {
+    if (!pwdInput || !pwdToggle) return;
+    const reveal = pwdInput.type === "password";
+    pwdInput.type = reveal ? "text" : "password";
+    pwdToggle.classList.toggle("is-revealed", reveal);
+    pwdToggle.setAttribute("aria-label", reveal ? "Masquer le mot de passe" : "Afficher le mot de passe");
+    pwdToggle.setAttribute("aria-pressed", reveal ? "true" : "false");
+  });
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -50,39 +67,27 @@ document.addEventListener("DOMContentLoaded", async () => {
             : error.message || "Connexion impossible."
         );
       }
-      const ok = await ensureAdmin();
-      if (!ok) {
-        // On récupère le détail du serveur (user_id + SQL prêt-à-coller) pour aider
-        let detail = null;
-        try {
-          const r = await fetch("/api/admin/me", {
-            headers: {
-              Authorization: `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`,
-            },
-          });
-          detail = await r.json();
-        } catch (_e) {
-          /* ignore */
+      const adminGate = await ensureAdmin();
+      if (!adminGate.ok) {
+        if (adminGate.networkFault) {
+          showError(
+            "Impossible de joindre l’API du site (serveur local). Arrêtez puis relancez « npm run dev » — la commande démarre Vite et l’API sur le port configuré (3001 par défaut). Vous pouvez aussi lancer « npm run server » dans un second terminal."
+          );
+        } else {
+          await supabase.auth.signOut();
+          showError(
+            adminGate.httpStatus === 403
+              ? "Ce compte n'a pas le rôle administrateur. Contactez le responsable du site pour obtenir l'accès."
+              : "Vérification du compte administrateur impossible. Réessayez dans un instant."
+          );
         }
-        await supabase.auth.signOut();
-        const err = new Error(
-          detail?.error ||
-            "Ce compte n'a pas le rôle administrateur. Contactez le responsable du site."
-        );
-        err.detail = detail;
-        throw err;
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Se connecter";
+        return;
       }
       window.location.replace("/admin.html");
     } catch (err) {
-      // Si le serveur a renvoyé l'user_id, on affiche le SQL prêt à copier
-      if (err?.detail?.user_id) {
-        errorEl.innerHTML =
-          "Ce compte n'a pas le rôle administrateur. Exécutez le SQL suivant dans Supabase pour vous ajouter :" +
-          `<code>INSERT INTO public.admins (user_id, email, role)\nVALUES ('${err.detail.user_id}', '${err.detail.email}', 'super-admin');</code>`;
-        errorEl.classList.add("visible");
-      } else {
-        showError(err instanceof Error ? err.message : "Connexion impossible.");
-      }
+      showError(err instanceof Error ? err.message : "Connexion impossible.");
       submitBtn.disabled = false;
       submitBtn.textContent = "Se connecter";
     }

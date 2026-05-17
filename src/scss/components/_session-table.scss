@@ -50,4 +50,31 @@
     background: rgba(107, 114, 128, 0.14);
     color: var(--color-text-muted);
   }
+
+  &--closed {
+    background: rgba(107, 114, 128, 0.18);
+    color: #4b5563;
+  }
+}
+
+.session-table__btn {
+  min-height: 40px;
+  padding: 0 16px;
+  font-size: 0.875rem;
+
+  &:hover,
+  &:focus-visible {
+    transform: none;
+  }
+}
+
+.session-table__btn--inactive,
+.session-table__btn--inactive[disabled] {
+  opacity: 1;
+  pointer-events: none;
+  cursor: not-allowed;
+  border-color: rgba(17, 24, 39, 0.14);
+  color: var(--color-text-muted);
+  background: rgba(17, 24, 39, 0.04);
+  box-shadow: none;
 }

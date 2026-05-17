@@ -1,6 +1,6 @@
 /**
  * Console admin SporFormation — orchestre les onglets :
- * Formations & villes · Prépa TEP · À propos · Partenaires.
+ * Formations & villes · Équipe (À propos) · Partenaires · Utilisateurs (Auth).
  *
  * Toutes les écritures passent par /api/admin/* (JWT Supabase + table admins
  * vérifiés côté serveur, écritures avec service_role uniquement).
@@ -110,22 +110,91 @@ async function ensureAdminOrRedirect() {
   }
 }
 
+/** Libellé du rôle stocké dans public.admins (console). */
+function formatConsoleRoleLabel(roleRaw) {
+  const r = String(roleRaw || "").trim();
+  const map = {
+    "super-admin": "Super-admin",
+    "site-editor": "Modificateur du site",
+    admin: "Modificateur du site",
+    "gestion-candidatures": "Gestion des candidatures",
+  };
+  return map[r] || r || "—";
+}
+
+function consoleRoleSelectValue(stored) {
+  const r = String(stored || "").trim();
+  if (r === "admin") return "site-editor";
+  if (r === "super-admin" || r === "site-editor" || r === "gestion-candidatures") return r;
+  return "site-editor";
+}
+
+/** Permissions console si /api/admin/me est ancien (sans champ permissions). */
+function deriveConsolePermissions(admin) {
+  if (admin.permissions) return admin.permissions;
+  const r = String(admin.role || "").trim();
+  const isSuper = r === "super-admin";
+  const legacyEditor = r === "admin" || r === "site-editor";
+  return {
+    cms: isSuper || legacyEditor,
+    users: isSuper,
+    candidaturesOnly: r === "gestion-candidatures",
+  };
+}
+
+/** Masque la nav CMS ou la liste utilisateurs selon permissions renvoyées par /api/admin/me */
+function applyConsoleLayout(perms) {
+  const p = perms || { cms: true, users: false, candidaturesOnly: false };
+  const usersLink = document.querySelector('.admin-sidebar__footer-link[data-tab="utilisateurs"]');
+  const sidebarMain = document.querySelector(".admin-sidebar__main");
+  const candPanel = document.getElementById("tab-candidatures-placeholder");
+  const adminPanel = document.querySelector(".admin-panel");
+
+  if (usersLink) {
+    usersLink.classList.toggle("hidden", !p.users);
+    usersLink.setAttribute("aria-hidden", p.users ? "false" : "true");
+  }
+
+  if (p.candidaturesOnly && candPanel && adminPanel) {
+    sidebarMain?.classList.add("hidden");
+    adminPanel.querySelectorAll(":scope > section").forEach((sec) => {
+      sec.classList.toggle("hidden", sec.id !== "tab-candidatures-placeholder");
+    });
+    candPanel.classList.remove("hidden");
+    return;
+  }
+
+  sidebarMain?.classList.remove("hidden");
+  candPanel?.classList.add("hidden");
+  if (!adminPanel) return;
+  adminPanel.querySelectorAll(":scope > section").forEach((sec) => {
+    if (sec.id === "tab-candidatures-placeholder") sec.classList.add("hidden");
+    else if (sec.id === "tab-formations") sec.classList.remove("hidden");
+    else sec.classList.add("hidden");
+  });
+  document.querySelectorAll(".admin-sidebar__main a[data-tab]").forEach((a) => {
+    a.classList.toggle("active", a.dataset.tab === "formations");
+  });
+}
+
 // ───── Tabs ─────────────────────────────────────────────────────────────────
-function initTabs() {
+function initTabs(onTabChange) {
   const links = document.querySelectorAll(".admin-sidebar a[data-tab]");
   const sections = {
     formations: document.getElementById("tab-formations"),
-    tep: document.getElementById("tab-tep"),
-    apropos: document.getElementById("tab-apropos"),
+    equipe: document.getElementById("tab-equipe"),
     partenaires: document.getElementById("tab-partenaires"),
+    utilisateurs: document.getElementById("tab-utilisateurs"),
   };
   links.forEach((a) => {
     a.addEventListener("click", () => {
       links.forEach((x) => x.classList.remove("active"));
       a.classList.add("active");
-      for (const [name, sec] of Object.entries(sections)) {
-        sec?.classList.toggle("hidden", name !== a.dataset.tab);
+      const name = a.dataset.tab || "";
+      for (const [key, sec] of Object.entries(sections)) {
+        sec?.classList.toggle("hidden", key !== name);
       }
+      if (typeof onTabChange === "function") onTabChange(name);
     });
   });
 }
@@ -684,6 +753,18 @@ function buildVariantSwatches(current, onChange) {
   return wrap;
 }
 
+/** Liste déroulante « style bouton » (même jeu que les swatches des fiches formation). */
+function buildDocVariantSelect(defaultVal) {
+  const sel = el("select", { class: "admin-input" });
+  const fallback =
+    DOC_BTN_VARIANT_OPTIONS.some(([v]) => v === defaultVal) ? defaultVal : "outline";
+  for (const [val, lab] of DOC_BTN_VARIANT_OPTIONS) {
+    sel.appendChild(el("option", { value: val }, lab));
+  }
+  sel.value = fallback;
+  return sel;
+}
+
 function makePreviewBtn(variant, label) {
   const btn = el("span", { class: `btn btn--${variant} admin-doc-preview-btn` }, label || "Bouton");
   btn.setAttribute("aria-hidden", "true");
@@ -1201,7 +1282,7 @@ function renderOtherPagesDocs() {
   if (!host) return;
   host.innerHTML = "";
 
-  host.appendChild(el("h3", { style: "margin:0 0 10px;font-size:14px;" }, "Ajouter (TEP, À propos, Handicap, global)"));
+  host.appendChild(el("h3", { style: "margin:0 0 10px;font-size:14px;" }, "Ajouter (TEP, Handicap, global)"));
 
   const grid = el("div", { class: "admin-grid" });
   const scopeSel = el(
@@ -1556,106 +1637,145 @@ async function bootFormationsTab() {
   renderOtherPagesDocs();
 }
 
-// ═════════════════════════ Onglet TEP ═══════════════════════════════════════
-const tepState = { etapes: [], settings: {} };
+// ═════════════════════════ Onglet Équipe pédagogique (À propos) ══════════════
+const equipeState = { items: [] };
 
-async function loadTep() {
-  const [s, e] = await Promise.all([
-    apiFetch("/api/admin/settings"),
-    apiFetch("/api/admin/tep-etapes"),
-  ]);
-  tepState.settings = {};
-  for (const it of s.items || []) tepState.settings[it.cle] = it.valeur;
-  tepState.etapes = e.items || [];
+async function loadEquipe() {
+  const r = await apiFetch("/api/admin/equipe-pedagogique");
+  equipeState.items = r.items || [];
 }
 
-function renderTepPrices() {
-  const p1 = tepState.settings.tep_prix_inscription_seule || {};
-  const p2 = tepState.settings.tep_prix_preparation || {};
-  document.getElementById("tep-libelle-1").value = p1.libelle ?? "Inscription seule";
-  document.getElementById("tep-montant-1").value = p1.montant ?? 70;
-  document.getElementById("tep-unite-1").value = p1.unite ?? "par candidat";
-  document.getElementById("tep-libelle-2").value = p2.libelle ?? "Préparation + inscription";
-  document.getElementById("tep-montant-2").value = p2.montant ?? 100;
-  document.getElementById("tep-unite-2").value = p2.unite ?? "tout compris";
-}
-
-function renderTepEtapes() {
-  const host = document.getElementById("tep-etapes-list");
+function renderEquipePedagogiqueList() {
+  const host = document.getElementById("equipe-pedagogique-list");
+  if (!host) return;
   host.innerHTML = "";
-  if (!tepState.etapes.length) {
-    host.appendChild(el("p", { class: "admin-empty" }, "Aucune étape — cliquez « Ajouter »."));
+  if (!equipeState.items.length) {
+    host.appendChild(
+      el(
+        "p",
+        { class: "admin-empty" },
+        "Aucun membre — exécutez le SQL « equipe_pedagogique » dans Supabase puis ajoutez des cadres ci-dessus."
+      )
+    );
     return;
   }
-  tepState.etapes.forEach((etape) => {
-    const wrap = el("div", { class: "tep-step-editor" + (etape.accent ? " accent" : "") });
-    const grid = el("div", { class: "admin-grid" });
-    const ordreI = el("input", { type: "number", value: etape.ordre, step: 10 });
-    const badgeI = el("input", { type: "text", value: etape.badge || "" });
-    const titreI = el("input", { type: "text", value: etape.titre });
-    grid.append(
-      el("div", { class: "admin-field" }, el("label", {}, "Ordre"), ordreI),
-      el("div", { class: "admin-field" }, el("label", {}, "Étiquette (eyebrow)"), badgeI),
-      el("div", { class: "admin-field" }, el("label", {}, "Titre"), titreI)
-    );
-    const descI = el("textarea", { rows: 3 }, etape.description);
-    const descField = el("div", { class: "admin-field" }, el("label", {}, "Description"), descI);
-    const accentI = el("input", { type: "checkbox" });
-    accentI.checked = !!etape.accent;
-    const accentLabel = el(
-      "label",
-      { class: "admin-toggle" },
-      accentI,
-      el("span", { class: "switch" }),
-      "Mettre en avant (cadre rouge)"
-    );
-    const actions = el(
+  const sorted = [...equipeState.items].sort((a, b) => Number(a.ordre) - Number(b.ordre));
+  for (const m of sorted) {
+    const prenomI = el("input", {
+      type: "text",
+      class: "admin-input",
+      value: m.prenom || "",
+      maxlength: 80,
+    });
+    const fonctionI = el("input", {
+      type: "text",
+      class: "admin-input",
+      value: m.fonction || "",
+      maxlength: 240,
+    });
+    const emailI = el("input", {
+      type: "email",
+      class: "admin-input",
+      value: m.email || "",
+    });
+    const telI = el("input", {
+      type: "text",
+      class: "admin-input",
+      value: m.telephone || "",
+      maxlength: 40,
+    });
+    const ordreI = el("input", {
+      type: "number",
+      class: "admin-input",
+      value: m.ordre,
+      min: 0,
+      step: 10,
+    });
+    const actifI = el("input", { type: "checkbox" });
+    if (m.actif !== false) actifI.setAttribute("checked", "");
+
+    const saveRow = async () => {
+      try {
+        await apiFetch(`/api/admin/equipe-pedagogique/${m.id}`, {
+          method: "PATCH",
+          body: JSON.stringify({
+            prenom: prenomI.value.trim(),
+            fonction: fonctionI.value.trim(),
+            email: emailI.value.trim() || null,
+            telephone: telI.value.trim() || null,
+            ordre: Number(ordreI.value || 0),
+            actif: actifI.checked,
+          }),
+        });
+        await loadEquipe();
+        renderEquipePedagogiqueList();
+        flash("Cadre enregistré.");
+      } catch (e) {
+        reportError("Enregistrement équipe", e);
+      }
+    };
+
+    const row = el(
       "div",
-      { style: "display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap;" },
-      accentLabel,
-      el("div", { style: "margin-left:auto;display:flex;gap:8px;" },
+      {
+        class: "admin-card",
+        style: "padding:16px 18px;margin-bottom:14px;",
+      },
+      el(
+        "div",
+        { class: "admin-grid" },
+        el("div", { class: "admin-field" }, el("label", {}, "Prénom"), prenomI),
+        el("div", { class: "admin-field" }, el("label", {}, "Ordre"), ordreI)
+      ),
+      el(
+        "div",
+        { class: "admin-field", style: "margin-top:10px;" },
+        el("label", {}, "Fonction"),
+        fonctionI
+      ),
+      el(
+        "div",
+        { class: "admin-grid", style: "margin-top:10px;" },
+        el("div", { class: "admin-field" }, el("label", {}, "E-mail"), emailI),
+        el("div", { class: "admin-field" }, el("label", {}, "Téléphone"), telI)
+      ),
+      el(
+        "div",
+        {
+          style:
+            "margin-top:14px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:flex-end;",
+        },
+        el(
+          "label",
+          { class: "admin-toggle", style: "margin-right:auto;" },
+          actifI,
+          el("span", { class: "switch" }),
+          document.createTextNode(" Visible sur le site")
+        ),
         el(
           "button",
           {
+            type: "button",
             class: "admin-btn admin-btn--primary admin-btn--sm",
-            on: {
-              click: async () => {
-                try {
-                  await apiFetch(`/api/admin/tep-etapes/${etape.id}`, {
-                    method: "PATCH",
-                    body: JSON.stringify({
-                      ordre: Number(ordreI.value),
-                      badge: badgeI.value.trim() || null,
-                      titre: titreI.value.trim(),
-                      description: descI.value.trim(),
-                      accent: accentI.checked,
-                    }),
-                  });
-                  await loadTep();
-                  renderTepEtapes();
-                  flash("Étape enregistrée.");
-                } catch (e) {
-                  reportError("Enregistrement impossible", e);
-                }
-              },
-            },
+            on: { click: saveRow },
           },
           "Enregistrer"
         ),
         el(
           "button",
           {
+            type: "button",
             class: "admin-btn admin-btn--danger admin-btn--sm",
             on: {
               click: async () => {
-                if (!confirm("Supprimer cette étape ?")) return;
+                if (!confirm(`Supprimer « ${m.prenom} » ?`)) return;
                 try {
-                  await apiFetch(`/api/admin/tep-etapes/${etape.id}`, { method: "DELETE" });
-                  await loadTep();
-                  renderTepEtapes();
-                  flash("Étape supprimée.");
+                  await apiFetch(`/api/admin/equipe-pedagogique/${m.id}`, { method: "DELETE" });
+                  await loadEquipe();
+                  renderEquipePedagogiqueList();
+                  flash("Supprimé.");
                 } catch (e) {
-                  reportError("Suppression impossible", e);
+                  reportError("Suppression équipe", e);
                 }
               },
             },
@@ -1664,105 +1784,49 @@ function renderTepEtapes() {
         )
       )
     );
-    wrap.append(grid, descField, actions);
-    host.appendChild(wrap);
-  });
-}
-
-function bindTepTab() {
-  document.getElementById("tep-save-prices").addEventListener("click", async () => {
-    try {
-      await apiFetch("/api/admin/settings/tep_prix_inscription_seule", {
-        method: "PUT",
-        body: JSON.stringify({
-          valeur: {
-            libelle: document.getElementById("tep-libelle-1").value.trim(),
-            montant: Number(document.getElementById("tep-montant-1").value || 0),
-            unite: document.getElementById("tep-unite-1").value.trim(),
-            devise: "€",
-          },
-        }),
-      });
-      await apiFetch("/api/admin/settings/tep_prix_preparation", {
-        method: "PUT",
-        body: JSON.stringify({
-          valeur: {
-            libelle: document.getElementById("tep-libelle-2").value.trim(),
-            montant: Number(document.getElementById("tep-montant-2").value || 0),
-            unite: document.getElementById("tep-unite-2").value.trim(),
-            devise: "€",
-          },
-        }),
-      });
-      await loadTep();
-      renderTepPrices();
-      flash("Tarifs enregistrés.");
-    } catch (e) {
-      reportError("Enregistrement tarifs impossible", e);
-    }
-  });
-
-  document.getElementById("tep-etape-add").addEventListener("click", async () => {
-    try {
-      const nextOrdre = (tepState.etapes.at(-1)?.ordre || 0) + 10;
-      await apiFetch("/api/admin/tep-etapes", {
-        method: "POST",
-        body: JSON.stringify({
-          ordre: nextOrdre,
-          badge: "Étape",
-          titre: "Nouvelle étape",
-          description: "Décrivez cette étape ici.",
-          accent: false,
-        }),
-      });
-      await loadTep();
-      renderTepEtapes();
-      flash("Étape ajoutée.");
-    } catch (e) {
-      reportError("Ajout impossible", e);
-    }
-  });
-}
-
-async function bootTepTab() {
-  await loadTep();
-  renderTepPrices();
-  renderTepEtapes();
-}
-
-// ═════════════════════════ Onglet À propos ═════════════════════════════════
-async function bootAproposTab() {
-  try {
-    const s = await apiFetch("/api/admin/settings");
-    const map = {};
-    for (const it of s.items || []) map[it.cle] = it.valeur;
-    const v = map.a_propos_emploi_debouches || {};
-    document.getElementById("apropos-titre").value = v.titre || "Emploi & débouchés";
-    document.getElementById("apropos-valeur").value = v.valeur || "Insertion";
-    document.getElementById("apropos-description").value = v.description || "";
-  } catch (e) {
-    reportError("Chargement À propos", e);
+    host.appendChild(row);
   }
 }
 
-function bindAproposTab() {
-  document.getElementById("apropos-save").addEventListener("click", async () => {
+function bindEquipeTab() {
+  const btn = document.getElementById("equipe-create");
+  if (!btn || btn.dataset.bound === "1") return;
+  btn.dataset.bound = "1";
+  btn.addEventListener("click", async () => {
+    const prenom = document.getElementById("equipe-prenom").value.trim();
+    const fonction = document.getElementById("equipe-fonction").value.trim();
+    if (!prenom || !fonction) {
+      flash("Prénom et fonction sont obligatoires.", "error");
+      return;
+    }
     try {
-      await apiFetch("/api/admin/settings/a_propos_emploi_debouches", {
-        method: "PUT",
+      await apiFetch("/api/admin/equipe-pedagogique", {
+        method: "POST",
         body: JSON.stringify({
-          valeur: {
-            titre: document.getElementById("apropos-titre").value.trim(),
-            valeur: document.getElementById("apropos-valeur").value.trim(),
-            description: document.getElementById("apropos-description").value.trim(),
-          },
+          prenom,
+          fonction,
+          email: document.getElementById("equipe-email").value.trim() || null,
+          telephone: document.getElementById("equipe-tel").value.trim() || null,
+          ordre: Number(document.getElementById("equipe-ordre-create").value || 500),
         }),
       });
-      flash("Bloc « Emploi & débouchés » enregistré.");
+      document.getElementById("equipe-prenom").value = "";
+      document.getElementById("equipe-fonction").value = "";
+      document.getElementById("equipe-email").value = "";
+      document.getElementById("equipe-tel").value = "";
+      document.getElementById("equipe-ordre-create").value = "500";
+      await loadEquipe();
+      renderEquipePedagogiqueList();
+      flash("Cadre ajouté.");
     } catch (e) {
-      reportError("Enregistrement impossible", e);
+      reportError("Ajout équipe", e);
     }
   });
+}
+
+async function bootEquipeTab() {
+  await loadEquipe();
+  renderEquipePedagogiqueList();
 }
 
 // ═════════════════════════ Onglet Partenaires ══════════════════════════════
@@ -1955,30 +2019,361 @@ async function bootPartenairesTab() {
   renderPartenaires();
 }
 
+// ═════════════════════════ Onglet Utilisateurs Auth ════════════════════════
+const usersState = {
+  users: [],
+  meId: "",
+  loading: false,
+  searchQuery: "",
+  sortKey: "name-asc",
+};
+
+function normalizeUserSearchText(s) {
+  return String(s ?? "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .trim();
+}
+
+function getFilteredSortedUsers() {
+  let list = usersState.users.slice();
+  const q = normalizeUserSearchText(usersState.searchQuery);
+  if (q) {
+    list = list.filter((u) => {
+      const name = normalizeUserSearchText(u.display_name || "");
+      const email = normalizeUserSearchText(u.email || "");
+      return name.includes(q) || email.includes(q);
+    });
+  }
+  const collator = new Intl.Collator("fr", { sensitivity: "base" });
+  const cmpEmail = (a, b) => collator.compare(a.email || "", b.email || "");
+  const cmpName = (a, b) =>
+    collator.compare(a.display_name || "", b.display_name || "") || cmpEmail(a, b);
+
+  list.sort((a, b) => {
+    switch (usersState.sortKey) {
+      case "name-desc":
+        return cmpName(b, a);
+      case "email-asc":
+        return cmpEmail(a, b);
+      case "email-desc":
+        return cmpEmail(b, a);
+      case "name-asc":
+      default:
+        return cmpName(a, b);
+    }
+  });
+  return list;
+}
+
+function updateAdminUsersStatus() {
+  const statusEl = document.getElementById("admin-users-status");
+  if (!statusEl) return;
+  const total = usersState.users.length;
+  if (!total) {
+    statusEl.textContent = "";
+    return;
+  }
+  const filtered = getFilteredSortedUsers().length;
+  const hasQuery = Boolean(usersState.searchQuery.trim());
+  if (hasQuery) {
+    statusEl.textContent =
+      filtered === total
+        ? `${total} compte(s)`
+        : `${filtered} résultat(s) sur ${total} compte(s)`;
+  } else {
+    statusEl.textContent = `${total} compte(s)`;
+  }
+}
+
+async function loadAuthUsersList() {
+  usersState.loading = true;
+  const statusEl = document.getElementById("admin-users-status");
+  if (statusEl) statusEl.textContent = "Chargement…";
+  try {
+    const r = await apiFetch("/api/admin/users");
+    usersState.users = r.users || [];
+    updateAdminUsersStatus();
+  } finally {
+    usersState.loading = false;
+  }
+}
+
+function renderAuthUsersList() {
+  const host = document.getElementById("admin-users-list");
+  if (!host) return;
+  host.replaceChildren();
+
+  if (!usersState.users.length) {
+    host.appendChild(el("p", { class: "muted" }, "Aucun utilisateur renvoyé par Auth."));
+    updateAdminUsersStatus();
+    return;
+  }
+
+  const rows = getFilteredSortedUsers();
+  if (!rows.length) {
+    host.appendChild(
+      el("p", { class: "muted" }, "Aucun résultat pour cette recherche. Modifiez ou effacez le filtre.")
+    );
+    updateAdminUsersStatus();
+    return;
+  }
+
+  const tbl = el("table", { class: "admin-table" });
+  tbl.appendChild(
+    el(
+      "thead",
+      {},
+      el(
+        "tr",
+        {},
+        el("th", {}, "Nom affiché"),
+        el("th", {}, "E-mail"),
+        el("th", {}, "Accès console"),
+        el("th", {}, "Rôle console")
+      )
+    )
+  );
+  const tbody = el("tbody");
+
+  for (const u of rows) {
+    const isSelf = u.id === usersState.meId;
+
+    const roleSel = el("select", {
+      class: "admin-input admin-console-role-select",
+      "aria-label": "Rôle console",
+    });
+    for (const [val, lab] of [
+      ["site-editor", "Modificateur du site"],
+      ["gestion-candidatures", "Gestion des candidatures"],
+      ["super-admin", "Super-administrateur"],
+    ]) {
+      roleSel.appendChild(el("option", { value: val }, lab));
+    }
+    roleSel.value = consoleRoleSelectValue(u.role);
+    roleSel.disabled = !u.admin;
+
+    const syncRoleFromServer = (row) => {
+      if (row?.role) u.role = row.role;
+      roleSel.value = consoleRoleSelectValue(u.role);
+    };
+
+    roleSel.addEventListener("change", async () => {
+      if (!u.admin) return;
+      roleSel.disabled = true;
+      try {
+        const data = await apiFetch(`/api/admin/users/${encodeURIComponent(u.id)}/admin`, {
+          method: "PUT",
+          body: JSON.stringify({ admin: true, console_role: roleSel.value }),
+        });
+        syncRoleFromServer(data.row);
+        flash("Rôle console mis à jour.");
+      } catch (err) {
+        roleSel.value = consoleRoleSelectValue(u.role);
+        reportError("Mise à jour du rôle impossible", err);
+      } finally {
+        roleSel.disabled = !u.admin;
+      }
+    });
+
+    const cb = el("input", {
+      type: "checkbox",
+      class: "admin-user-admin-cb",
+      checked: u.admin,
+      disabled: isSelf && u.admin,
+      title:
+        isSelf && u.admin
+          ? "Vous ne pouvez pas retirer vos propres droits depuis cette interface."
+          : u.admin
+            ? "Retirer l’accès à la console"
+            : "Accorder l’accès à la console (rôle choisi dans la liste)",
+      on: {
+        change: async (ev) => {
+          const input = ev.target;
+          const next = input.checked;
+          input.disabled = true;
+          roleSel.disabled = true;
+          try {
+            if (next) {
+              const data = await apiFetch(`/api/admin/users/${encodeURIComponent(u.id)}/admin`, {
+                method: "PUT",
+                body: JSON.stringify({
+                  admin: true,
+                  console_role: roleSel.value,
+                }),
+              });
+              u.admin = true;
+              syncRoleFromServer(data.row);
+              flash("Accès console activé.");
+            } else {
+              await apiFetch(`/api/admin/users/${encodeURIComponent(u.id)}/admin`, {
+                method: "PUT",
+                body: JSON.stringify({ admin: false }),
+              });
+              u.admin = false;
+              u.role = null;
+              flash("Accès console retiré.");
+            }
+            renderAuthUsersList();
+          } catch (err) {
+            input.checked = !next;
+            reportError("Mise à jour impossible", err);
+          } finally {
+            input.disabled = isSelf && u.admin;
+            roleSel.disabled = !u.admin;
+          }
+        },
+      },
+    });
+
+    tbody.appendChild(
+      el(
+        "tr",
+        {},
+        el("td", {}, u.display_name || "—"),
+        el("td", {}, u.email || "—"),
+        el("td", { style: "text-align:center;" }, cb),
+        el("td", {}, roleSel)
+      )
+    );
+  }
+
+  tbl.appendChild(tbody);
+  host.appendChild(tbl);
+  updateAdminUsersStatus();
+}
+
+function bindAuthUsersTab() {
+  const btn = document.getElementById("admin-users-refresh");
+  const searchInput = document.getElementById("admin-users-search");
+  const sortSel = document.getElementById("admin-users-sort");
+
+  btn?.addEventListener("click", async () => {
+    try {
+      await loadAuthUsersList();
+      renderAuthUsersList();
+      flash("Liste actualisée.");
+    } catch (e) {
+      reportError("Actualisation impossible", e);
+    }
+  });
+
+  searchInput?.addEventListener("input", () => {
+    usersState.searchQuery = searchInput.value;
+    renderAuthUsersList();
+  });
+
+  sortSel?.addEventListener("change", () => {
+    usersState.sortKey = sortSel.value || "name-asc";
+    renderAuthUsersList();
+  });
+}
+
+async function bootAuthUsersTab() {
+  await loadAuthUsersList();
+  renderAuthUsersList();
+}
+
+function bindProfileModal(adminEmail) {
+  const modal = document.getElementById("admin-profile-modal");
+  const openBtn = document.getElementById("admin-open-profile");
+  const backdrop = document.getElementById("admin-profile-backdrop");
+  const cancel = document.getElementById("admin-profile-cancel");
+  const save = document.getElementById("admin-profile-save");
+  const emailEl = document.getElementById("admin-profile-email");
+  const pw = document.getElementById("admin-profile-password");
+  const pw2 = document.getElementById("admin-profile-password2");
+
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.add("hidden");
+    modal.setAttribute("aria-hidden", "true");
+    if (pw) pw.value = "";
+    if (pw2) pw2.value = "";
+  }
+
+  function openModal() {
+    if (!modal || !emailEl) return;
+    emailEl.textContent = adminEmail || "—";
+    if (pw) pw.value = "";
+    if (pw2) pw2.value = "";
+    modal.classList.remove("hidden");
+    modal.setAttribute("aria-hidden", "false");
+    pw?.focus();
+  }
+
+  openBtn?.addEventListener("click", () => openModal());
+  backdrop?.addEventListener("click", () => closeModal());
+  cancel?.addEventListener("click", () => closeModal());
+
+  save?.addEventListener("click", async () => {
+    const a = pw?.value?.trim() || "";
+    const b = pw2?.value?.trim() || "";
+    if (a.length < 8) {
+      flash("Le mot de passe doit contenir au moins 8 caractères.", "error");
+      return;
+    }
+    if (a !== b) {
+      flash("Les deux mots de passe ne correspondent pas.", "error");
+      return;
+    }
+    try {
+      const { error } = await supabase.auth.updateUser({ password: a });
+      if (error) throw error;
+      flash("Mot de passe mis à jour.");
+      closeModal();
+    } catch (e) {
+      reportError("Modification du mot de passe impossible", e);
+    }
+  });
+
+  document.addEventListener("keydown", (ev) => {
+    if (ev.key !== "Escape" || !modal || modal.classList.contains("hidden")) return;
+    closeModal();
+  });
+}
+
 // ═════════════════════════ Boot global ═════════════════════════════════════
 document.addEventListener("DOMContentLoaded", async () => {
   const admin = await ensureAdminOrRedirect();
   if (!admin) return;
 
+  const perms = deriveConsolePermissions(admin);
+
+  applyConsoleLayout(perms);
+
   document.getElementById("admin-user-email").textContent =
-    `${admin.email} · ${admin.role}`;
+    `${admin.email} · ${formatConsoleRoleLabel(admin.role)}`;
   document.getElementById("admin-logout").addEventListener("click", async () => {
     await supabase.auth.signOut();
     window.location.replace("/login.html");
   });
 
-  initTabs();
-  bindOtherPagesDocs();
-  bindTepTab();
-  bindAproposTab();
-  bindPartenairesTab();
+  usersState.meId = admin.user_id || "";
 
-  try {
-    await bootFormationsTab();
-    await bootTepTab();
-    await bootAproposTab();
-    await bootPartenairesTab();
-  } catch (e) {
-    reportError("Chargement initial", e);
+  initTabs((tab) => {
+    if (tab === "utilisateurs" && perms.users) {
+      bootAuthUsersTab().catch((e) => reportError("Utilisateurs", e));
+    }
+  });
+
+  if (perms.cms) {
+    bindOtherPagesDocs();
+    bindEquipeTab();
+    bindPartenairesTab();
+    try {
+      await bootFormationsTab();
+      await bootEquipeTab();
+      await bootPartenairesTab();
+    } catch (e) {
+      reportError("Chargement initial", e);
+    }
   }
+
+  if (perms.users) {
+    bindAuthUsersTab();
+  }
+
+  bindProfileModal(admin.email);
 });

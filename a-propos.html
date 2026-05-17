@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>À Propos | SporFormation</title>
-  <meta name="description" content="Découvrez l'histoire, la mission, les résultats, la certification Qualiopi, les coûts et les partenaires de SporFormation.">
+  <title>Qui sommes-nous ? | SporFormation</title>
+  <meta name="description" content="Notre ADN, nos missions et valeurs, l'équipe pédagogique, les aides aux apprentis (simulateur, logement, permis) et la certification Qualiopi.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -14,102 +14,229 @@
   <a class="skip-link" href="#contenu">Aller au contenu principal</a>
   <header class="site-header site-header--solid" id="site-header">
     <div class="container nav">
-      <a class="nav__brand" href="index.html"><img class="nav__logo-img" src="/assets/logos/spor-formation-logo.png" width="728" height="343" alt="SporFormation — Retour à l'accueil"></a>
+      <a class="nav__brand" href="/">
+        <img class="nav__logo-img" src="/assets/logos/spor-formation-logo.png" width="728" height="343" alt="SporFormation — Retour à l'accueil">
+      </a>
       <div class="nav__desktop">
         <nav aria-label="Navigation principale">
           <ul class="nav__list">
-            <li class="nav__item"><a class="nav__link" href="index.html">Accueil</a></li>
+            <li class="nav__item"><a class="nav__link" href="/">Accueil</a></li>
             <li class="nav__item">
-              <button class="nav__menu-button" type="button" aria-haspopup="true" aria-expanded="false">
-                Formations
-                <span aria-hidden="true">▾</span>
-              </button>
-              <div class="nav__dropdown" role="menu" aria-label="Sous-menu formations">
+              <button type="button" class="nav__menu-button">Formations</button>
+              <div class="nav__dropdown">
                 <ul class="nav__dropdown-list">
-                  <li><a class="nav__dropdown-link" href="formations.html">Voir toutes les formations <span>Tous parcours</span></a></li>
-                  <li><a class="nav__dropdown-link" href="formations.html#sport">BP JEPS Sport <span>Sport &amp; performance</span></a></li>
-                  <li><a class="nav__dropdown-link" href="formations.html#animation">Animation &amp; coordination <span>Animation &amp; projets</span></a></li>
-                  <li><a class="nav__dropdown-link" href="tep.html">Diagnostic &amp; préparation TEP <span>Entrer sereinement</span></a></li>
+                  <li><a class="nav__dropdown-link" href="/formations.html">Voir toutes les formations</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=bp-jeps-mapst&amp;v=Courbevoie">BPJEPS MAPST</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=bp-jeps-aspf&amp;v=Courbevoie">BPJEPS APSF (forme)</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=bp-jeps-basket&amp;v=Courbevoie">BPJEPS Basket-ball</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=bp-jeps-rugby&amp;v=Courbevoie">BPJEPS Rugby à XV</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=bp-jeps-asec&amp;v=Courbevoie">BPJEPS Animateur ASEC</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=cc-acm&amp;v=Courbevoie">CC Directeur ACM</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=de-jeps-asec-coordination&amp;v=Courbevoie">DEJEPS ASEC — coordination</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=tfp-cdssa&amp;v=Paris%207e">TFP CDSSA</a></li>
                 </ul>
               </div>
             </li>
-            <li class="nav__item"><a class="nav__link" href="tep.html">TEP</a></li>
-            <li class="nav__item"><a class="nav__link" href="apprentissage.html">Apprentissage &amp; Employeurs</a></li>
             <li class="nav__item">
-              <button class="nav__menu-button" type="button" aria-haspopup="true" aria-expanded="false">
-                À Propos
-                <span aria-hidden="true">▾</span>
-              </button>
-              <div class="nav__dropdown" role="menu" aria-label="Sous-menu à propos">
+              <button type="button" class="nav__menu-button">Apprentissage</button>
+              <div class="nav__dropdown">
                 <ul class="nav__dropdown-list">
-                  <li><a class="nav__dropdown-link" href="a-propos.html">Qui sommes-nous ? <span>Mission &amp; valeurs</span></a></li>
-                  <li><a class="nav__dropdown-link" href="a-propos.html#resultats">Résultats <span>Chiffres &amp; insertion</span></a></li>
-                  <li><a class="nav__dropdown-link" href="a-propos.html#qualiopi">Qualiopi <span>Certification qualité</span></a></li>
-                  <li><a class="nav__dropdown-link" href="a-propos.html#couts">Coûts &amp; aides <span>Financement</span></a></li>
-                  <li><a class="nav__dropdown-link" href="a-propos.html#partenaires">Partenaires <span>Structures partenaires</span></a></li>
+                  <li><a class="nav__dropdown-link" href="/apprentissage.html">Apprentissage &amp; employeurs</a></li>
+                  <li><a class="nav__dropdown-link" href="/formulaire-employeur.html">Formulaire employeur</a></li>
                 </ul>
               </div>
             </li>
-            <li class="nav__item"><a class="nav__link" href="handicap.html">Handicap</a></li>
-            <li class="nav__item"><a class="nav__link" href="contact.html">Contact</a></li>
+            <li class="nav__item">
+              <button type="button" class="nav__menu-button">Préparation TEP</button>
+              <div class="nav__dropdown">
+                <ul class="nav__dropdown-list">
+                  <li><a class="nav__dropdown-link" href="/tep.html">Diagnostic &amp; préparation TEP</a></li>
+                  <li><a class="nav__dropdown-link" href="/inscription-prepa-tep.html">Inscription prépa TEP</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav__item">
+              <button type="button" class="nav__menu-button">À propos</button>
+              <div class="nav__dropdown">
+                <ul class="nav__dropdown-list">
+                  <li><a class="nav__dropdown-link" href="/certificat-qualiopi.html">Certificat Qualiopi</a></li>
+                  <li><a class="nav__dropdown-link" href="/a-propos.html">Qui sommes-nous&nbsp;?</a></li>
+                  <li><a class="nav__dropdown-link" href="/a-propos.html#resultats">Résultats</a></li>
+                  <li><a class="nav__dropdown-link" href="/a-propos.html#couts">Coûts &amp; prises en charge</a></li>
+                  <li><a class="nav__dropdown-link" href="/a-propos.html#aides-apprentis">Les aides aux apprentis</a></li>
+                  <li><a class="nav__dropdown-link" href="/a-propos.html#partenaires">Nos partenaires</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav__item"><a class="nav__link" href="/handicap.html">Handicap</a></li>
+            <li class="nav__item"><a class="nav__link" href="/contact.html">Contact</a></li>
           </ul>
         </nav>
-        <a class="btn btn--primary nav__cta" href="contact.html">S'inscrire maintenant</a>
+        <a class="btn btn--primary nav__cta" href="/contact.html">S'inscrire maintenant</a>
       </div>
-      <button class="nav__toggle" type="button" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Ouvrir le menu"><span class="nav__toggle-line"></span><span class="nav__toggle-line"></span><span class="nav__toggle-line"></span></button>
+      <button class="nav__toggle" type="button" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Ouvrir le menu">
+        <span class="nav__toggle-line"></span>
+        <span class="nav__toggle-line"></span>
+        <span class="nav__toggle-line"></span>
+      </button>
     </div>
   </header>
+
   <div class="mobile-nav__overlay" id="mobile-nav-overlay"></div>
   <aside class="mobile-nav" id="mobile-nav" aria-label="Menu mobile">
     <nav>
       <ul class="mobile-nav__list">
-        <li><a class="mobile-nav__link" href="index.html">Accueil</a></li>
+        <li><a class="mobile-nav__link" href="/">Accueil</a></li>
         <li>
           <details>
-            <summary class="mobile-nav__summary">Formations <span aria-hidden="true">+</span></summary>
+            <summary class="mobile-nav__summary">Formations</summary>
             <div class="mobile-nav__sublist">
-              <a href="formations.html">Voir toutes les formations</a>
-              <a href="formations.html#sport">Parcours sport</a>
-              <a href="formations.html#animation">Parcours animation</a>
-              <a href="tep.html">Préparation TEP</a>
+              <a href="/formations.html">Voir toutes les formations</a>
+              <a href="/formation-detail.html?f=bp-jeps-mapst&amp;v=Courbevoie">BPJEPS MAPST</a>
+              <a href="/formation-detail.html?f=bp-jeps-aspf&amp;v=Courbevoie">BPJEPS APSF (forme)</a>
+              <a href="/formation-detail.html?f=bp-jeps-basket&amp;v=Courbevoie">BPJEPS Basket-ball</a>
+              <a href="/formation-detail.html?f=bp-jeps-rugby&amp;v=Courbevoie">BPJEPS Rugby à XV</a>
+              <a href="/formation-detail.html?f=bp-jeps-asec&amp;v=Courbevoie">BPJEPS Animateur ASEC</a>
+              <a href="/formation-detail.html?f=cc-acm&amp;v=Courbevoie">CC Directeur ACM</a>
+              <a href="/formation-detail.html?f=de-jeps-asec-coordination&amp;v=Courbevoie">DEJEPS ASEC — coordination</a>
+              <a href="/formation-detail.html?f=tfp-cdssa&amp;v=Paris%207e">TFP CDSSA</a>
             </div>
           </details>
         </li>
-        <li><a class="mobile-nav__link" href="tep.html">TEP</a></li>
-        <li><a class="mobile-nav__link" href="apprentissage.html">Apprentissage &amp; Employeurs</a></li>
         <li>
           <details>
-            <summary class="mobile-nav__summary">À Propos <span aria-hidden="true">+</span></summary>
+            <summary class="mobile-nav__summary">Apprentissage</summary>
             <div class="mobile-nav__sublist">
-              <a href="a-propos.html">Qui sommes-nous ?</a>
-              <a href="a-propos.html#resultats">Résultats</a>
-              <a href="a-propos.html#qualiopi">Qualiopi</a>
-              <a href="a-propos.html#couts">Coûts &amp; aides</a>
-              <a href="a-propos.html#partenaires">Partenaires</a>
+              <a href="/apprentissage.html">Apprentissage &amp; employeurs</a>
+              <a href="/formulaire-employeur.html">Formulaire employeur</a>
             </div>
           </details>
         </li>
-        <li><a class="mobile-nav__link" href="handicap.html">Handicap</a></li>
-        <li><a class="mobile-nav__link" href="contact.html">Contact</a></li>
+        <li>
+          <details>
+            <summary class="mobile-nav__summary">Préparation TEP</summary>
+            <div class="mobile-nav__sublist">
+              <a href="/tep.html">Diagnostic &amp; préparation TEP</a>
+              <a href="/inscription-prepa-tep.html">Inscription prépa TEP</a>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details>
+            <summary class="mobile-nav__summary">À propos</summary>
+            <div class="mobile-nav__sublist">
+              <a href="/certificat-qualiopi.html">Certificat Qualiopi</a>
+              <a href="/a-propos.html">Qui sommes-nous&nbsp;?</a>
+              <a href="/a-propos.html#resultats">Résultats</a>
+              <a href="/a-propos.html#couts">Coûts &amp; prises en charge</a>
+              <a href="/a-propos.html#aides-apprentis">Les aides aux apprentis</a>
+              <a href="/a-propos.html#partenaires">Nos partenaires</a>
+            </div>
+          </details>
+        </li>
+        <li><a class="mobile-nav__link" href="/handicap.html">Handicap</a></li>
+        <li><a class="mobile-nav__link" href="/contact.html">Contact</a></li>
       </ul>
-      <a class="btn btn--primary mobile-nav__cta" href="contact.html">Nous contacter</a>
+      <a class="btn btn--primary mobile-nav__cta" href="/contact.html">S'inscrire maintenant</a>
     </nav>
   </aside>
-
   <main id="contenu">
     <section class="page-hero">
       <div class="container page-hero__grid">
         <div class="reveal">
-          <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a><span>></span><strong>À Propos</strong></nav>
+          <nav class="breadcrumb" aria-label="Fil d'Ariane">
+            <a href="index.html">Accueil</a><span>&gt;</span><strong>Qui sommes-nous&nbsp;?</strong>
+          </nav>
           <div class="section-heading">
-            <span class="eyebrow" style="background: rgba(255,255,255,0.12); color: #ffffff;">Notre identité</span>
-            <h1>Notre histoire, notre mission</h1>
-            <p>SporFormation est né d'une conviction simple : la passion du sport et de l'animation mérite un accompagnement à la hauteur. Depuis notre création, nous formons des centaines de professionnels chaque année avec une seule obsession : votre réussite.</p>
+            <span class="eyebrow" style="background: rgba(255,255,255,0.12); color: #ffffff;">Notre ADN</span>
+            <h1>Qui sommes-nous&nbsp;?</h1>
+            <p><strong>Former avec passion, encadrer avec exigence, réussir ensemble.</strong></p>
+            <p>Organisme de formation spécialisé dans les métiers du sport et de l’animation, SporFormation accompagne les apprentis vers des diplômes d’État reconnus et une insertion durable.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:14px;">
+              <a class="btn btn--primary" href="formations.html">Découvrir nos formations</a>
+              <a class="btn btn--secondary" href="contact.html">Nous contacter</a>
+            </div>
           </div>
         </div>
         <div class="media-frame reveal">
-          <img src="https://placehold.co/900x700/F8F9FA/1A1A2E?text=%C3%89quipe+Spor+Formation" alt="Photo d'équipe placeholder de SporFormation" loading="lazy" width="900" height="700">
+          <img src="https://placehold.co/900x700/F8F9FA/1A1A2E?text=SporFormation" alt="SporFormation — équipe et apprentis" loading="lazy" width="900" height="700">
         </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Nos missions</span>
+          <h2>Ce qui nous anime au quotidien</h2>
+        </div>
+        <div class="grid grid--3">
+          <article class="info-card reveal">
+            <h3>Former des professionnels</h3>
+            <p>Préparer des éducateurs sportifs et animateurs compétents, alignés sur les attentes du terrain.</p>
+          </article>
+          <article class="info-card reveal">
+            <h3>Accompagner vers l’emploi</h3>
+            <p>Aider nos apprentis à intégrer durablement le monde professionnel grâce à un suivi personnalisé.</p>
+          </article>
+          <article class="info-card reveal">
+            <h3>Répondre aux besoins des structures</h3>
+            <p>Collaborer avec les clubs, associations, structures de loisirs et collectivités partenaires.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--surface">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Nos valeurs</span>
+          <h2>Proximité, qualité, insertion</h2>
+        </div>
+        <div class="grid grid--3">
+          <article class="info-card reveal">
+            <h3>Proximité humaine</h3>
+            <p>Un accompagnement personnalisé et à taille humaine, tout au long du parcours.</p>
+          </article>
+          <article class="info-card reveal">
+            <h3>Qualité &amp; engagement</h3>
+            <p>Des formateurs experts et passionnés, dans un cadre certifié Qualiopi.</p>
+          </article>
+          <article class="info-card reveal">
+            <h3>Insertion professionnelle</h3>
+            <p>Une exigence forte sur l’employabilité et la collaboration avec les entreprises formatrices.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Notre engagement</span>
+          <h2>Une vision commune</h2>
+        </div>
+        <blockquote class="apropos-manifeste reveal">
+          <p>Chez SporFormation, nous croyons que l’apprentissage est une chance — une voie d’excellence pour révéler les talents, accompagner les vocations et professionnaliser les parcours.</p>
+          <ul>
+            <li>Un engagement fort auprès de chaque apprenti à chaque étape de la formation.</li>
+            <li>Une équipe pédagogique investie, composée de formateurs qualifiés et proches du terrain.</li>
+            <li>Une pédagogie active qui valorise la mise en pratique, l’expérimentation et la progression.</li>
+            <li>Un accompagnement individualisé et des outils de suivi pour garantir l’évolution de chaque parcours.</li>
+          </ul>
+          <p><strong>Notre mission&nbsp;:</strong> former les éducateurs et animateurs de demain, en leur transmettant des compétences, des valeurs et une posture professionnelle solide.</p>
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="section section--surface equipe-section" id="equipe">
+      <div class="container">
+        <div class="section-heading section-heading--center reveal">
+          <span class="eyebrow">Équipe</span>
+          <h2>L’équipe pédagogique &amp; administrative</h2>
+          <p>Les personnes qui vous accompagnent au sein de l’école (modifiable dans la console admin).</p>
+        </div>
+        <div data-equipe-pedagogique-grid aria-live="polite"></div>
       </div>
     </section>
 
@@ -119,7 +246,7 @@
         <div class="grid grid--4 stats-inline">
           <article class="stat-card reveal"><div class="stat-card__value"><span class="counter" data-live-metric="classes" data-target="14" data-decimals="0">0</span></div><h3>Sessions</h3><p><span data-live-metric="classes">14</span> sessions de formation ouvertes sur l'année 2025.</p></article>
           <article class="stat-card reveal"><div class="stat-card__value"><span class="counter" data-live-metric="students" data-target="204" data-decimals="0">0</span></div><h3>Apprentis formés</h3><p><span data-live-metric="students">204</span> apprentis accompagnés sur nos parcours en alternance.</p></article>
-          <article class="stat-card reveal"><div class="stat-card__value"><span class="counter" data-target="98.8" data-decimals="1">0</span>%</div><h3>Satisfaction</h3><p>98,8% de satisfaction apprenants sur les services du CFA.</p></article>
+          <article class="stat-card reveal"><div class="stat-card__value"><span class="counter" data-target="98.8" data-decimals="1">0</span>%</div><h3>Satisfaction</h3><p>98,8&nbsp;% de satisfaction apprenants sur les services du CFA.</p></article>
           <article class="stat-card reveal" data-stat-emploi-debouches><div class="stat-card__value">Insertion</div><h3>Emploi &amp; débouchés</h3><p>Taux d'insertion et de réussite à personnaliser avec vos chiffres consolidés.</p></article>
         </div>
       </div>
@@ -145,16 +272,129 @@
       <div class="container">
         <div class="section-heading reveal"><span class="eyebrow">Prise en charge</span><h2>La formation ne vous coûte rien</h2><p>Nous clarifions le financement pour éviter toute confusion et rassurer les candidats comme les employeurs.</p></div>
         <div class="grid grid--2">
-          <article class="info-card reveal"><h3>Pour les apprentis</h3><p>0€ à votre charge dans le cadre du contrat d'apprentissage. Vous vous formez tout en étant rémunéré.</p></article>
+          <article class="info-card reveal"><h3>Pour les apprentis</h3><p>0&nbsp;€ à votre charge dans le cadre du contrat d'apprentissage. Vous vous formez tout en étant rémunéré.</p></article>
           <article class="info-card reveal"><h3>Pour les employeurs</h3><p>Les coûts pédagogiques sont pris en charge selon les règles de votre OPCO, avec des aides possibles à l'embauche.</p></article>
         </div>
         <div class="note-panel reveal" style="margin-top: 24px;">Le détail des prises en charge peut varier selon le diplôme, le profil et le financeur. Un échange avec notre équipe permet d'établir un cadrage précis.</div>
       </div>
     </section>
 
+    <section class="section section--surface" id="aides-apprentis">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Apprentis</span>
+          <h2>Les aides aux apprentis</h2>
+          <p>
+            Simulateurs, logements, permis de conduire et autres dispositifs pour vous accompagner pendant votre formation en apprentissage.
+          </p>
+        </div>
+
+        <article class="info-card reveal" style="margin-bottom: 28px;">
+          <h3>Simulateur d'aides</h3>
+          <p>
+            L'ANAF (Association des Apprentis de France) propose un simulateur en ligne pour connaître les aides auxquelles vous pouvez prétendre en fonction de votre situation.
+            Vous pouvez ainsi évaluer vos droits et vous rapprocher des organismes référents.
+          </p>
+          <p style="margin-top: 16px;">
+            <a class="btn btn--primary" href="https://www.mesaidesapprenti.fr/" target="_blank" rel="noopener noreferrer">En savoir plus — Mes aides d'apprenti</a>
+          </p>
+        </article>
+
+        <div class="section-heading reveal" style="margin-top: 8px;">
+          <h3 style="font-size: clamp(1.25rem, 2vw, 1.5rem); margin-bottom: 0;">Les possibilités d'hébergement</h3>
+          <p>Pour vos temps de formation en Nouvelle-Aquitaine, plusieurs solutions peuvent vous aider à trouver un logement.</p>
+        </div>
+        <div class="grid grid--3" style="margin-bottom: 24px;">
+          <article class="info-card reveal">
+            <h3>Opération Un Deux Toit</h3>
+            <p>Louer une chambre chez l'habitant à la nuit, à la semaine ou au mois, avec des loyers encadrés.</p>
+            <p style="margin-top: 12px;"><a href="https://www.operationundeuxtoit.fr/" target="_blank" rel="noopener noreferrer">operationundeuxtoit.fr</a></p>
+          </article>
+          <article class="info-card reveal">
+            <h3>Bordeaux Habitats Jeunes</h3>
+            <p>Divers types de logements proposés sous différentes formules (location, co-location, sous-location), avec espaces communs.</p>
+            <p style="margin-top: 12px;"><a href="https://www.bordeaux-habitat.fr/offres/louer/un-logement-etudiant/" target="_blank" rel="noopener noreferrer">Logement étudiant — Bordeaux Habitat</a></p>
+          </article>
+          <article class="info-card reveal">
+            <h3>Campus Atlantica</h3>
+            <p>Situé à Artigues-près-Bordeaux&nbsp;: possibilité de louer une chambre type hôtel selon les formules proposées par l'établissement.</p>
+            <p style="margin-top: 12px;"><a href="https://www.campus-atlantica.fr/" target="_blank" rel="noopener noreferrer">campus-atlantica.fr</a></p>
+          </article>
+        </div>
+        <p class="reveal" style="margin-bottom: 28px;">
+          La Région Nouvelle-Aquitaine présente également les aides et dispositifs autour de l'hébergement&nbsp;:
+          <a href="https://jeunes.nouvelle-aquitaine.fr/vie-quotidienne/passeport-logement" target="_blank" rel="noopener noreferrer">Informations hébergements — Jeunes Nouvelle-Aquitaine</a>.
+        </p>
+
+        <div class="grid grid--2" style="margin-bottom: 28px;">
+          <article class="info-card reveal">
+            <h3>L'aide au permis</h3>
+            <p>
+              Les jeunes âgés de <strong>18 à 30 ans</strong>, titulaires d'un contrat d'apprentissage en cours d'exécution et engagés dans un parcours vers le permis&nbsp;B,
+              peuvent prétendre à une aide au titre de l'<strong>aide au permis&nbsp;B</strong> (montant forfaitaire de <strong>500&nbsp;€</strong>, sous réserve des conditions et dates en vigueur).
+            </p>
+            <p style="margin-top: 12px;">
+              <a href="https://www.alternance.emploi.gouv.fr/portail-alternance/aide-au-financement-du-permis-de-conduire-b" target="_blank" rel="noopener noreferrer">Plus d'informations sur le portail de l'alternance</a>
+            </p>
+          </article>
+          <article class="info-card reveal">
+            <h3>L'aide hébergement &amp; restauration</h3>
+            <p>Une aide peut être attribuée aux apprentis sur leur temps de formation, au titre de l'hébergement et de la restauration.</p>
+            <ul style="margin: 12px 0 0 1.1rem; padding: 0;">
+              <li>Les montants sont forfaitaires&nbsp;: <strong>3&nbsp;€</strong> le repas et <strong>6&nbsp;€</strong> la nuitée (petit-déjeuner inclus).</li>
+              <li>Les modalités précises vous seront présentées lors de la rentrée en formation.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="section-heading reveal">
+          <span class="eyebrow">À noter</span>
+          <h3 style="font-size: clamp(1.25rem, 2vw, 1.5rem); margin-bottom: 0;">Autres dispositifs</h3>
+        </div>
+        <div class="grid grid--2">
+          <article class="info-card reveal">
+            <h3>La carte d'étudiant des métiers</h3>
+            <p>Lors de la signature du contrat, les apprentis reçoivent une carte d'étudiant des métiers permettant de bénéficier de remises dans de nombreux lieux partenaires.</p>
+          </article>
+          <article class="info-card reveal">
+            <h3>Le premier équipement</h3>
+            <p>Dès la première année de contrat, nos apprentis se voient dotés d'un trousseau composé d'équipements sportifs adaptés au métier.</p>
+          </article>
+          <article class="info-card reveal">
+            <h3>L'aide Mobili-Jeunes</h3>
+            <p>
+              Une aide pouvant prendre en charge une partie du loyer (entre environ <strong>10&nbsp;€</strong> et <strong>100&nbsp;€</strong> maximum par mois pendant un an),
+              pour les jeunes de moins de 30&nbsp;ans en formation en alternance sous contrat d'apprentissage ou de professionnalisation.
+            </p>
+            <p style="margin-top: 12px;">
+              <a href="https://www.actionlogement.fr/thematiques/agir-pour-les-jeunes/l-aide-mobili-jeune" target="_blank" rel="noopener noreferrer">En savoir plus — Action Logement</a>
+            </p>
+          </article>
+          <article class="info-card reveal">
+            <h3>Départ 18:25</h3>
+            <p>Dans un objectif d'égal accès aux vacances pour tous, ce dispositif permet aux jeunes de <strong>18 à 25&nbsp;ans</strong> en situation modeste de bénéficier&nbsp;:</p>
+            <ul style="margin: 12px 0 0 1.1rem; padding: 0;">
+              <li>d'une sélection de séjours adaptés au budget&nbsp;;</li>
+              <li>de destinations variées (mer, montagne, ville) via un réseau de partenaires&nbsp;;</li>
+              <li>d'une aide financière, attribuée sous conditions de ressources ou de statut, pouvant financer jusqu'à <strong>75&nbsp;%</strong> de leur séjour.</li>
+            </ul>
+            <p style="margin-top: 12px;">
+              <a href="https://depart1825.com/" target="_blank" rel="noopener noreferrer">Tester votre éligibilité — Départ&nbsp;18:25</a>
+            </p>
+          </article>
+        </div>
+
+        <div class="note-panel reveal" style="margin-top: 28px;">
+          <strong>Offres et emploi dans le sport&nbsp;:</strong>
+          pour explorer les métiers et les opportunités du secteur, vous pouvez aussi consulter la plateforme
+          <a href="https://www.le-sport-recrute.fr/" target="_blank" rel="noopener noreferrer">Le sport recrute</a>.
+        </div>
+      </div>
+    </section>
+
     <section class="section section--surface" id="partenaires">
       <div class="container">
-        <div class="section-heading section-heading--center reveal"><span class="eyebrow">Partenaires</span><h2>Ils nous font confiance</h2><p>Prévoyez ici les logos de clubs, associations, collectivités et structures partenaires qui renforcent la crédibilité du site.</p></div>
+        <div class="section-heading section-heading--center reveal"><span class="eyebrow">Partenaires</span><h2>Ils nous font confiance</h2><p>Structures partenaires qui renforcent la crédibilité du CFA.</p></div>
         <div class="logo-grid" data-partenaires-grid>
           <div class="partner-card reveal">Partenaire 01</div>
           <div class="partner-card reveal">Partenaire 02</div>
@@ -171,7 +411,7 @@
     <div class="container site-footer__grid">
       <div class="site-footer__brand"><div class="nav__brand"><img class="nav__logo-img" src="/assets/logos/spor-formation-logo.png" width="728" height="343" alt="SporFormation — Formez-vous à un métier qui a du sens"></div><p>Un CFA engagé pour transformer les vocations en carrières solides dans le sport et l'animation.</p></div>
       <div><h3>Formations</h3><ul><li><a href="formations.html">Toutes les formations</a></li><li><a href="tep.html">Préparation TEP</a></li><li><a href="contact.html">Postuler</a></li></ul></div>
-      <div><h3>Informations</h3><ul><li><a href="apprentissage.html">Apprentissage</a></li><li><a href="handicap.html">Handicap</a></li><li><a href="mentions-legales.html">Mentions légales</a></li></ul></div>
+      <div><h3>Informations</h3><ul><li><a href="apprentissage.html">Apprentissage</a></li><li><a href="#aides-apprentis">Aides aux apprentis</a></li><li><a href="handicap.html">Handicap</a></li><li><a href="mentions-legales.html">Mentions légales</a></li></ul></div>
       <div><h3>Contact</h3><ul><li><a href="tel:+33744990699">07 44 99 06 99</a></li><li><a href="mailto:raphaelsporformation@gmail.com">raphaelsporformation@gmail.com</a></li><li>159/161 rue Armand Silvestre, 92400 Courbevoie</li></ul></div>
     </div>
     <div class="container site-footer__bottom"><p>© 2026 SporFormation - Tous droits réservés</p><div class="site-footer__bottom-links"><a href="mentions-legales.html">Mentions légales</a><a href="politique-de-confidentialite.html">Politique de confidentialité</a><a href="#qualiopi">Certification Qualiopi</a></div></div>

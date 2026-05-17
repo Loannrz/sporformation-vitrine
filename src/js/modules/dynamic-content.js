@@ -6,16 +6,15 @@
  *   • remplace les prix TEP (#tep-pricing, #methode-details)
  *   • remplace les étapes méthode TEP (data-tep-method-grid)
  *   • remplace le bloc « Emploi & débouchés » de a-propos.html
- *   • injecte la grille de partenaires
+ *   • injecte l'équipe pédagogique (À propos / Qui sommes-nous)
  *   • injecte les boutons « Documents et liens utiles » (zones data-docs-zone sur les fiches)
  *
- * Stratégie : si l'API est indisponible, on ne casse rien — les valeurs HTML
- * statiques restent en place.
+ * Stratégie : si l'API est indisponible, les zones CMS restent vides (tableaux indicateurs, etc.).
  */
 
 import {
   RESULTS_INDICATORS_CLE,
-  parseResultsIndicators,
+  parseResultsIndicatorsFromCms,
 } from "./results-indicators.js";
 import {
   resolveDeadlineDisplay,
@@ -24,6 +23,7 @@ import {
   resolveSuccessRateTrim,
   DEFAULT_SUCCESS_LABEL,
 } from "./formation-sidebar-display.js";
+import { refreshSessionsCalendarTable, enrollmentFromByCle } from "./sessions-calendar-table.js";
 
 const PAYLOAD_URL = "/api/public/site-content";
 let cachedPayload = null;
@@ -52,69 +52,92 @@ function formatHumanDate(iso) {
   const [y, m, d] = iso.split("-").map(Number);
   return dateFmt.format(new Date(Date.UTC(y, m - 1, d)));
 }
-function todayIso() {
-  const d = new Date();
-  const z = (n) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${z(d.getMonth() + 1)}-${z(d.getDate())}`;
-}
 
-function findFormationSheet(slug, ville) {
-  const key = `${slug}|${ville}`;
-  for (const art of document.querySelectorAll("[data-formation-detail-sheet]")) {
-    if (art.getAttribute("data-formation-detail-sheet") === key) return art;
+/** Section « Indicateurs de résultats » (*-res) : tableau + bloc % pilotés par le CMS uniquement. */
+function applyFormationResultsSection(sheet, byCle) {
+  const section = sheet.querySelector('section[id$="-res"]');
+  if (!section) return;
+
+  const rawRi = byCle[RESULTS_INDICATORS_CLE];
+  const data = parseResultsIndicatorsFromCms(rawRi);
+  const rate = resolveSuccessRateTrim(byCle);
+  const lab =
+    String(byCle.summary_stat_label ?? "").trim() || DEFAULT_SUCCESS_LABEL;
+
+  const statBlock = section.querySelector(".formation-detail-sheet__stat");
+  const tableWrap = section.querySelector(".formation-detail-sheet__table-wrap");
+  const foot = section.querySelector(".formation-detail-sheet__footnote");
+
+  let table = tableWrap?.querySelector("table");
+  if (tableWrap && !table) {
+    tableWrap.innerHTML = "<table><thead><tr></tr></thead><tbody></tbody></table>";
+    table = tableWrap.querySelector("table");
   }
-  return null;
-}
 
-/** Met à jour le bloc « Indicateurs de résultats » dans la fiche courante. */
-function applyResultsIndicatorsDom(sheet, data) {
-  const statBlock = sheet.querySelector(".formation-detail-sheet__stat");
+  const theadRow = table?.querySelector("thead tr");
+  const tbody = table?.querySelector("tbody");
+
   if (statBlock) {
+    const heroVal = statBlock.querySelector(".formation-detail-sheet__stat-value");
     const strongEl = statBlock.querySelector(".formation-detail-sheet__stat-caption strong");
     const spanEl = statBlock.querySelector(".formation-detail-sheet__stat-caption span");
-    if (strongEl && data.heroTitle) strongEl.textContent = data.heroTitle;
-    if (spanEl) spanEl.textContent = data.heroNote || "";
+
+    if (rate) {
+      statBlock.hidden = false;
+      if (heroVal) heroVal.textContent = rate;
+      if (strongEl) strongEl.textContent = data?.heroTitle ?? "";
+      if (spanEl) {
+        if (data) spanEl.textContent = data.heroNote ?? "";
+        else spanEl.textContent = lab;
+      }
+    } else {
+      statBlock.hidden = true;
+      if (heroVal) heroVal.textContent = "";
+      if (strongEl) strongEl.textContent = "";
+      if (spanEl) spanEl.textContent = "";
+    }
   }
 
-  const wrap = sheet.querySelector(".formation-detail-sheet__table-wrap");
-  const table = wrap?.querySelector("table");
-  if (!table || !Array.isArray(data.columns) || !Array.isArray(data.rows)) return;
-
-  const theadRow = table.querySelector("thead tr");
-  const tbody = table.querySelector("tbody");
   if (!theadRow || !tbody) return;
 
   theadRow.innerHTML = "";
-  for (const col of data.columns) {
-    const th = document.createElement("th");
-    th.scope = "col";
-    th.textContent = col;
-    theadRow.appendChild(th);
-  }
-
   tbody.innerHTML = "";
-  const dataCols = Math.max(1, data.columns.length - 1);
-  for (const row of data.rows) {
-    const tr = document.createElement("tr");
-    const tdLabel = document.createElement("td");
-    tdLabel.textContent = row.label || "";
-    tr.appendChild(tdLabel);
-    const cells = Array.isArray(row.cells) ? row.cells : [];
-    for (let i = 0; i < dataCols; i++) {
-      const td = document.createElement("td");
-      const raw = String(cells[i] ?? "").trim();
-      const strong = document.createElement("strong");
-      strong.textContent = raw || "\u00a0";
-      td.appendChild(strong);
-      tr.appendChild(td);
+
+  if (data && Array.isArray(data.columns) && data.columns.length >= 2) {
+    for (const col of data.columns) {
+      const th = document.createElement("th");
+      th.scope = "col";
+      th.textContent = col;
+      theadRow.appendChild(th);
     }
-    tbody.appendChild(tr);
+    const dataCols = data.columns.length - 1;
+    for (const row of data.rows) {
+      const tr = document.createElement("tr");
+      const tdLabel = document.createElement("td");
+      tdLabel.textContent = row.label || "";
+      tr.appendChild(tdLabel);
+      const cells = Array.isArray(row.cells) ? row.cells : [];
+      for (let i = 0; i < dataCols; i++) {
+        const td = document.createElement("td");
+        const rawCell = String(cells[i] ?? "").trim();
+        const strong = document.createElement("strong");
+        strong.textContent = rawCell || "\u00a0";
+        td.appendChild(strong);
+        tr.appendChild(td);
+      }
+      tbody.appendChild(tr);
+    }
   }
 
-  const section = wrap.closest("section") || sheet;
-  const foot = section.querySelector(".formation-detail-sheet__footnote");
-  if (foot && data.footnote != null && String(data.footnote).trim()) {
-    foot.textContent = data.footnote.trim();
+  if (foot) {
+    const ft = data?.footnote?.trim();
+    if (ft) {
+      foot.hidden = false;
+      foot.textContent = ft;
+    } else {
+      foot.hidden = true;
+      foot.textContent = "";
+    }
   }
 }
 
@@ -122,15 +145,27 @@ function applyResultsIndicatorsDom(sheet, data) {
 function applyFormationOverrides(overrides) {
   if (!document.querySelector("[data-formation-detail-page]")) return;
 
+  const list = overrides || [];
+
+  document.querySelectorAll("[data-formation-detail-sheet]").forEach((article) => {
+    const key = article.getAttribute("data-formation-detail-sheet")?.trim();
+    if (!key) return;
+    const pipe = key.indexOf("|");
+    if (pipe < 0) return;
+    const s = key.slice(0, pipe).trim();
+    const v = key.slice(pipe + 1).trim();
+    const items = list.filter((o) => o.slug === s && o.ville === v);
+    const byCleLocal = {};
+    for (const it of items) byCleLocal[it.cle] = it.valeur;
+    applyFormationResultsSection(article, byCleLocal);
+  });
+
   const params = new URLSearchParams(window.location.search);
   const slug = params.get("f")?.trim();
   const ville = params.get("v")?.trim();
   if (!slug || !ville) return;
 
-  const items = (overrides || []).filter(
-    (o) => o.slug === slug && o.ville === ville
-  );
-
+  const items = list.filter((o) => o.slug === slug && o.ville === ville);
   const byCle = {};
   for (const it of items) byCle[it.cle] = it.valeur;
 
@@ -165,7 +200,6 @@ function applyFormationOverrides(overrides) {
     if (statLabelEl) statLabelEl.textContent = "";
   }
 
-  // Indicateurs détaillés
   const fields = [
     ["effectif_actuel", "[data-formation-stat-effectif]"],
     ["taux_apprentis", "[data-formation-stat-apprentis]"],
@@ -177,34 +211,6 @@ function applyFormationOverrides(overrides) {
     if (byCle[cle]) setTextIfNonEmpty(sel, byCle[cle]);
   }
 
-  const sheet = findFormationSheet(slug, ville);
-  if (sheet) {
-    if (byCle[RESULTS_INDICATORS_CLE]) {
-      applyResultsIndicatorsDom(
-        sheet,
-        parseResultsIndicators(byCle[RESULTS_INDICATORS_CLE])
-      );
-    }
-
-    const bottomStat = sheet.querySelector(".formation-detail-sheet__stat");
-    if (bottomStat) {
-      if (rate) {
-        bottomStat.hidden = false;
-        const heroVal = bottomStat.querySelector(
-          ".formation-detail-sheet__stat-value"
-        );
-        if (heroVal) heroVal.textContent = rate;
-        const captionSpan = bottomStat.querySelector(
-          ".formation-detail-sheet__stat-caption > span"
-        );
-        if (captionSpan) captionSpan.textContent = lab;
-      } else {
-        bottomStat.hidden = true;
-      }
-    }
-  }
-
-  // ── CTA (sidebar) : auto-grisé si deadline_iso passée, ou masqué via toggle
   applyCtaState(byCle);
 }
 
@@ -224,25 +230,8 @@ function applyCtaState(byCle) {
   cta.textContent = defaultLabel;
   cta.hidden = false;
 
-  // Toggle désactivé → bouton visible mais gris, sans lien (comme « inscriptions fermées »)
-  const hiddenIntent = (() => {
-    const v = String(byCle.inscription_visible ?? "").trim().toLowerCase();
-    return v === "0" || v === "false";
-  })();
-  if (hiddenIntent) {
-    cta.hidden = false;
-    cta.textContent = "Inscriptions fermées";
-    cta.classList.add("formation-summary__cta--disabled");
-    cta.setAttribute("aria-disabled", "true");
-    cta.removeAttribute("href");
-    cta.style.pointerEvents = "none";
-    cta.style.opacity = "";
-    return;
-  }
-
-  // Date limite dépassée → même rendu désactivé
-  const iso = byCle.deadline_iso;
-  if (iso && /^\d{4}-\d{2}-\d{2}$/.test(iso) && iso < todayIso()) {
+  const enrollment = enrollmentFromByCle(byCle);
+  if (!enrollment.canApply) {
     cta.textContent = "Inscriptions fermées";
     cta.classList.add("formation-summary__cta--disabled");
     cta.setAttribute("aria-disabled", "true");
@@ -328,6 +317,43 @@ function applyAproposEmploi(settings) {
   if (valEl && v.valeur) valEl.textContent = v.valeur;
   if (titreEl && v.titre) titreEl.textContent = v.titre;
   if (descEl && v.description) descEl.textContent = v.description;
+}
+
+// ── Équipe pédagogique (page Qui sommes-nous / À propos) ─────────────────────
+function applyEquipePedagogique(members) {
+  const host = document.querySelector("[data-equipe-pedagogique-grid]");
+  if (!host) return;
+  host.innerHTML = "";
+  if (!members?.length) return;
+  const sorted = [...members].sort((a, b) => Number(a.ordre ?? 0) - Number(b.ordre ?? 0));
+  for (const m of sorted) {
+    const article = document.createElement("article");
+    article.className = "equipe-card reveal";
+    const h3 = document.createElement("h3");
+    h3.className = "equipe-card__name";
+    h3.textContent = m.prenom || "";
+    article.appendChild(h3);
+    const role = document.createElement("p");
+    role.className = "equipe-card__role";
+    role.textContent = m.fonction || "";
+    article.appendChild(role);
+    if (m.email) {
+      const a = document.createElement("a");
+      a.className = "equipe-card__contact";
+      a.href = `mailto:${String(m.email).trim()}`;
+      a.textContent = m.email;
+      article.appendChild(a);
+    }
+    if (m.telephone) {
+      const tel = document.createElement("a");
+      tel.className = "equipe-card__contact";
+      const raw = String(m.telephone).replace(/\s/g, "").replace(/\./g, "");
+      tel.href = `tel:${raw}`;
+      tel.textContent = m.telephone;
+      article.appendChild(tel);
+    }
+    host.appendChild(article);
+  }
 }
 
 // ── Partenaires : remplace la grille statique ───────────────────────────────
@@ -463,6 +489,11 @@ export async function initDynamicContent() {
     console.warn("[dynamic] A propos", e);
   }
   try {
+    applyEquipePedagogique(payload.equipe_pedagogique);
+  } catch (e) {
+    console.warn("[dynamic] equipe pedagogique", e);
+  }
+  try {
     applyPartenaires(payload.partenaires);
   } catch (e) {
     console.warn("[dynamic] partenaires", e);
@@ -471,5 +502,10 @@ export async function initDynamicContent() {
     applyDocumentZones(payload.documents);
   } catch (e) {
     console.warn("[dynamic] docs", e);
+  }
+  try {
+    refreshSessionsCalendarTable(payload.formation_overrides ?? []);
+  } catch (e) {
+    console.warn("[dynamic] sessions calendar table", e);
   }
 }

@@ -12,6 +12,7 @@ import {
   initFormationCityModal,
   initFormationDetailPage,
 } from "./modules/formation-city-detail.js";
+import { initSessionsCalendarTable } from "./modules/sessions-calendar-table.js";
 import {
   initContactForm,
   initEmployerForm,
@@ -31,6 +32,7 @@ const boot = async () => {
   initFilters();
   initFormationCityModal();
   initFormationDetailPage();
+  initSessionsCalendarTable();
   initContactForm();
   initEmployerForm();
   initPrepaTepForm();

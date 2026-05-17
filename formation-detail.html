@@ -15,49 +15,65 @@
 
   <header class="site-header site-header--solid" id="site-header">
     <div class="container nav">
-      <a class="nav__brand" href="index.html">
+      <a class="nav__brand" href="/">
         <img class="nav__logo-img" src="/assets/logos/spor-formation-logo.png" width="728" height="343" alt="SporFormation — Retour à l'accueil">
       </a>
       <div class="nav__desktop">
         <nav aria-label="Navigation principale">
           <ul class="nav__list">
-            <li class="nav__item"><a class="nav__link" href="index.html">Accueil</a></li>
+            <li class="nav__item"><a class="nav__link" href="/">Accueil</a></li>
             <li class="nav__item">
-              <button class="nav__menu-button" type="button" aria-haspopup="true" aria-expanded="false">
-                Formations
-                <span aria-hidden="true">▾</span>
-              </button>
-              <div class="nav__dropdown" role="menu" aria-label="Sous-menu formations">
+              <button type="button" class="nav__menu-button">Formations</button>
+              <div class="nav__dropdown">
                 <ul class="nav__dropdown-list">
-                  <li><a class="nav__dropdown-link" href="formations.html">Voir toutes les formations <span>Tous parcours</span></a></li>
-                  <li><a class="nav__dropdown-link" href="formations.html#sport">BP JEPS Sport <span>Sport &amp; performance</span></a></li>
-                  <li><a class="nav__dropdown-link" href="formations.html#animation">Animation &amp; coordination <span>Animation &amp; projets</span></a></li>
-                  <li><a class="nav__dropdown-link" href="tep.html">Diagnostic &amp; préparation TEP <span>Entrer sereinement</span></a></li>
+                  <li><a class="nav__dropdown-link" href="/formations.html">Voir toutes les formations</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=bp-jeps-mapst&amp;v=Courbevoie">BPJEPS MAPST</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=bp-jeps-aspf&amp;v=Courbevoie">BPJEPS APSF (forme)</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=bp-jeps-basket&amp;v=Courbevoie">BPJEPS Basket-ball</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=bp-jeps-rugby&amp;v=Courbevoie">BPJEPS Rugby à XV</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=bp-jeps-asec&amp;v=Courbevoie">BPJEPS Animateur ASEC</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=cc-acm&amp;v=Courbevoie">CC Directeur ACM</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=de-jeps-asec-coordination&amp;v=Courbevoie">DEJEPS ASEC — coordination</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=tfp-cdssa&amp;v=Paris%207e">TFP CDSSA</a></li>
                 </ul>
               </div>
             </li>
-            <li class="nav__item"><a class="nav__link" href="tep.html">TEP</a></li>
-            <li class="nav__item"><a class="nav__link" href="apprentissage.html">Apprentissage &amp; Employeurs</a></li>
             <li class="nav__item">
-              <button class="nav__menu-button" type="button" aria-haspopup="true" aria-expanded="false">
-                À Propos
-                <span aria-hidden="true">▾</span>
-              </button>
-              <div class="nav__dropdown" role="menu" aria-label="Sous-menu à propos">
+              <button type="button" class="nav__menu-button">Apprentissage</button>
+              <div class="nav__dropdown">
                 <ul class="nav__dropdown-list">
-                  <li><a class="nav__dropdown-link" href="a-propos.html">Qui sommes-nous ? <span>Mission &amp; valeurs</span></a></li>
-                  <li><a class="nav__dropdown-link" href="a-propos.html#resultats">Résultats <span>Chiffres &amp; insertion</span></a></li>
-                  <li><a class="nav__dropdown-link" href="a-propos.html#qualiopi">Qualiopi <span>Certification qualité</span></a></li>
-                  <li><a class="nav__dropdown-link" href="a-propos.html#couts">Coûts &amp; aides <span>Financement</span></a></li>
-                  <li><a class="nav__dropdown-link" href="a-propos.html#partenaires">Partenaires <span>Structures partenaires</span></a></li>
+                  <li><a class="nav__dropdown-link" href="/apprentissage.html">Apprentissage &amp; employeurs</a></li>
+                  <li><a class="nav__dropdown-link" href="/formulaire-employeur.html">Formulaire employeur</a></li>
                 </ul>
               </div>
             </li>
-            <li class="nav__item"><a class="nav__link" href="handicap.html">Handicap</a></li>
-            <li class="nav__item"><a class="nav__link" href="contact.html">Contact</a></li>
+            <li class="nav__item">
+              <button type="button" class="nav__menu-button">Préparation TEP</button>
+              <div class="nav__dropdown">
+                <ul class="nav__dropdown-list">
+                  <li><a class="nav__dropdown-link" href="/tep.html">Diagnostic &amp; préparation TEP</a></li>
+                  <li><a class="nav__dropdown-link" href="/inscription-prepa-tep.html">Inscription prépa TEP</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav__item">
+              <button type="button" class="nav__menu-button">À propos</button>
+              <div class="nav__dropdown">
+                <ul class="nav__dropdown-list">
+                  <li><a class="nav__dropdown-link" href="/certificat-qualiopi.html">Certificat Qualiopi</a></li>
+                  <li><a class="nav__dropdown-link" href="/a-propos.html">Qui sommes-nous&nbsp;?</a></li>
+                  <li><a class="nav__dropdown-link" href="/a-propos.html#resultats">Résultats</a></li>
+                  <li><a class="nav__dropdown-link" href="/a-propos.html#couts">Coûts &amp; prises en charge</a></li>
+                  <li><a class="nav__dropdown-link" href="/a-propos.html#aides-apprentis">Les aides aux apprentis</a></li>
+                  <li><a class="nav__dropdown-link" href="/a-propos.html#partenaires">Nos partenaires</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav__item"><a class="nav__link" href="/handicap.html">Handicap</a></li>
+            <li class="nav__item"><a class="nav__link" href="/contact.html">Contact</a></li>
           </ul>
         </nav>
-        <a class="btn btn--primary nav__cta" href="contact.html">S'inscrire maintenant</a>
+        <a class="btn btn--primary nav__cta" href="/contact.html">S'inscrire maintenant</a>
       </div>
       <button class="nav__toggle" type="button" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Ouvrir le menu">
         <span class="nav__toggle-line"></span>
@@ -71,39 +87,60 @@
   <aside class="mobile-nav" id="mobile-nav" aria-label="Menu mobile">
     <nav>
       <ul class="mobile-nav__list">
-        <li><a class="mobile-nav__link" href="index.html">Accueil</a></li>
+        <li><a class="mobile-nav__link" href="/">Accueil</a></li>
         <li>
           <details>
-            <summary class="mobile-nav__summary">Formations <span aria-hidden="true">+</span></summary>
+            <summary class="mobile-nav__summary">Formations</summary>
             <div class="mobile-nav__sublist">
-              <a href="formations.html">Voir toutes les formations</a>
-              <a href="formations.html#sport">Parcours sport</a>
-              <a href="formations.html#animation">Parcours animation</a>
-              <a href="tep.html">Préparation TEP</a>
+              <a href="/formations.html">Voir toutes les formations</a>
+              <a href="/formation-detail.html?f=bp-jeps-mapst&amp;v=Courbevoie">BPJEPS MAPST</a>
+              <a href="/formation-detail.html?f=bp-jeps-aspf&amp;v=Courbevoie">BPJEPS APSF (forme)</a>
+              <a href="/formation-detail.html?f=bp-jeps-basket&amp;v=Courbevoie">BPJEPS Basket-ball</a>
+              <a href="/formation-detail.html?f=bp-jeps-rugby&amp;v=Courbevoie">BPJEPS Rugby à XV</a>
+              <a href="/formation-detail.html?f=bp-jeps-asec&amp;v=Courbevoie">BPJEPS Animateur ASEC</a>
+              <a href="/formation-detail.html?f=cc-acm&amp;v=Courbevoie">CC Directeur ACM</a>
+              <a href="/formation-detail.html?f=de-jeps-asec-coordination&amp;v=Courbevoie">DEJEPS ASEC — coordination</a>
+              <a href="/formation-detail.html?f=tfp-cdssa&amp;v=Paris%207e">TFP CDSSA</a>
             </div>
           </details>
         </li>
-        <li><a class="mobile-nav__link" href="tep.html">TEP</a></li>
-        <li><a class="mobile-nav__link" href="apprentissage.html">Apprentissage &amp; Employeurs</a></li>
         <li>
           <details>
-            <summary class="mobile-nav__summary">À Propos <span aria-hidden="true">+</span></summary>
+            <summary class="mobile-nav__summary">Apprentissage</summary>
             <div class="mobile-nav__sublist">
-              <a href="a-propos.html">Qui sommes-nous ?</a>
-              <a href="a-propos.html#resultats">Résultats</a>
-              <a href="a-propos.html#qualiopi">Qualiopi</a>
-              <a href="a-propos.html#couts">Coûts &amp; aides</a>
-              <a href="a-propos.html#partenaires">Partenaires</a>
+              <a href="/apprentissage.html">Apprentissage &amp; employeurs</a>
+              <a href="/formulaire-employeur.html">Formulaire employeur</a>
             </div>
           </details>
         </li>
-        <li><a class="mobile-nav__link" href="handicap.html">Handicap</a></li>
-        <li><a class="mobile-nav__link" href="contact.html">Contact</a></li>
+        <li>
+          <details>
+            <summary class="mobile-nav__summary">Préparation TEP</summary>
+            <div class="mobile-nav__sublist">
+              <a href="/tep.html">Diagnostic &amp; préparation TEP</a>
+              <a href="/inscription-prepa-tep.html">Inscription prépa TEP</a>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details>
+            <summary class="mobile-nav__summary">À propos</summary>
+            <div class="mobile-nav__sublist">
+              <a href="/certificat-qualiopi.html">Certificat Qualiopi</a>
+              <a href="/a-propos.html">Qui sommes-nous&nbsp;?</a>
+              <a href="/a-propos.html#resultats">Résultats</a>
+              <a href="/a-propos.html#couts">Coûts &amp; prises en charge</a>
+              <a href="/a-propos.html#aides-apprentis">Les aides aux apprentis</a>
+              <a href="/a-propos.html#partenaires">Nos partenaires</a>
+            </div>
+          </details>
+        </li>
+        <li><a class="mobile-nav__link" href="/handicap.html">Handicap</a></li>
+        <li><a class="mobile-nav__link" href="/contact.html">Contact</a></li>
       </ul>
-      <a class="btn btn--primary mobile-nav__cta" href="contact.html">S'inscrire maintenant</a>
+      <a class="btn btn--primary mobile-nav__cta" href="/contact.html">S'inscrire maintenant</a>
     </nav>
   </aside>
-
   <main id="contenu">
     <section class="formation-detail-hero" data-formation-detail-page>
       <div class="container">
@@ -402,11 +439,12 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <div class="formation-detail-sheet__stat">
-                  <span class="formation-detail-sheet__stat-value">60&nbsp;%</span>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
                   <div class="formation-detail-sheet__stat-caption">
-                    <strong>Taux d’obtention du diplôme</strong>
-                    <span>Session 2025 — donnée communiquée à titre indicatif.</span>
+                    <strong></strong>
+                    <span></span>
                     <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
                   </div>
                 </div>
@@ -414,40 +452,14 @@
                 <div class="formation-detail-sheet__table-wrap">
                   <table>
                     <thead>
-                      <tr>
-                        <th scope="col">Indicateurs</th>
-                        <th scope="col">Session&nbsp;2024‑2025</th>
-                        <th scope="col">Session&nbsp;2025‑2026</th>
-                      </tr>
+                      <tr></tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>Nombre d’apprenants</td>
-                        <td><strong>17</strong></td>
-                        <td><strong>12</strong></td>
-                      </tr>
-                      <tr>
-                        <td>Taux d’apprentis</td>
-                        <td><strong>88,23&nbsp;%</strong></td>
-                        <td><strong>100&nbsp;%</strong></td>
-                      </tr>
-                      <tr>
-                        <td>Taux d’interruption de formation</td>
-                        <td><strong>0&nbsp;%</strong></td>
-                        <td><strong>8,33&nbsp;%</strong></td>
-                      </tr>
-                      <tr>
-                        <td>Taux de rupture de contrat d’apprentissage</td>
-                        <td><strong>0&nbsp;%</strong></td>
-                        <td><strong>16,66&nbsp;%</strong></td>
-                      </tr>
-                    </tbody>
+                    <tbody></tbody>
                   </table>
                 </div>
-                <p class="formation-detail-sheet__footnote">
-                  *&nbsp;Sous réserve de nouvelles signatures de contrat — chiffres en date du <strong>15&nbsp;avril&nbsp;2026</strong>.
-                </p>
-              </section>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
               <section class="formation-detail-section reveal" id="fd-aspf-cvq-docs">
                 <header class="formation-detail-section__header">
@@ -460,13 +472,7 @@
                   <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="tep.html">Préparation TEP APSF</a>
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/41752" rel="noopener noreferrer">Fiche RNCP&nbsp;41752</a>
-                  <a class="btn btn--outline" href="contact.html">Certificat médical &amp; pièces dossier</a>
-                  <a class="btn btn--outline" href="certificat-qualiopi.html">Certification Qualiopi</a>
-                  <a class="btn btn--outline" href="contact.html">Nous contacter</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p>
@@ -714,11 +720,12 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <div class="formation-detail-sheet__stat">
-                  <span class="formation-detail-sheet__stat-value">50&nbsp;%</span>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
                   <div class="formation-detail-sheet__stat-caption">
-                    <strong>Taux d’obtention du diplôme</strong>
-                    <span>Session 2024‑2025 — donnée indicative.</span>
+                    <strong></strong>
+                    <span></span>
                     <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
                   </div>
                 </div>
@@ -726,24 +733,14 @@
                 <div class="formation-detail-sheet__table-wrap">
                   <table>
                     <thead>
-                      <tr>
-                        <th scope="col">Indicateurs</th>
-                        <th scope="col">Session&nbsp;2024‑2025</th>
-                        <th scope="col">Session&nbsp;2025‑2026</th>
-                      </tr>
+                      <tr></tr>
                     </thead>
-                    <tbody>
-                      <tr><td>Nombre d’apprenants</td><td><strong>11</strong></td><td><strong>10</strong></td></tr>
-                      <tr><td>Taux d’apprentis</td><td><strong>100&nbsp;%</strong></td><td><strong>100&nbsp;%</strong></td></tr>
-                      <tr><td>Taux d’interruption de formation</td><td><strong>27&nbsp;%</strong></td><td><strong>0&nbsp;%</strong></td></tr>
-                      <tr><td>Taux de rupture de contrat d’apprentissage</td><td><strong>27&nbsp;%</strong></td><td><strong>0&nbsp;%</strong></td></tr>
-                    </tbody>
+                    <tbody></tbody>
                   </table>
                 </div>
-                <p class="formation-detail-sheet__footnote">
-                  *&nbsp;Sous réserve de nouvelles signatures — chiffres en date du <strong>24&nbsp;décembre&nbsp;2025</strong>.
-                </p>
-              </section>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
 
               <section class="formation-detail-section reveal" id="fd-bskt-cvq-docs">
@@ -757,13 +754,7 @@
                   <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="tep.html">Préparation TEP</a>
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/40423" rel="noopener noreferrer">Fiche RNCP&nbsp;40423</a>
-                  <a class="btn btn--outline" href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000051272292" rel="noopener noreferrer">Référentiel diplôme</a>
-                  <a class="btn btn--outline" href="contact.html">Certificat médical &amp; dossier</a>
-                  <a class="btn btn--outline" href="certificat-qualiopi.html">Qualiopi</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p>
@@ -1011,11 +1002,12 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <div class="formation-detail-sheet__stat">
-                  <span class="formation-detail-sheet__stat-value">72&nbsp;%</span>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
                   <div class="formation-detail-sheet__stat-caption">
-                    <strong>Taux d’obtention du diplôme</strong>
-                    <span>Session 2024‑2025 — donnée indicative.</span>
+                    <strong></strong>
+                    <span></span>
                     <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
                   </div>
                 </div>
@@ -1023,24 +1015,14 @@
                 <div class="formation-detail-sheet__table-wrap">
                   <table>
                     <thead>
-                      <tr>
-                        <th scope="col">Indicateurs</th>
-                        <th scope="col">Session&nbsp;2024‑2025</th>
-                        <th scope="col">Session&nbsp;2025‑2026</th>
-                      </tr>
+                      <tr></tr>
                     </thead>
-                    <tbody>
-                      <tr><td>Nombre d’apprenants</td><td><strong>13</strong></td><td><strong>15</strong></td></tr>
-                      <tr><td>Taux d’apprentis</td><td><strong>100&nbsp;%</strong></td><td><strong>100&nbsp;%</strong></td></tr>
-                      <tr><td>Taux d’interruption de formation</td><td><strong>15&nbsp;%</strong></td><td><strong>6,66&nbsp;%</strong></td></tr>
-                      <tr><td>Taux de rupture de contrat d’apprentissage</td><td><strong>15&nbsp;%</strong></td><td><strong>6,66&nbsp;%</strong></td></tr>
-                    </tbody>
+                    <tbody></tbody>
                   </table>
                 </div>
-                <p class="formation-detail-sheet__footnote">
-                  *&nbsp;Sous réserve de nouvelles signatures — chiffres en date du <strong>24&nbsp;décembre&nbsp;2025</strong>.
-                </p>
-              </section>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
 
               <section class="formation-detail-section reveal" id="fd-bskt-nan-docs">
@@ -1054,13 +1036,7 @@
                   <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="tep.html">Préparation TEP</a>
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/40423" rel="noopener noreferrer">Fiche RNCP&nbsp;40423</a>
-                  <a class="btn btn--outline" href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000051272292" rel="noopener noreferrer">Référentiel diplôme</a>
-                  <a class="btn btn--outline" href="contact.html">Certificat médical &amp; dossier</a>
-                  <a class="btn btn--outline" href="certificat-qualiopi.html">Qualiopi</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p>
@@ -1308,31 +1284,27 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <p>
-                  Données publiées pour le site de <strong>Cergy</strong> sur la session <strong>2025‑2026</strong>&nbsp;; les colonnes suivantes seront complétées après consolidation.
-                </p>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
+                  <div class="formation-detail-sheet__stat-caption">
+                    <strong></strong>
+                    <span></span>
+                    <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
+                  </div>
+                </div>
 
                 <div class="formation-detail-sheet__table-wrap">
                   <table>
                     <thead>
-                      <tr>
-                        <th scope="col">Indicateurs</th>
-                        <th scope="col">Session&nbsp;2025‑2026</th>
-                        <th scope="col">Session suivante</th>
-                      </tr>
+                      <tr></tr>
                     </thead>
-                    <tbody>
-                      <tr><td>Nombre d’apprenants</td><td><strong>13</strong></td><td>—</td></tr>
-                      <tr><td>Taux d’apprentis</td><td><strong>100&nbsp;%</strong></td><td>—</td></tr>
-                      <tr><td>Taux d’interruption de formation</td><td><strong>7,69&nbsp;%</strong></td><td>—</td></tr>
-                      <tr><td>Taux de rupture de contrat d’apprentissage</td><td><strong>7,69&nbsp;%</strong></td><td>—</td></tr>
-                    </tbody>
+                    <tbody></tbody>
                   </table>
                 </div>
-                <p class="formation-detail-sheet__footnote">
-                  *&nbsp;Sous réserve de nouvelles signatures — chiffres en date du <strong>15&nbsp;avril&nbsp;2026</strong>.
-                </p>
-              </section>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
 
               <section class="formation-detail-section reveal" id="fd-bskt-cgy-docs">
@@ -1346,13 +1318,7 @@
                   <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="tep.html">Préparation TEP</a>
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/40423" rel="noopener noreferrer">Fiche RNCP&nbsp;40423</a>
-                  <a class="btn btn--outline" href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000051272292" rel="noopener noreferrer">Référentiel diplôme</a>
-                  <a class="btn btn--outline" href="contact.html">Certificat médical &amp; dossier</a>
-                  <a class="btn btn--outline" href="certificat-qualiopi.html">Qualiopi</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p>
@@ -1603,11 +1569,12 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <div class="formation-detail-sheet__stat">
-                  <span class="formation-detail-sheet__stat-value">87,50&nbsp;%</span>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
                   <div class="formation-detail-sheet__stat-caption">
-                    <strong>Taux d’obtention du diplôme</strong>
-                    <span>Session 2023‑2024 — donnée indicative.</span>
+                    <strong></strong>
+                    <span></span>
                     <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
                   </div>
                 </div>
@@ -1615,24 +1582,14 @@
                 <div class="formation-detail-sheet__table-wrap">
                   <table>
                     <thead>
-                      <tr>
-                        <th scope="col">Indicateurs</th>
-                        <th scope="col">Session&nbsp;2024‑2025</th>
-                        <th scope="col">Session&nbsp;2025‑2026</th>
-                      </tr>
+                      <tr></tr>
                     </thead>
-                    <tbody>
-                      <tr><td>Nombre d’apprenants</td><td><strong>17</strong></td><td><strong>13</strong></td></tr>
-                      <tr><td>Taux d’apprentis</td><td><strong>100&nbsp;%</strong></td><td><strong>100&nbsp;%</strong></td></tr>
-                      <tr><td>Taux d’interruption de formation</td><td><strong>0&nbsp;%</strong></td><td><strong>7,69&nbsp;%</strong></td></tr>
-                      <tr><td>Taux de rupture de contrat d’apprentissage</td><td><strong>0&nbsp;%</strong></td><td><strong>7,69&nbsp;%</strong></td></tr>
-                    </tbody>
+                    <tbody></tbody>
                   </table>
                 </div>
-                <p class="formation-detail-sheet__footnote">
-                  *&nbsp;Sous réserve de nouvelles signatures — chiffres en date du <strong>15&nbsp;avril&nbsp;2026</strong>.
-                </p>
-              </section>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
 
               <section class="formation-detail-section reveal" id="fd-asec-cvq-docs">
@@ -1646,13 +1603,7 @@
                   <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/39926" rel="noopener noreferrer">Fiche RNCP&nbsp;39926</a>
-                  <a class="btn btn--outline" href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050674969" rel="noopener noreferrer">Référentiel diplôme</a>
-                  <a class="btn btn--outline" href="contact.html">Certificat médical &amp; dossier</a>
-                  <a class="btn btn--outline" href="certificat-qualiopi.html">Qualiopi</a>
-                  <a class="btn btn--outline" href="contact.html">Nous contacter</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p>
@@ -1902,11 +1853,27 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <p>
-                  Les indicateurs détaillés pour le site de <strong>Coulommiers</strong> seront publiés sur cette fiche lors des prochains arbitrages Qualiopi.
-                  Pour toute question sur une promotion en cours, contactez nos équipes ou consultez la page <a href="a-propos.html#resultats">Résultats</a>.
-                </p>
-              </section>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
+                  <div class="formation-detail-sheet__stat-caption">
+                    <strong></strong>
+                    <span></span>
+                    <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
+                  </div>
+                </div>
+
+                <div class="formation-detail-sheet__table-wrap">
+                  <table>
+                    <thead>
+                      <tr></tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
 
               <section class="formation-detail-section reveal" id="fd-asec-coul-docs">
@@ -1920,13 +1887,7 @@
                   <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/39926" rel="noopener noreferrer">Fiche RNCP&nbsp;39926</a>
-                  <a class="btn btn--outline" href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050674969" rel="noopener noreferrer">Référentiel diplôme</a>
-                  <a class="btn btn--outline" href="contact.html">Certificat médical &amp; dossier</a>
-                  <a class="btn btn--outline" href="certificat-qualiopi.html">Qualiopi</a>
-                  <a class="btn btn--outline" href="contact.html">Nous contacter</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p>
@@ -2174,11 +2135,12 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <div class="formation-detail-sheet__stat">
-                  <span class="formation-detail-sheet__stat-value">84&nbsp;%</span>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
                   <div class="formation-detail-sheet__stat-caption">
-                    <strong>Taux d’obtention du diplôme</strong>
-                    <span>Session 2024‑2025 — donnée indicative.</span>
+                    <strong></strong>
+                    <span></span>
                     <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
                   </div>
                 </div>
@@ -2186,24 +2148,14 @@
                 <div class="formation-detail-sheet__table-wrap">
                   <table>
                     <thead>
-                      <tr>
-                        <th scope="col">Indicateurs</th>
-                        <th scope="col">Session&nbsp;2024‑2025</th>
-                        <th scope="col">Session&nbsp;2025‑2026</th>
-                      </tr>
+                      <tr></tr>
                     </thead>
-                    <tbody>
-                      <tr><td>Nombre d’apprenants</td><td><strong>13</strong></td><td><strong>11</strong></td></tr>
-                      <tr><td>Taux d’apprentis</td><td><strong>100&nbsp;%</strong></td><td><strong>100&nbsp;%</strong></td></tr>
-                      <tr><td>Taux d’interruption de formation</td><td><strong>8&nbsp;%</strong></td><td><strong>18,18&nbsp;%</strong></td></tr>
-                      <tr><td>Taux de rupture de contrat d’apprentissage</td><td><strong>8&nbsp;%</strong></td><td><strong>18,18&nbsp;%</strong></td></tr>
-                    </tbody>
+                    <tbody></tbody>
                   </table>
                 </div>
-                <p class="formation-detail-sheet__footnote">
-                  *&nbsp;Sous réserve de nouvelles signatures — chiffres en date du <strong>15&nbsp;avril&nbsp;2026</strong>.
-                </p>
-              </section>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
               <section class="formation-detail-section reveal" id="fd-rugby-cvq-docs">
                 <header class="formation-detail-section__header">
@@ -2216,13 +2168,7 @@
                   <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/41750" rel="noopener noreferrer">Fiche RNCP&nbsp;41750</a>
-                  <a class="btn btn--outline" href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000052034892" rel="noopener noreferrer">Référentiel diplôme</a>
-                  <a class="btn btn--outline" href="contact.html">Certificat médical &amp; dossier</a>
-                  <a class="btn btn--outline" href="certificat-qualiopi.html">Qualiopi</a>
-                  <a class="btn btn--outline" href="contact.html">Nous contacter</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p><strong>Qualiopi&nbsp;:</strong> «&nbsp;Action de formation&nbsp;» et «&nbsp;Action de formation par apprentissage&nbsp;».</p>
@@ -2427,11 +2373,27 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <p>
-                  Les indicateurs consolidés par certification sont présentés dans la rubrique résultats lorsque les effectifs et sessions permettent une publication utile.
-                </p>
-                <p><a href="a-propos.html#resultats">Consulter nos résultats</a></p>
-              </section>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
+                  <div class="formation-detail-sheet__stat-caption">
+                    <strong></strong>
+                    <span></span>
+                    <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
+                  </div>
+                </div>
+
+                <div class="formation-detail-sheet__table-wrap">
+                  <table>
+                    <thead>
+                      <tr></tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
               <section class="formation-detail-section reveal" id="fd-cc-acm-cvq-docs">
                 <header class="formation-detail-section__header">
@@ -2444,12 +2406,7 @@
                   <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rs/5737" rel="noopener noreferrer">Fiche RS&nbsp;5737</a>
-                  <a class="btn btn--outline" href="contact.html">Référentiel &amp; dossier</a>
-                  <a class="btn btn--outline" href="certificat-qualiopi.html">Qualiopi</a>
-                  <a class="btn btn--outline" href="contact.html">Nous contacter</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p><strong>Qualiopi&nbsp;:</strong> «&nbsp;Action de formation&nbsp;» et «&nbsp;Action de formation par apprentissage&nbsp;».</p>
@@ -2750,27 +2707,27 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
+                  <div class="formation-detail-sheet__stat-caption">
+                    <strong></strong>
+                    <span></span>
+                    <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
+                  </div>
+                </div>
+
                 <div class="formation-detail-sheet__table-wrap">
                   <table>
                     <thead>
-                      <tr>
-                        <th scope="col">Indicateurs</th>
-                        <th scope="col">Session&nbsp;2025‑2026</th>
-                      </tr>
+                      <tr></tr>
                     </thead>
-                    <tbody>
-                      <tr><td>Nombre d’apprenants</td><td><strong>11</strong></td></tr>
-                      <tr><td>Taux d’apprentis</td><td><strong>100&nbsp;%</strong></td></tr>
-                      <tr><td>Taux d’interruption de formation</td><td><strong>0&nbsp;%</strong></td></tr>
-                      <tr><td>Taux de rupture de contrat d’apprentissage</td><td><strong>9,09&nbsp;%</strong></td></tr>
-                    </tbody>
+                    <tbody></tbody>
                   </table>
                 </div>
-                <p class="formation-detail-sheet__footnote">
-                  *&nbsp;Sous réserve de nouvelles signatures — chiffres en date du <strong>15&nbsp;avril&nbsp;2026</strong>.
-                </p>
-                <p><a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a></p>
-              </section>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
               <section class="formation-detail-section reveal" id="fd-dejeps-asec-cvq-docs">
                 <header class="formation-detail-section__header">
@@ -2783,13 +2740,7 @@
                   <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/39930" rel="noopener noreferrer">Fiche RNCP&nbsp;39930</a>
-                  <a class="btn btn--outline" href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050714986" rel="noopener noreferrer">Référentiel diplôme</a>
-                  <a class="btn btn--outline" href="apprentissage.html">Aides apprentis &amp; hébergement</a>
-                  <a class="btn btn--outline" href="certificat-qualiopi.html">Qualiopi</a>
-                  <a class="btn btn--outline" href="contact.html">Nous contacter</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p><strong>Qualiopi&nbsp;:</strong> «&nbsp;Action de formation&nbsp;» et «&nbsp;Action de formation par apprentissage&nbsp;».</p>
@@ -3067,12 +3018,27 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <p>
-                  Les indicateurs publiés par session sont communiqués lorsque les effectifs permettent une lecture représentative.
-                </p>
-                <p><a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a></p>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
+                  <div class="formation-detail-sheet__stat-caption">
+                    <strong></strong>
+                    <span></span>
+                    <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
+                  </div>
+                </div>
 
-              </section>
+                <div class="formation-detail-sheet__table-wrap">
+                  <table>
+                    <thead>
+                      <tr></tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
               <section class="formation-detail-section reveal" id="fd-tfp-cdssa-p7-docs">
                 <header class="formation-detail-section__header">
@@ -3085,13 +3051,7 @@
                   <h2 class="formation-detail-section__title">Documents utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/38142" rel="noopener noreferrer">Fiche RNCP&nbsp;38142</a>
-                  <a class="btn btn--outline" href="contact.html">Référentiel &amp; dossier</a>
-                  <a class="btn btn--outline" href="contact.html">Modèle attestation d’expérience</a>
-                  <a class="btn btn--outline" href="certificat-qualiopi.html">Qualiopi</a>
-                  <a class="btn btn--outline" href="contact.html">Nous contacter</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p><strong>Qualiopi&nbsp;:</strong> «&nbsp;Action de formation&nbsp;» et «&nbsp;Action de formation par apprentissage&nbsp;».</p>
@@ -3370,12 +3330,27 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <p>
-                  Les indicateurs publiés par session sont communiqués lorsque les effectifs permettent une lecture représentative.
-                </p>
-                <p><a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a></p>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
+                  <div class="formation-detail-sheet__stat-caption">
+                    <strong></strong>
+                    <span></span>
+                    <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
+                  </div>
+                </div>
 
-              </section>
+                <div class="formation-detail-sheet__table-wrap">
+                  <table>
+                    <thead>
+                      <tr></tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
               <section class="formation-detail-section reveal" id="fd-tfp-cdssa-dcy-docs">
                 <header class="formation-detail-section__header">
@@ -3388,13 +3363,7 @@
                   <h2 class="formation-detail-section__title">Documents utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/38142" rel="noopener noreferrer">Fiche RNCP&nbsp;38142</a>
-                  <a class="btn btn--outline" href="contact.html">Référentiel &amp; dossier</a>
-                  <a class="btn btn--outline" href="contact.html">Modèle attestation d’expérience</a>
-                  <a class="btn btn--outline" href="certificat-qualiopi.html">Qualiopi</a>
-                  <a class="btn btn--outline" href="contact.html">Nous contacter</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p><strong>Qualiopi&nbsp;:</strong> «&nbsp;Action de formation&nbsp;» et «&nbsp;Action de formation par apprentissage&nbsp;».</p>
@@ -3673,11 +3642,12 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <div class="formation-detail-sheet__stat">
-                  <span class="formation-detail-sheet__stat-value">100&nbsp;%</span>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
                   <div class="formation-detail-sheet__stat-caption">
-                    <strong>Taux d’obtention du diplôme</strong>
-                    <span>Session 2025 — donnée indicative.</span>
+                    <strong></strong>
+                    <span></span>
                     <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
                   </div>
                 </div>
@@ -3685,24 +3655,14 @@
                 <div class="formation-detail-sheet__table-wrap">
                   <table>
                     <thead>
-                      <tr>
-                        <th scope="col">Indicateurs</th>
-                        <th scope="col">Session&nbsp;2025</th>
-                      </tr>
+                      <tr></tr>
                     </thead>
-                    <tbody>
-                      <tr><td>Nombre d’apprenants</td><td><strong>11</strong></td></tr>
-                      <tr><td>Taux d’apprentis</td><td><strong>100&nbsp;%</strong></td></tr>
-                      <tr><td>Taux d’interruption de formation</td><td><strong>27&nbsp;%</strong></td></tr>
-                      <tr><td>Taux de rupture de contrat d’apprentissage</td><td><strong>27&nbsp;%</strong></td></tr>
-                    </tbody>
+                    <tbody></tbody>
                   </table>
                 </div>
-                <p class="formation-detail-sheet__footnote">
-                  *&nbsp;Sous réserve de nouvelles signatures — chiffres en date du <strong>24&nbsp;décembre&nbsp;2025</strong>.
-                </p>
+                <p class="formation-detail-sheet__footnote" hidden></p>
 
-              </section>
+</section>
 
               <section class="formation-detail-section reveal" id="fd-tfp-cdssa-cgy-docs">
                 <header class="formation-detail-section__header">
@@ -3715,13 +3675,7 @@
                   <h2 class="formation-detail-section__title">Documents utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/38142" rel="noopener noreferrer">Fiche RNCP&nbsp;38142</a>
-                  <a class="btn btn--outline" href="contact.html">Référentiel &amp; dossier</a>
-                  <a class="btn btn--outline" href="contact.html">Modèle attestation d’expérience</a>
-                  <a class="btn btn--outline" href="certificat-qualiopi.html">Qualiopi</a>
-                  <a class="btn btn--outline" href="contact.html">Nous contacter</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p><strong>Qualiopi&nbsp;:</strong> «&nbsp;Action de formation&nbsp;» et «&nbsp;Action de formation par apprentissage&nbsp;».</p>
@@ -4012,11 +3966,12 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <div class="formation-detail-sheet__stat">
-                  <span class="formation-detail-sheet__stat-value">80&nbsp;%</span>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
                   <div class="formation-detail-sheet__stat-caption">
-                    <strong>Taux d’obtention du diplôme</strong>
-                    <span>Session 2025‑2026 — donnée communiquée à titre indicatif.</span>
+                    <strong></strong>
+                    <span></span>
                     <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
                   </div>
                 </div>
@@ -4024,40 +3979,14 @@
                 <div class="formation-detail-sheet__table-wrap">
                   <table>
                     <thead>
-                      <tr>
-                        <th scope="col">Indicateurs</th>
-                        <th scope="col">Session&nbsp;2025</th>
-                        <th scope="col">Session&nbsp;2026</th>
-                      </tr>
+                      <tr></tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>Nombre d’apprenants</td>
-                        <td><strong>23</strong></td>
-                        <td><strong>15</strong></td>
-                      </tr>
-                      <tr>
-                        <td>Taux d’apprentis</td>
-                        <td><strong>100&nbsp;%</strong></td>
-                        <td><strong>67&nbsp;%</strong></td>
-                      </tr>
-                      <tr>
-                        <td>Taux d’interruption de formation</td>
-                        <td><strong>9&nbsp;%</strong></td>
-                        <td><strong>27&nbsp;%</strong></td>
-                      </tr>
-                      <tr>
-                        <td>Taux de rupture de contrat d’apprentissage</td>
-                        <td><strong>13&nbsp;%</strong></td>
-                        <td><strong>13&nbsp;%</strong></td>
-                      </tr>
-                    </tbody>
+                    <tbody></tbody>
                   </table>
                 </div>
-                <p class="formation-detail-sheet__footnote">
-                  *&nbsp;Chiffres sous réserve de nouvelles signatures de contrat — donnée indicative au <strong>18&nbsp;mars&nbsp;2026</strong>.
-                </p>
-              </section>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
               <section class="formation-detail-section reveal" id="fd-mapst-cvq-docs">
                 <header class="formation-detail-section__header">
@@ -4070,14 +3999,7 @@
                   <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="tep.html">Préparation TEP MAPST</a>
-                  <a class="btn btn--outline" href="tep.html">Calendrier TEP Île-de-France</a>
-                  <a class="btn btn--outline" href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688" rel="noopener noreferrer">Référentiel diplôme MAPST</a>
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/40480" rel="noopener noreferrer">Fiche RNCP&nbsp;40480</a>
-                  <a class="btn btn--outline" href="https://www.sports.gouv.fr/" rel="noopener noreferrer">Informations ministère des Sports</a>
-                  <a class="btn btn--outline" href="contact.html">Liste des pièces à fournir</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p>
@@ -4369,11 +4291,12 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <div class="formation-detail-sheet__stat">
-                  <span class="formation-detail-sheet__stat-value">83&nbsp;%</span>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
                   <div class="formation-detail-sheet__stat-caption">
-                    <strong>Taux d’obtention du diplôme</strong>
-                    <span>Session 2024‑2025 — donnée communiquée à titre indicatif.</span>
+                    <strong></strong>
+                    <span></span>
                     <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
                   </div>
                 </div>
@@ -4381,40 +4304,14 @@
                 <div class="formation-detail-sheet__table-wrap">
                   <table>
                     <thead>
-                      <tr>
-                        <th scope="col">Indicateurs</th>
-                        <th scope="col">Session&nbsp;2024‑2025</th>
-                        <th scope="col">Session&nbsp;2025‑2026</th>
-                      </tr>
+                      <tr></tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>Nombre d’apprenants</td>
-                        <td><strong>18</strong></td>
-                        <td><strong>10</strong></td>
-                      </tr>
-                      <tr>
-                        <td>Taux d’apprentis</td>
-                        <td><strong>100&nbsp;%</strong></td>
-                        <td><strong>100&nbsp;%</strong></td>
-                      </tr>
-                      <tr>
-                        <td>Taux d’interruption de formation</td>
-                        <td><strong>6&nbsp;%</strong></td>
-                        <td><strong>1&nbsp;%</strong></td>
-                      </tr>
-                      <tr>
-                        <td>Taux de rupture de contrat d’apprentissage</td>
-                        <td><strong>11&nbsp;%</strong></td>
-                        <td><strong>1&nbsp;%</strong></td>
-                      </tr>
-                    </tbody>
+                    <tbody></tbody>
                   </table>
                 </div>
-                <p class="formation-detail-sheet__footnote">
-                  *&nbsp;Sous réserve de nouvelles signatures de contrat — chiffres en date du <strong>15&nbsp;avril&nbsp;2026</strong>.
-                </p>
-              </section>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
               
 
@@ -4429,14 +4326,7 @@
                   <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="tep.html">Préparation TEP MAPST</a>
-                  <a class="btn btn--outline" href="tep.html">Calendrier TEP Île-de-France</a>
-                  <a class="btn btn--outline" href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688" rel="noopener noreferrer">Référentiel diplôme MAPST</a>
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/40480" rel="noopener noreferrer">Fiche RNCP&nbsp;40480</a>
-                  <a class="btn btn--outline" href="https://www.sports.gouv.fr/" rel="noopener noreferrer">Informations ministère des Sports</a>
-                  <a class="btn btn--outline" href="contact.html">Liste des pièces à fournir</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p>
@@ -4728,48 +4618,27 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <p>
-                  Les indicateurs ci-dessous reprennent les données publiées pour le site de <strong>Cergy</strong>
-                  (session 2024)&nbsp;; la colonne «&nbsp;session en cours&nbsp;» sera complétée à l’issue des inscriptions.
-                </p>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
+                  <div class="formation-detail-sheet__stat-caption">
+                    <strong></strong>
+                    <span></span>
+                    <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
+                  </div>
+                </div>
 
                 <div class="formation-detail-sheet__table-wrap">
                   <table>
                     <thead>
-                      <tr>
-                        <th scope="col">Indicateurs</th>
-                        <th scope="col">Session&nbsp;2024</th>
-                        <th scope="col">Session en cours</th>
-                      </tr>
+                      <tr></tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>Nombre d’apprenants</td>
-                        <td><strong>9</strong></td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <td>Taux d’apprentis</td>
-                        <td><strong>100&nbsp;%</strong></td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <td>Taux d’interruption de formation</td>
-                        <td><strong>0&nbsp;%</strong></td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <td>Taux de rupture de contrat d’apprentissage</td>
-                        <td><strong>0&nbsp;%</strong></td>
-                        <td>—</td>
-                      </tr>
-                    </tbody>
+                    <tbody></tbody>
                   </table>
                 </div>
-                <p class="formation-detail-sheet__footnote">
-                  *&nbsp;Sous réserve de nouvelles signatures de contrat — chiffres en date du <strong>26&nbsp;mars&nbsp;2025</strong>.
-                </p>
-              </section>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
               
 
@@ -4784,14 +4653,7 @@
                   <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="tep.html">Préparation TEP MAPST</a>
-                  <a class="btn btn--outline" href="tep.html">Calendrier TEP Île-de-France</a>
-                  <a class="btn btn--outline" href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688" rel="noopener noreferrer">Référentiel diplôme MAPST</a>
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/40480" rel="noopener noreferrer">Fiche RNCP&nbsp;40480</a>
-                  <a class="btn btn--outline" href="https://www.sports.gouv.fr/" rel="noopener noreferrer">Informations ministère des Sports</a>
-                  <a class="btn btn--outline" href="contact.html">Liste des pièces à fournir</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p>
@@ -5083,11 +4945,12 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <div class="formation-detail-sheet__stat">
-                  <span class="formation-detail-sheet__stat-value">94&nbsp;%</span>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
                   <div class="formation-detail-sheet__stat-caption">
-                    <strong>Taux d’obtention du diplôme</strong>
-                    <span>Session 2024‑2025 — donnée communiquée à titre indicatif.</span>
+                    <strong></strong>
+                    <span></span>
                     <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
                   </div>
                 </div>
@@ -5095,40 +4958,14 @@
                 <div class="formation-detail-sheet__table-wrap">
                   <table>
                     <thead>
-                      <tr>
-                        <th scope="col">Indicateurs</th>
-                        <th scope="col">Session&nbsp;2024‑2025</th>
-                        <th scope="col">Session&nbsp;2025‑2026</th>
-                      </tr>
+                      <tr></tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>Nombre d’apprenants</td>
-                        <td><strong>20</strong></td>
-                        <td><strong>23</strong></td>
-                      </tr>
-                      <tr>
-                        <td>Taux d’apprentis</td>
-                        <td><strong>100&nbsp;%</strong></td>
-                        <td><strong>100&nbsp;%</strong></td>
-                      </tr>
-                      <tr>
-                        <td>Taux d’interruption de formation</td>
-                        <td><strong>5&nbsp;%</strong></td>
-                        <td><strong>0&nbsp;%</strong></td>
-                      </tr>
-                      <tr>
-                        <td>Taux de rupture de contrat d’apprentissage</td>
-                        <td><strong>15&nbsp;%</strong></td>
-                        <td><strong>8,69&nbsp;%</strong></td>
-                      </tr>
-                    </tbody>
+                    <tbody></tbody>
                   </table>
                 </div>
-                <p class="formation-detail-sheet__footnote">
-                  *&nbsp;Sous réserve de nouvelles signatures de contrat — chiffres en date du <strong>15&nbsp;avril&nbsp;2026</strong>.
-                </p>
-              </section>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
               
 
@@ -5143,14 +4980,7 @@
                   <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="tep.html">Préparation TEP MAPST</a>
-                  <a class="btn btn--outline" href="tep.html">Calendrier TEP Île-de-France</a>
-                  <a class="btn btn--outline" href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688" rel="noopener noreferrer">Référentiel diplôme MAPST</a>
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/40480" rel="noopener noreferrer">Fiche RNCP&nbsp;40480</a>
-                  <a class="btn btn--outline" href="https://www.sports.gouv.fr/" rel="noopener noreferrer">Informations ministère des Sports</a>
-                  <a class="btn btn--outline" href="contact.html">Liste des pièces à fournir</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p>
@@ -5442,11 +5272,12 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <div class="formation-detail-sheet__stat">
-                  <span class="formation-detail-sheet__stat-value">100&nbsp;%</span>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
                   <div class="formation-detail-sheet__stat-caption">
-                    <strong>Taux d’obtention du diplôme</strong>
-                    <span>Session 2024‑2025 — donnée communiquée à titre indicatif.</span>
+                    <strong></strong>
+                    <span></span>
                     <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
                   </div>
                 </div>
@@ -5454,40 +5285,14 @@
                 <div class="formation-detail-sheet__table-wrap">
                   <table>
                     <thead>
-                      <tr>
-                        <th scope="col">Indicateurs</th>
-                        <th scope="col">Session&nbsp;2024‑2025</th>
-                        <th scope="col">Session&nbsp;2025‑2026</th>
-                      </tr>
+                      <tr></tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>Nombre d’apprenants</td>
-                        <td><strong>4</strong></td>
-                        <td><strong>5</strong></td>
-                      </tr>
-                      <tr>
-                        <td>Taux d’apprentis</td>
-                        <td><strong>100&nbsp;%</strong></td>
-                        <td><strong>100&nbsp;%</strong></td>
-                      </tr>
-                      <tr>
-                        <td>Taux d’interruption de formation</td>
-                        <td><strong>0&nbsp;%</strong></td>
-                        <td><strong>0&nbsp;%</strong></td>
-                      </tr>
-                      <tr>
-                        <td>Taux de rupture de contrat d’apprentissage</td>
-                        <td><strong>0&nbsp;%</strong></td>
-                        <td><strong>0&nbsp;%</strong></td>
-                      </tr>
-                    </tbody>
+                    <tbody></tbody>
                   </table>
                 </div>
-                <p class="formation-detail-sheet__footnote">
-                  *&nbsp;Sous réserve de nouvelles signatures de contrat — chiffres en date du <strong>15&nbsp;avril&nbsp;2026</strong>.
-                </p>
-              </section>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
               
 
@@ -5504,14 +5309,7 @@
                   <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="tep.html">Préparation TEP MAPST</a>
-                  <a class="btn btn--outline" href="tep.html">Calendrier TEP Île-de-France</a>
-                  <a class="btn btn--outline" href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688" rel="noopener noreferrer">Référentiel diplôme MAPST</a>
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/40480" rel="noopener noreferrer">Fiche RNCP&nbsp;40480</a>
-                  <a class="btn btn--outline" href="https://www.sports.gouv.fr/" rel="noopener noreferrer">Informations ministère des Sports</a>
-                  <a class="btn btn--outline" href="contact.html">Liste des pièces à fournir</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p>
@@ -5807,18 +5605,27 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <p>
-                  Les indicateurs consolidés pour le site d’<strong>Ajaccio</strong> sont intégrés à cette fiche au fil des publications légalistes et du suivi Qualiopi.
-                  Pour une vue d’ensemble, voir également la page <a href="a-propos.html#resultats">Résultats</a>.
-                </p>
-                <div class="formation-detail-sheet__highlight">
-                  <p><strong>Hébergement (périodes de formation théorique).</strong> Une aide peut être mobilisée selon les modalités présentées lors de la rentrée (conditions et montants précisés par le centre).</p>
-                  <p><strong>Aides apprentis.</strong> Équipement, carte étudiant et dispositifs type permis peuvent être évoqués selon les critères en vigueur — renseignez-vous sur notre page <a href="apprentissage.html">Apprentissage &amp; employeurs</a>.</p>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
+                  <div class="formation-detail-sheet__stat-caption">
+                    <strong></strong>
+                    <span></span>
+                    <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
+                  </div>
                 </div>
-                <p class="formation-detail-sheet__footnote">
-                  *&nbsp;Ouverture sous réserve d’habilitation — données publiques au titre des informations communiquées sur la fiche lieu du titre MAPST.
-                </p>
-              </section>
+
+                <div class="formation-detail-sheet__table-wrap">
+                  <table>
+                    <thead>
+                      <tr></tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
               
 
@@ -5835,14 +5642,7 @@
                   <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="tep.html">Préparation TEP MAPST</a>
-                  <a class="btn btn--outline" href="tep.html">Calendrier TEP Île-de-France</a>
-                  <a class="btn btn--outline" href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688" rel="noopener noreferrer">Référentiel diplôme MAPST</a>
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/40480" rel="noopener noreferrer">Fiche RNCP&nbsp;40480</a>
-                  <a class="btn btn--outline" href="https://www.sports.gouv.fr/" rel="noopener noreferrer">Informations ministère des Sports</a>
-                  <a class="btn btn--outline" href="contact.html">Liste des pièces à fournir</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p>
@@ -6134,46 +5934,27 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <p>
-                  Effectifs et indicateurs connus à ce jour pour le site <strong>Arpajon&nbsp;/&nbsp;Égly</strong>&nbsp;; la deuxième colonne sera complétée à l’issue des reports officiels.
-                </p>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
+                  <div class="formation-detail-sheet__stat-caption">
+                    <strong></strong>
+                    <span></span>
+                    <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
+                  </div>
+                </div>
+
                 <div class="formation-detail-sheet__table-wrap">
                   <table>
                     <thead>
-                      <tr>
-                        <th scope="col">Indicateurs</th>
-                        <th scope="col">Session&nbsp;2025‑2026</th>
-                        <th scope="col">Session suivante</th>
-                      </tr>
+                      <tr></tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>Nombre d’apprenants</td>
-                        <td><strong>12</strong></td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <td>Taux d’apprentis</td>
-                        <td><strong>100&nbsp;%</strong></td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <td>Taux d’interruption de formation</td>
-                        <td><strong>0&nbsp;%</strong></td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <td>Taux de rupture de contrat d’apprentissage</td>
-                        <td><strong>0&nbsp;%</strong></td>
-                        <td>—</td>
-                      </tr>
-                    </tbody>
+                    <tbody></tbody>
                   </table>
                 </div>
-                <p class="formation-detail-sheet__footnote">
-                  *&nbsp;Sous réserve de nouvelles signatures de contrat — chiffres en date du <strong>15&nbsp;avril&nbsp;2026</strong>.
-                </p>
-              </section>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
               
 
@@ -6190,14 +5971,7 @@
                   <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="tep.html">Préparation TEP MAPST</a>
-                  <a class="btn btn--outline" href="tep.html">Calendrier TEP Île-de-France</a>
-                  <a class="btn btn--outline" href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688" rel="noopener noreferrer">Référentiel diplôme MAPST</a>
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/40480" rel="noopener noreferrer">Fiche RNCP&nbsp;40480</a>
-                  <a class="btn btn--outline" href="https://www.sports.gouv.fr/" rel="noopener noreferrer">Informations ministère des Sports</a>
-                  <a class="btn btn--outline" href="contact.html">Liste des pièces à fournir</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p>
@@ -6489,46 +6263,27 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <p>
-                  Indicateurs publiés pour la session <strong>2025‑2026</strong> sur le site de <strong>Mortagne-au-Perche</strong>&nbsp;; les données de la session suivante seront ajoutées après clôture des inscriptions.
-                </p>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
+                  <div class="formation-detail-sheet__stat-caption">
+                    <strong></strong>
+                    <span></span>
+                    <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
+                  </div>
+                </div>
+
                 <div class="formation-detail-sheet__table-wrap">
                   <table>
                     <thead>
-                      <tr>
-                        <th scope="col">Indicateurs</th>
-                        <th scope="col">Session&nbsp;2025‑2026</th>
-                        <th scope="col">Session suivante</th>
-                      </tr>
+                      <tr></tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>Nombre d’apprenants</td>
-                        <td><strong>8</strong></td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <td>Taux d’apprentis</td>
-                        <td><strong>100&nbsp;%</strong></td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <td>Taux d’interruption de formation</td>
-                        <td><strong>0&nbsp;%</strong></td>
-                        <td>—</td>
-                      </tr>
-                      <tr>
-                        <td>Taux de rupture de contrat d’apprentissage</td>
-                        <td><strong>0&nbsp;%</strong></td>
-                        <td>—</td>
-                      </tr>
-                    </tbody>
+                    <tbody></tbody>
                   </table>
                 </div>
-                <p class="formation-detail-sheet__footnote">
-                  *&nbsp;Sous réserve de nouvelles signatures de contrat — chiffres en date du <strong>15&nbsp;avril&nbsp;2026</strong>.
-                </p>
-              </section>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
               
 
@@ -6545,14 +6300,7 @@
                   <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="tep.html">Préparation TEP MAPST</a>
-                  <a class="btn btn--outline" href="tep.html">Calendrier TEP Île-de-France</a>
-                  <a class="btn btn--outline" href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688" rel="noopener noreferrer">Référentiel diplôme MAPST</a>
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/40480" rel="noopener noreferrer">Fiche RNCP&nbsp;40480</a>
-                  <a class="btn btn--outline" href="https://www.sports.gouv.fr/" rel="noopener noreferrer">Informations ministère des Sports</a>
-                  <a class="btn btn--outline" href="contact.html">Liste des pièces à fournir</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p>
@@ -6844,16 +6592,27 @@
                   <h2 class="formation-detail-section__title">Indicateurs de résultats</h2>
                 </header>
 
-                <p>
-                  Les indicateurs détaillés pour le site de <strong>Drancy</strong> seront complétés sur cette fiche lors des prochains publications «&nbsp;résultats&nbsp;».
-                </p>
-                <p>
-                  Pour toute question sur une promotion en cours ou une session passée, écrivez-nous via le <a href="contact.html">formulaire de contact</a> ou consultez la rubrique <a href="a-propos.html#resultats">Résultats</a>.
-                </p>
-                <p class="formation-detail-sheet__footnote">
-                  *&nbsp;Données communiquées à titre indicatif — mise à jour conformément aux obligations Qualiopi.
-                </p>
-              </section>
+                
+                <div class="formation-detail-sheet__stat" hidden>
+                  <span class="formation-detail-sheet__stat-value"></span>
+                  <div class="formation-detail-sheet__stat-caption">
+                    <strong></strong>
+                    <span></span>
+                    <a href="a-propos.html#resultats">Plus d’informations sur nos résultats</a>
+                  </div>
+                </div>
+
+                <div class="formation-detail-sheet__table-wrap">
+                  <table>
+                    <thead>
+                      <tr></tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+                <p class="formation-detail-sheet__footnote" hidden></p>
+
+</section>
 
               
 
@@ -6870,14 +6629,7 @@
                   <h2 class="formation-detail-section__title">Documents et liens utiles</h2>
                 </header>
 
-                <div class="formation-detail-sheet__links-grid">
-                  <a class="btn btn--outline" href="tep.html">Préparation TEP MAPST</a>
-                  <a class="btn btn--outline" href="tep.html">Calendrier TEP Île-de-France</a>
-                  <a class="btn btn--outline" href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000050685688" rel="noopener noreferrer">Référentiel diplôme MAPST</a>
-                  <a class="btn btn--outline" href="https://www.francecompetences.fr/recherche/rncp/40480" rel="noopener noreferrer">Fiche RNCP&nbsp;40480</a>
-                  <a class="btn btn--outline" href="https://www.sports.gouv.fr/" rel="noopener noreferrer">Informations ministère des Sports</a>
-                  <a class="btn btn--outline" href="contact.html">Liste des pièces à fournir</a>
-                </div>
+                <div class="formation-detail-sheet__links-grid"></div>
 
                 <div class="formation-detail-sheet__qualiopi-band">
                   <p>
@@ -7012,7 +6764,6 @@
       <div>
         <h3>Informations</h3>
         <ul>
-          <li><a href="a-propos.html">À Propos</a></li>
           <li><a href="handicap.html">Handicap</a></li>
           <li><a href="mentions-legales.html">Mentions légales</a></li>
         </ul>

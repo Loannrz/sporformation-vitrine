@@ -14,88 +14,132 @@
   <a class="skip-link" href="#contenu">Aller au contenu principal</a>
   <header class="site-header site-header--solid" id="site-header">
     <div class="container nav">
-      <a class="nav__brand" href="index.html"><img class="nav__logo-img" src="/assets/logos/spor-formation-logo.png" width="728" height="343" alt="SporFormation — Retour à l'accueil"></a>
+      <a class="nav__brand" href="/">
+        <img class="nav__logo-img" src="/assets/logos/spor-formation-logo.png" width="728" height="343" alt="SporFormation — Retour à l'accueil">
+      </a>
       <div class="nav__desktop">
         <nav aria-label="Navigation principale">
           <ul class="nav__list">
-            <li class="nav__item"><a class="nav__link" href="index.html">Accueil</a></li>
+            <li class="nav__item"><a class="nav__link" href="/">Accueil</a></li>
             <li class="nav__item">
-              <button class="nav__menu-button" type="button" aria-haspopup="true" aria-expanded="false">
-                Formations
-                <span aria-hidden="true">▾</span>
-              </button>
-              <div class="nav__dropdown" role="menu" aria-label="Sous-menu formations">
+              <button type="button" class="nav__menu-button">Formations</button>
+              <div class="nav__dropdown">
                 <ul class="nav__dropdown-list">
-                  <li><a class="nav__dropdown-link" href="formations.html">Voir toutes les formations <span>Tous parcours</span></a></li>
-                  <li><a class="nav__dropdown-link" href="formations.html#sport">BP JEPS Sport <span>Sport &amp; performance</span></a></li>
-                  <li><a class="nav__dropdown-link" href="formations.html#animation">Animation &amp; coordination <span>Animation &amp; projets</span></a></li>
-                  <li><a class="nav__dropdown-link" href="tep.html">Diagnostic &amp; préparation TEP <span>Entrer sereinement</span></a></li>
+                  <li><a class="nav__dropdown-link" href="/formations.html">Voir toutes les formations</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=bp-jeps-mapst&amp;v=Courbevoie">BPJEPS MAPST</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=bp-jeps-aspf&amp;v=Courbevoie">BPJEPS APSF (forme)</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=bp-jeps-basket&amp;v=Courbevoie">BPJEPS Basket-ball</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=bp-jeps-rugby&amp;v=Courbevoie">BPJEPS Rugby à XV</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=bp-jeps-asec&amp;v=Courbevoie">BPJEPS Animateur ASEC</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=cc-acm&amp;v=Courbevoie">CC Directeur ACM</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=de-jeps-asec-coordination&amp;v=Courbevoie">DEJEPS ASEC — coordination</a></li>
+                  <li><a class="nav__dropdown-link" href="/formation-detail.html?f=tfp-cdssa&amp;v=Paris%207e">TFP CDSSA</a></li>
                 </ul>
               </div>
             </li>
-            <li class="nav__item"><a class="nav__link" href="tep.html">TEP</a></li>
-            <li class="nav__item"><a class="nav__link" href="apprentissage.html">Apprentissage &amp; Employeurs</a></li>
             <li class="nav__item">
-              <button class="nav__menu-button" type="button" aria-haspopup="true" aria-expanded="false">
-                À Propos
-                <span aria-hidden="true">▾</span>
-              </button>
-              <div class="nav__dropdown" role="menu" aria-label="Sous-menu à propos">
+              <button type="button" class="nav__menu-button">Apprentissage</button>
+              <div class="nav__dropdown">
                 <ul class="nav__dropdown-list">
-                  <li><a class="nav__dropdown-link" href="a-propos.html">Qui sommes-nous ? <span>Mission &amp; valeurs</span></a></li>
-                  <li><a class="nav__dropdown-link" href="a-propos.html#resultats">Résultats <span>Chiffres &amp; insertion</span></a></li>
-                  <li><a class="nav__dropdown-link" href="certificat-qualiopi.html">Qualiopi <span>Certification qualité</span></a></li>
-                  <li><a class="nav__dropdown-link" href="a-propos.html#couts">Coûts &amp; aides <span>Financement</span></a></li>
-                  <li><a class="nav__dropdown-link" href="a-propos.html#partenaires">Partenaires <span>Structures partenaires</span></a></li>
+                  <li><a class="nav__dropdown-link" href="/apprentissage.html">Apprentissage &amp; employeurs</a></li>
+                  <li><a class="nav__dropdown-link" href="/formulaire-employeur.html">Formulaire employeur</a></li>
                 </ul>
               </div>
             </li>
-            <li class="nav__item"><a class="nav__link" href="handicap.html">Handicap</a></li>
-            <li class="nav__item"><a class="nav__link" href="contact.html">Contact</a></li>
+            <li class="nav__item">
+              <button type="button" class="nav__menu-button">Préparation TEP</button>
+              <div class="nav__dropdown">
+                <ul class="nav__dropdown-list">
+                  <li><a class="nav__dropdown-link" href="/tep.html">Diagnostic &amp; préparation TEP</a></li>
+                  <li><a class="nav__dropdown-link" href="/inscription-prepa-tep.html">Inscription prépa TEP</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav__item">
+              <button type="button" class="nav__menu-button">À propos</button>
+              <div class="nav__dropdown">
+                <ul class="nav__dropdown-list">
+                  <li><a class="nav__dropdown-link" href="/certificat-qualiopi.html">Certificat Qualiopi</a></li>
+                  <li><a class="nav__dropdown-link" href="/a-propos.html">Qui sommes-nous&nbsp;?</a></li>
+                  <li><a class="nav__dropdown-link" href="/a-propos.html#resultats">Résultats</a></li>
+                  <li><a class="nav__dropdown-link" href="/a-propos.html#couts">Coûts &amp; prises en charge</a></li>
+                  <li><a class="nav__dropdown-link" href="/a-propos.html#aides-apprentis">Les aides aux apprentis</a></li>
+                  <li><a class="nav__dropdown-link" href="/a-propos.html#partenaires">Nos partenaires</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav__item"><a class="nav__link" href="/handicap.html">Handicap</a></li>
+            <li class="nav__item"><a class="nav__link" href="/contact.html">Contact</a></li>
           </ul>
         </nav>
-        <a class="btn btn--primary nav__cta" href="contact.html">S'inscrire maintenant</a>
+        <a class="btn btn--primary nav__cta" href="/contact.html">S'inscrire maintenant</a>
       </div>
-      <button class="nav__toggle" type="button" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Ouvrir le menu"><span class="nav__toggle-line"></span><span class="nav__toggle-line"></span><span class="nav__toggle-line"></span></button>
+      <button class="nav__toggle" type="button" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Ouvrir le menu">
+        <span class="nav__toggle-line"></span>
+        <span class="nav__toggle-line"></span>
+        <span class="nav__toggle-line"></span>
+      </button>
     </div>
   </header>
+
   <div class="mobile-nav__overlay" id="mobile-nav-overlay"></div>
   <aside class="mobile-nav" id="mobile-nav" aria-label="Menu mobile">
     <nav>
       <ul class="mobile-nav__list">
-        <li><a class="mobile-nav__link" href="index.html">Accueil</a></li>
+        <li><a class="mobile-nav__link" href="/">Accueil</a></li>
         <li>
           <details>
-            <summary class="mobile-nav__summary">Formations <span aria-hidden="true">+</span></summary>
+            <summary class="mobile-nav__summary">Formations</summary>
             <div class="mobile-nav__sublist">
-              <a href="formations.html">Voir toutes les formations</a>
-              <a href="formations.html#sport">Parcours sport</a>
-              <a href="formations.html#animation">Parcours animation</a>
-              <a href="tep.html">Préparation TEP</a>
+              <a href="/formations.html">Voir toutes les formations</a>
+              <a href="/formation-detail.html?f=bp-jeps-mapst&amp;v=Courbevoie">BPJEPS MAPST</a>
+              <a href="/formation-detail.html?f=bp-jeps-aspf&amp;v=Courbevoie">BPJEPS APSF (forme)</a>
+              <a href="/formation-detail.html?f=bp-jeps-basket&amp;v=Courbevoie">BPJEPS Basket-ball</a>
+              <a href="/formation-detail.html?f=bp-jeps-rugby&amp;v=Courbevoie">BPJEPS Rugby à XV</a>
+              <a href="/formation-detail.html?f=bp-jeps-asec&amp;v=Courbevoie">BPJEPS Animateur ASEC</a>
+              <a href="/formation-detail.html?f=cc-acm&amp;v=Courbevoie">CC Directeur ACM</a>
+              <a href="/formation-detail.html?f=de-jeps-asec-coordination&amp;v=Courbevoie">DEJEPS ASEC — coordination</a>
+              <a href="/formation-detail.html?f=tfp-cdssa&amp;v=Paris%207e">TFP CDSSA</a>
             </div>
           </details>
         </li>
-        <li><a class="mobile-nav__link" href="tep.html">TEP</a></li>
-        <li><a class="mobile-nav__link" href="apprentissage.html">Apprentissage &amp; Employeurs</a></li>
         <li>
           <details>
-            <summary class="mobile-nav__summary">À Propos <span aria-hidden="true">+</span></summary>
+            <summary class="mobile-nav__summary">Apprentissage</summary>
             <div class="mobile-nav__sublist">
-              <a href="a-propos.html">Qui sommes-nous ?</a>
-              <a href="a-propos.html#resultats">Résultats</a>
-              <a href="certificat-qualiopi.html">Certificat Qualiopi</a>
-              <a href="a-propos.html#couts">Coûts &amp; aides</a>
-              <a href="a-propos.html#partenaires">Partenaires</a>
+              <a href="/apprentissage.html">Apprentissage &amp; employeurs</a>
+              <a href="/formulaire-employeur.html">Formulaire employeur</a>
             </div>
           </details>
         </li>
-        <li><a class="mobile-nav__link" href="handicap.html">Handicap</a></li>
-        <li><a class="mobile-nav__link" href="contact.html">Contact</a></li>
+        <li>
+          <details>
+            <summary class="mobile-nav__summary">Préparation TEP</summary>
+            <div class="mobile-nav__sublist">
+              <a href="/tep.html">Diagnostic &amp; préparation TEP</a>
+              <a href="/inscription-prepa-tep.html">Inscription prépa TEP</a>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details>
+            <summary class="mobile-nav__summary">À propos</summary>
+            <div class="mobile-nav__sublist">
+              <a href="/certificat-qualiopi.html">Certificat Qualiopi</a>
+              <a href="/a-propos.html">Qui sommes-nous&nbsp;?</a>
+              <a href="/a-propos.html#resultats">Résultats</a>
+              <a href="/a-propos.html#couts">Coûts &amp; prises en charge</a>
+              <a href="/a-propos.html#aides-apprentis">Les aides aux apprentis</a>
+              <a href="/a-propos.html#partenaires">Nos partenaires</a>
+            </div>
+          </details>
+        </li>
+        <li><a class="mobile-nav__link" href="/handicap.html">Handicap</a></li>
+        <li><a class="mobile-nav__link" href="/contact.html">Contact</a></li>
       </ul>
-      <a class="btn btn--primary mobile-nav__cta" href="contact.html">Nous contacter</a>
+      <a class="btn btn--primary mobile-nav__cta" href="/contact.html">S'inscrire maintenant</a>
     </nav>
   </aside>
-
   <main id="contenu" class="main--certificat">
     <section class="section section--surface" aria-labelledby="certificat-titre">
       <div class="container certificat-intro">

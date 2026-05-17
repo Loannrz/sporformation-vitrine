@@ -20,6 +20,38 @@ export function defaultResultsIndicators() {
   };
 }
 
+/**
+ * Données affichées sur le site public uniquement si présentes en base.
+ * Pas de tableau « par défaut » : vide ⇒ aucune ligne injectée (voir dynamic-content).
+ */
+export function parseResultsIndicatorsFromCms(raw) {
+  if (raw == null || !String(raw).trim()) return null;
+  try {
+    const o = JSON.parse(raw);
+    const cols = Array.isArray(o.columns)
+      ? o.columns.map((c) => String(c ?? "").trim())
+      : [];
+    if (cols.length < 2) return null;
+    const dataColCount = cols.length - 1;
+    const rowsInput = Array.isArray(o.rows) ? o.rows : [];
+    const rows = rowsInput.map((r) => ({
+      label: String(r?.label ?? "").trim(),
+      cells: Array.from({ length: dataColCount }, (_, i) =>
+        String(r?.cells?.[i] ?? "").trim()
+      ),
+    }));
+    return {
+      heroTitle: typeof o.heroTitle === "string" ? o.heroTitle.trim() : "",
+      heroNote: typeof o.heroNote === "string" ? o.heroNote.trim() : "",
+      columns: cols,
+      rows,
+      footnote: typeof o.footnote === "string" ? o.footnote.trim() : "",
+    };
+  } catch {
+    return null;
+  }
+}
+
 function normalizeRowsForColumns(rowsInput, dataColCount, fallbackRows) {
   const src = rowsInput?.length ? rowsInput : fallbackRows;
   return src.map((r, idx) => {
