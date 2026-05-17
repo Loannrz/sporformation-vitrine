@@ -366,11 +366,16 @@ export const FORMATION_META = {
   },
 };
 
-function parseCities(raw) {
-  return String(raw ?? "")
-    .split("|")
-    .map((s) => s.trim())
-    .filter(Boolean);
+/** Villes connues pour un slug (clés `slug|ville` de FORMATION_META), triées. */
+export function citiesForFormationSlug(slug) {
+  const s = String(slug ?? "").trim();
+  if (!s) return [];
+  const prefix = `${s}|`;
+  const cities = [];
+  for (const key of Object.keys(FORMATION_META)) {
+    if (key.startsWith(prefix)) cities.push(key.slice(prefix.length));
+  }
+  return cities.sort((a, b) => a.localeCompare(b, "fr", { sensitivity: "base" }));
 }
 
 function buildDetailUrl(slug, city) {
@@ -380,7 +385,51 @@ function buildDetailUrl(slug, city) {
   return url.pathname + url.search + url.hash;
 }
 
+const FORMATION_CITY_MODAL_HTML = `
+  <div id="formation-city-modal" class="formation-modal" hidden aria-hidden="true">
+    <div class="formation-modal__backdrop" data-formation-modal-close tabindex="-1"></div>
+    <div
+      class="formation-modal__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="formation-modal-title"
+      tabindex="-1"
+    >
+      <button type="button" class="formation-modal__close" data-formation-modal-close aria-label="Fermer">
+        ×
+      </button>
+      <span class="formation-modal__eyebrow">Formation</span>
+      <h2 id="formation-modal-title" class="formation-modal__title">Dans quelle ville&nbsp;?</h2>
+      <p class="formation-modal__subtitle" data-formation-modal-subtitle></p>
+      <div class="formation-modal__divider" aria-hidden="true"></div>
+      <div class="formation-modal__cities" data-formation-modal-cities></div>
+    </div>
+  </div>
+`;
+
+function ensureFormationCityModal() {
+  if (document.getElementById("formation-city-modal")) return;
+  const tpl = document.createElement("template");
+  tpl.innerHTML = FORMATION_CITY_MODAL_HTML.trim();
+  const node = tpl.content.firstElementChild;
+  if (node) document.body.appendChild(node);
+}
+
+function isFormationDetailMenuLink(anchor) {
+  if (!(anchor instanceof HTMLAnchorElement)) return false;
+  let url;
+  try {
+    url = new URL(anchor.href, window.location.href);
+  } catch {
+    return false;
+  }
+  const p = url.pathname.replace(/\/+$/, "");
+  if (!p.endsWith("/formation-detail.html") && !p.endsWith("formation-detail.html")) return false;
+  return Boolean(url.searchParams.get(PARAM_FORMATION)?.trim());
+}
+
 export function initFormationCityModal() {
+  ensureFormationCityModal();
   const modal = document.getElementById("formation-city-modal");
   const subtitle = modal?.querySelector("[data-formation-modal-subtitle]");
   const citiesWrap = modal?.querySelector("[data-formation-modal-cities]");
@@ -407,66 +456,113 @@ export function initFormationCityModal() {
     lastTrigger = null;
   };
 
-  modal.querySelectorAll("[data-formation-modal-close]").forEach((el) => {
-    el.addEventListener("click", close);
-  });
+  if (!modal.dataset.sporCloseBound) {
+    modal.dataset.sporCloseBound = "1";
+    modal.querySelectorAll("[data-formation-modal-close]").forEach((el) => {
+      el.addEventListener("click", close);
+    });
+  }
 
-  document.querySelectorAll("[data-formation-detail-trigger]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const article = btn.closest("[data-formation-slug]");
-      if (!article) return;
-
-      lastTrigger = btn;
-      const slug = article.dataset.formationSlug?.trim();
-      const cities = parseCities(article.dataset.cities);
-      if (!slug || !cities.length) return;
-
-      const title =
-        (slug && FORMATION_LABELS[slug]) ||
-        article.querySelector("h3")?.textContent?.trim() ||
-        "Formation";
-
-      subtitle.textContent = title;
-
-      const pinSvg = `
+  const PIN_SVG = `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M12 22s7-7.5 7-13a7 7 0 1 0-14 0c0 5.5 7 13 7 13Z" />
           <circle cx="12" cy="9" r="2.5" />
         </svg>`;
 
-      citiesWrap.innerHTML = "";
-      cities.forEach((city) => {
-        const b = document.createElement("button");
-        b.type = "button";
-        b.className = "formation-modal__city-btn";
-        b.innerHTML = `
-          <span class="formation-modal__city-pin">${pinSvg}</span>
+  function openCityChoiceModal(slug, cities, title, trigger) {
+    lastTrigger = trigger ?? null;
+    subtitle.textContent = title;
+
+    citiesWrap.innerHTML = "";
+    for (const city of cities) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "formation-modal__city-btn";
+      b.innerHTML = `
+          <span class="formation-modal__city-pin">${PIN_SVG}</span>
           <span class="formation-modal__city-label"></span>
           <span class="formation-modal__city-arrow" aria-hidden="true">→</span>
         `;
-        b.querySelector(".formation-modal__city-label").textContent = city;
-        b.setAttribute("aria-label", `Voir le détail de ${title} à ${city}`);
-        b.addEventListener("click", () => {
-          window.location.href = buildDetailUrl(slug, city);
-        });
-        citiesWrap.appendChild(b);
+      b.querySelector(".formation-modal__city-label").textContent = city;
+      b.setAttribute("aria-label", `Voir le détail de ${title} à ${city}`);
+      b.addEventListener("click", () => {
+        window.location.href = buildDetailUrl(slug, city);
       });
+      citiesWrap.appendChild(b);
+    }
 
-      modal.hidden = false;
-      modal.setAttribute("aria-hidden", "false");
-      document.body.classList.add("formation-modal-open");
+    modal.hidden = false;
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("formation-modal-open");
 
-      onKeydown = (e) => {
-        if (e.key === "Escape") {
-          e.preventDefault();
-          close();
-        }
-      };
-      document.addEventListener("keydown", onKeydown);
+    if (onKeydown) document.removeEventListener("keydown", onKeydown);
+    onKeydown = (e) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        close();
+      }
+    };
+    document.addEventListener("keydown", onKeydown);
 
-      dialog.focus({ preventScroll: true });
+    dialog.focus({ preventScroll: true });
+  }
+
+  if (!modal.dataset.sporNavDelegation) {
+    modal.dataset.sporNavDelegation = "1";
+    document.addEventListener("click", (e) => {
+      const a = e.target.closest("a");
+      if (!a || !isFormationDetailMenuLink(a)) return;
+      if (e.button !== 0 || e.defaultPrevented) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+      let slug;
+      try {
+        slug = new URL(a.href, window.location.href).searchParams.get(PARAM_FORMATION)?.trim();
+      } catch {
+        return;
+      }
+      if (!slug) return;
+
+      const cities = citiesForFormationSlug(slug);
+      if (!cities.length) return;
+
+      if (cities.length === 1) {
+        e.preventDefault();
+        window.location.assign(buildDetailUrl(slug, cities[0]));
+        return;
+      }
+
+      e.preventDefault();
+      const title = FORMATION_LABELS[slug] || a.textContent?.trim() || "Formation";
+      openCityChoiceModal(slug, cities, title, a);
     });
-  });
+  }
+
+  if (!modal.dataset.sporCardTriggers) {
+    modal.dataset.sporCardTriggers = "1";
+    document.querySelectorAll("[data-formation-detail-trigger]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const article = btn.closest("[data-formation-slug]");
+        if (!article) return;
+
+        const slug = article.dataset.formationSlug?.trim();
+        const cities = citiesForFormationSlug(slug);
+        if (!slug || !cities.length) return;
+
+        if (cities.length === 1) {
+          window.location.href = buildDetailUrl(slug, cities[0]);
+          return;
+        }
+
+        const title =
+          (slug && FORMATION_LABELS[slug]) ||
+          article.querySelector("h3")?.textContent?.trim() ||
+          "Formation";
+
+        openCityChoiceModal(slug, cities, title, btn);
+      });
+    });
+  }
 }
 
 function renderBadges(container, badges) {

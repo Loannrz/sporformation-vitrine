@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portail — Inscription &amp; connexion | SporFormation</title>
+  <meta name="description" content="Créez votre espace personnel SporFormation ou connectez-vous.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <script type="module" src="/src/js/portail-entry.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu principal</a>
+  <header class="portal-simple-header">
+    <div class="container portal-simple-header__inner">
+      <a class="nav__brand" href="/" style="display:flex;align-items:center;">
+        <img class="nav__logo-img" src="/assets/logos/spor-formation-logo.png" width="728" height="343" alt="SporFormation — Accueil">
+      </a>
+      <a class="btn btn--ghost" href="/">Accueil</a>
+    </div>
+  </header>
+
+  <main class="portal-main" id="contenu">
+    <div class="container">
+      <div class="portal-card">
+        <h1 class="portal-card__title">Espace personnel</h1>
+        <p class="portal-card__lead">
+          Compte dédié au site vitrine (distinct de l’espace staff / Cloud). Créez un compte ou connectez-vous.
+        </p>
+
+        <div class="portal-tabs" role="tablist" aria-label="Mode">
+          <button type="button" class="portal-tabs__btn" role="tab" id="tab-register" aria-selected="true" aria-controls="panel-register">Créer un compte</button>
+          <button type="button" class="portal-tabs__btn" role="tab" id="tab-login" aria-selected="false" aria-controls="panel-login">Se connecter</button>
+        </div>
+
+        <div id="portal-flash" class="portal-msg portal-msg--error" hidden></div>
+
+        <div class="portal-panel" id="panel-register" role="tabpanel" aria-labelledby="tab-register">
+          <form id="form-register" novalidate>
+            <div class="portal-field">
+              <label for="reg-email">E-mail</label>
+              <input type="email" id="reg-email" name="email" required autocomplete="email" maxlength="254">
+            </div>
+            <div class="portal-field">
+              <label for="reg-password">Mot de passe</label>
+              <input type="password" id="reg-password" name="password" required autocomplete="new-password" minlength="8" maxlength="200">
+            </div>
+            <div class="portal-field">
+              <label for="reg-password2">Confirmer le mot de passe</label>
+              <input type="password" id="reg-password2" name="passwordConfirm" required autocomplete="new-password" minlength="8" maxlength="200">
+            </div>
+            <div class="portal-actions">
+              <button type="submit" class="btn btn--primary">Créer un compte</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="portal-panel" id="panel-login" role="tabpanel" aria-labelledby="tab-login" hidden>
+          <form id="form-login" novalidate>
+            <div class="portal-field">
+              <label for="login-email">E-mail</label>
+              <input type="email" id="login-email" name="email" required autocomplete="username" maxlength="254">
+            </div>
+            <div class="portal-field">
+              <label for="login-password">Mot de passe</label>
+              <input type="password" id="login-password" name="password" required autocomplete="current-password" maxlength="200">
+            </div>
+            <div class="portal-actions">
+              <button type="submit" class="btn btn--primary">Se connecter</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

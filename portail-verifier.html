@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmer l’e-mail | SporFormation</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <script type="module" src="/src/js/portail-verify-entry.js"></script>
+</head>
+<body class="portal-page portal-page--verify">
+  <a class="skip-link" href="#contenu">Aller au contenu principal</a>
+  <header class="portal-simple-header">
+    <div class="container portal-simple-header__inner">
+      <a class="nav__brand" href="/">
+        <img class="nav__logo-img" src="/assets/logos/spor-formation-logo.png" width="728" height="343" alt="SporFormation — Accueil">
+      </a>
+      <a class="btn btn--ghost" href="/portail">← Retour connexion</a>
+    </div>
+  </header>
+
+  <main class="portal-main portal-main--verify" id="contenu">
+    <div class="container">
+      <div class="portal-verify-card">
+        <div class="portal-verify-card__hero" aria-hidden="true">
+          <div class="portal-verify-card__icon-wrap">
+            <svg class="portal-verify-card__icon" width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M4 6h16v12H4V6z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
+              <path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="portal-verify-card__step">Étape 2 sur 2 — Confirmation</span>
+        </div>
+
+        <div class="portal-verify-card__body">
+          <h1 class="portal-verify-card__title">Vérifiez votre boîte mail</h1>
+          <p class="portal-verify-card__lead">
+            Nous avons envoyé un <strong>code à 6 chiffres</strong>. Saisissez-le ci-dessous pour activer votre espace personnel.
+          </p>
+
+          <p class="portal-verify-sentto" id="verify-sentto-wrap" hidden>
+            Code envoyé à <strong id="verify-email-strong"></strong>
+          </p>
+
+          <div id="portal-flash" class="portal-msg portal-msg--error" hidden></div>
+
+          <form id="form-verify" class="portal-verify-form" novalidate>
+            <div class="portal-field portal-field--compact">
+              <label for="verify-email-input">Adresse e-mail du compte</label>
+              <input type="email" id="verify-email-input" name="email" required autocomplete="email" maxlength="254" placeholder="vous@exemple.fr">
+            </div>
+
+            <fieldset class="portal-otp-fieldset">
+              <legend class="portal-otp-legend">Code de vérification</legend>
+              <p class="portal-otp-hint">Valide environ <strong>25 minutes</strong>. Vérifiez aussi les courriers indésirables.</p>
+              <div class="portal-otp-digits" role="group" aria-label="Code à six chiffres">
+                <input class="portal-otp-digit" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code" data-otp-index="0" aria-label="Chiffre 1">
+                <input class="portal-otp-digit" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" data-otp-index="1" aria-label="Chiffre 2">
+                <input class="portal-otp-digit" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" data-otp-index="2" aria-label="Chiffre 3">
+                <input class="portal-otp-digit" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" data-otp-index="3" aria-label="Chiffre 4">
+                <input class="portal-otp-digit" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" data-otp-index="4" aria-label="Chiffre 5">
+                <input class="portal-otp-digit" type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" data-otp-index="5" aria-label="Chiffre 6">
+              </div>
+            </fieldset>
+
+            <div class="portal-verify-actions">
+              <button type="submit" class="btn btn--primary portal-verify-submit">Confirmer et accéder à mon espace</button>
+              <button type="button" class="portal-link-btn" id="verify-resend">Renvoyer un nouveau code</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

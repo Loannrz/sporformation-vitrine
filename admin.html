@@ -45,13 +45,19 @@
         Partenaires
       </a>
       <hr class="admin-sidebar__divider" aria-hidden="true">
+      <a data-tab="inscription">
+        <span class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </span>
+        Formulaire d’inscription
+      </a>
       </nav>
       <div class="admin-sidebar__footer">
         <a data-tab="utilisateurs" class="admin-sidebar__footer-link">
           <span class="icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </span>
-          Liste des utilisateurs
+          Liste des utilisateurs cloud
         </a>
         <button type="button" class="admin-sidebar__footer-btn" id="admin-open-profile">
           <span class="icon">
@@ -179,12 +185,23 @@
         </div>
       </section>
 
-      <!-- Onglet: Utilisateurs Auth & droits admin -->
+      <!-- Onglet: formulaires d’inscription (portail) -->
+      <section id="tab-inscription" class="hidden">
+        <div class="admin-panel__header">
+          <div>
+            <h2>Formulaire d’inscription</h2>
+            <p class="lead">Création <strong>étape par étape</strong> (une seule étape à l’écran tant que vous n’avez pas validé « Étape suivante ») : blocs <strong>titre</strong> et <strong>description</strong>, puis questions (texte, nombre, choix unique ou multiple, deux options type 1/2, oui/non, fichier).</p>
+          </div>
+        </div>
+        <div class="admin-inscription-page-host" id="inscription-builder-root"></div>
+      </section>
+
+      <!-- Onglet: Utilisateurs Auth (cloud) & droits admin -->
       <section id="tab-utilisateurs" class="hidden">
         <div class="admin-panel__header">
           <div>
-            <h2>Utilisateurs &amp; administrateurs</h2>
-            <p class="lead">Réservé aux <strong>super-administrateurs</strong>. Cochez <strong>Accès console</strong> puis choisissez le <strong>rôle console</strong>&nbsp;: modificateur du site (CMS sans cette liste), gestion des candidatures (connexion seule pour l’instant), ou super-admin (tout).</p>
+            <h2>Utilisateurs cloud &amp; administrateurs</h2>
+            <p class="lead">Comptes issus de <strong>Supabase Auth</strong> (cloud). Réservé aux <strong>super-administrateurs</strong>. Cochez <strong>Accès console</strong> puis choisissez le <strong>rôle console</strong>&nbsp;: modificateur du site (CMS sans cette liste), gestion des candidatures (connexion seule pour l’instant), ou super-admin (tout).</p>
           </div>
         </div>
 
@@ -197,7 +214,7 @@
               class="admin-input admin-users-search"
               placeholder="Rechercher par nom ou e-mail…"
               autocomplete="off"
-              aria-label="Rechercher dans la liste des utilisateurs"
+              aria-label="Rechercher dans la liste des utilisateurs cloud"
             >
             <select id="admin-users-sort" class="admin-input admin-users-sort" aria-label="Trier la liste">
               <option value="name-asc">Nom A → Z</option>
@@ -215,11 +232,11 @@
         <div class="admin-panel__header">
           <div>
             <h2>Gestion des candidatures</h2>
-            <p class="lead">Vous êtes connecté avec le rôle <strong>gestion des candidatures</strong>. Les écrans de traitement des candidatures et contrats seront ajoutés ici&nbsp;; pour l’instant cet espace ne permet pas de modifier la vitrine.</p>
+            <p class="lead">Vous êtes connecté avec le rôle <strong>gestion des candidatures</strong>. Les dossiers d’inscription portail ne sont pas traités dans cette console&nbsp;; utilisez votre outil prévu à cet effet. Ici, la vitrine du site n’est pas modifiable.</p>
           </div>
         </div>
         <div class="admin-card">
-          <p class="muted">Contenu à venir.</p>
+          <p class="muted">Contenu réservé à un autre espace de travail.</p>
         </div>
       </section>
     </main>
@@ -236,6 +253,10 @@
       </div>
       <div class="admin-field">
         <label for="admin-profile-password">Nouveau mot de passe</label>
+        <p class="admin-profile-password-note" role="note">
+          <span class="admin-profile-password-note__icon" aria-hidden="true">?</span>
+          <span class="admin-profile-password-note__text">Le mot de passe modifié ici sera également modifié pour votre accès cloud.</span>
+        </p>
         <input type="password" id="admin-profile-password" class="admin-input" autocomplete="new-password" minlength="8" placeholder="Minimum 8 caractères">
       </div>
       <div class="admin-field">

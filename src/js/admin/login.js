@@ -1,17 +1,25 @@
-/** Page /login.html — authentification administrateur via Supabase Auth. */
+/** Page /login — authentification administrateur via Supabase Auth. */
 import { supabase, apiFetch } from "./supabase-client.js";
 
-async function ensureAdmin() {
+/** @param {string | undefined} accessToken Jeton frais renvoyé par signInWithPassword (évite 401 transitoire). */
+async function ensureAdmin(accessToken) {
   try {
-    const me = await apiFetch("/api/admin/me");
+    const me = await apiFetch("/api/admin/me", accessToken ? { accessToken } : {});
     return { ok: Boolean(me?.ok) };
   } catch (e) {
     const status = typeof e?.status === "number" ? e.status : null;
     const msg = e instanceof Error ? e.message : String(e);
+    const hint = typeof e?.hint === "string" ? e.hint : "";
     const networkFault =
       status == null &&
       (e instanceof TypeError || /failed to fetch|networkerror|load failed/i.test(msg));
-    return { ok: false, networkFault, httpStatus: status };
+    return {
+      ok: false,
+      networkFault,
+      httpStatus: status,
+      serverMessage: msg,
+      serverHint: hint || undefined,
+    };
   }
 }
 
@@ -24,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Si déjà connecté et déjà admin, redirige directement
   const sessionGate = await ensureAdmin();
   if (sessionGate.ok) {
-    window.location.replace("/admin.html");
+    window.location.replace("/admin");
     return;
   }
 
@@ -59,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const password = document.getElementById("login-password").value;
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { data: signData, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) {
         throw new Error(
           error.message?.toLowerCase().includes("invalid")
@@ -67,7 +75,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             : error.message || "Connexion impossible."
         );
       }
-      const adminGate = await ensureAdmin();
+      const freshToken = signData?.session?.access_token?.trim() || "";
+      const adminGate = await ensureAdmin(freshToken || undefined);
       if (!adminGate.ok) {
         if (adminGate.networkFault) {
           showError(
@@ -75,17 +84,40 @@ document.addEventListener("DOMContentLoaded", async () => {
           );
         } else {
           await supabase.auth.signOut();
-          showError(
-            adminGate.httpStatus === 403
-              ? "Ce compte n'a pas le rôle administrateur. Contactez le responsable du site pour obtenir l'accès."
-              : "Vérification du compte administrateur impossible. Réessayez dans un instant."
-          );
+          const st = adminGate.httpStatus;
+          if (st === 403) {
+            showError(
+              "Ce compte n'a pas le rôle administrateur. Contactez le responsable du site pour obtenir l'accès."
+            );
+          } else if (st === 401) {
+            showError(
+              "La session n’a pas pu être vérifiée tout de suite. Réessayez : si le problème continue, vérifiez que l’API tourne et que les clés Supabase (.env.local) correspondent au même projet que ce site."
+            );
+          } else if (st === 503) {
+            showError(
+              "Serveur mal configuré : SUPABASE_URL (ou VITE_SUPABASE_URL) et SUPABASE_SERVICE_ROLE_KEY sont requis côté API pour la console admin."
+            );
+          } else if (typeof st === "number") {
+            const detail =
+              adminGate.serverMessage &&
+              adminGate.serverMessage !== `Erreur HTTP ${st}`
+                ? adminGate.serverMessage
+                : "";
+            const hintSuffix = adminGate.serverHint ? ` — ${adminGate.serverHint}` : "";
+            showError(
+              detail
+                ? `${detail}${hintSuffix}`
+                : `Vérification du compte impossible (erreur ${st}). Réessayez dans un instant ou contactez le support.`
+            );
+          } else {
+            showError("Vérification du compte administrateur impossible. Réessayez dans un instant.");
+          }
         }
         submitBtn.disabled = false;
         submitBtn.textContent = "Se connecter";
         return;
       }
-      window.location.replace("/admin.html");
+      window.location.replace("/admin");
     } catch (err) {
       showError(err instanceof Error ? err.message : "Connexion impossible.");
       submitBtn.disabled = false;

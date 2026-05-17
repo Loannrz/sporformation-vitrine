@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paramètres | Mon compte | SporFormation</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <script type="module" src="/src/js/compte-entry.js"></script>
+</head>
+<body data-compte-page="settings" class="portal-page portal-page--dash">
+  <a class="skip-link" href="#contenu">Aller au contenu principal</a>
+  <header class="portal-simple-header">
+    <div class="container portal-simple-header__inner">
+      <a class="nav__brand" href="/">
+        <img class="nav__logo-img" src="/assets/logos/spor-formation-logo.png" width="728" height="343" alt="SporFormation — Accueil">
+      </a>
+      <a class="btn btn--ghost" href="/">Site vitrine</a>
+    </div>
+  </header>
+
+  <main class="portal-main portal-main--dash" id="contenu">
+    <div class="container portal-dash-wrap portal-dash-wrap--settings">
+      <nav class="portal-dash-nav" aria-label="Espace compte">
+        <a class="portal-dash-nav__link" href="/compte/tableau-de-bord">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Tableau de bord
+        </a>
+        <a class="portal-dash-nav__link" href="/compte/inscription">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Inscription formation
+        </a>
+        <a class="portal-dash-nav__link is-active" href="/compte/parametres">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          Paramètres
+        </a>
+        <button type="button" class="portal-dash-nav__link portal-dash-nav__link--btn" id="portal-logout">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+          Déconnexion
+        </button>
+      </nav>
+
+      <div class="portal-settings-panel">
+        <header class="portal-settings-panel__head">
+          <h1 class="portal-settings-panel__title">Paramètres du compte</h1>
+          <p class="portal-settings-panel__lead">Gérez votre accès à l’espace personnel du site vitrine.</p>
+        </header>
+
+        <div class="portal-card portal-card--settings">
+          <h2 class="portal-settings-section-title">Identifiant</h2>
+          <p class="portal-settings-section-desc">Votre adresse e-mail (non modifiable pour le moment).</p>
+          <div class="portal-field">
+            <label for="portal-settings-email">E-mail</label>
+            <input type="email" id="portal-settings-email" readonly class="portal-field-readonly">
+          </div>
+
+          <h2 class="portal-settings-section-title portal-settings-section-title--spaced">Mot de passe</h2>
+          <div id="portal-settings-flash" class="portal-msg" hidden></div>
+
+          <form id="portal-password-form" novalidate>
+            <div class="portal-field">
+              <label for="pwd-current">Mot de passe actuel</label>
+              <input type="password" id="pwd-current" required autocomplete="current-password" maxlength="200">
+            </div>
+            <div class="portal-field">
+              <label for="pwd-new">Nouveau mot de passe</label>
+              <input type="password" id="pwd-new" required autocomplete="new-password" minlength="8" maxlength="200">
+            </div>
+            <div class="portal-field">
+              <label for="pwd-new2">Confirmer le nouveau mot de passe</label>
+              <input type="password" id="pwd-new2" required autocomplete="new-password" minlength="8" maxlength="200">
+            </div>
+            <div class="portal-actions portal-actions--settings">
+              <button type="submit" class="btn btn--primary">Enregistrer le nouveau mot de passe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

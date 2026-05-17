@@ -34,15 +34,19 @@ export async function getAccessToken() {
   return data.session?.access_token || null;
 }
 
-/** Wrapper fetch avec Authorization automatique. */
+/** Wrapper fetch avec Authorization automatique.
+ *  Passer `{ accessToken: "<jwt>" }` juste après signInWithPassword évite une course où getSession()
+ *  n’a pas encore le jeton (401 alors que le compte est bien admin). */
 export async function apiFetch(input, init = {}) {
-  const token = await getAccessToken();
-  const headers = new Headers(init.headers || {});
+  const explicit = typeof init.accessToken === "string" && init.accessToken.trim() ? init.accessToken.trim() : "";
+  const { accessToken: _omit, ...fetchInit } = init;
+  const token = explicit || (await getAccessToken());
+  const headers = new Headers(fetchInit.headers || {});
   if (token) headers.set("Authorization", `Bearer ${token}`);
-  if (init.body && !(init.body instanceof FormData) && !headers.has("Content-Type")) {
+  if (fetchInit.body && !(fetchInit.body instanceof FormData) && !headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
   }
-  const res = await fetch(input, { ...init, headers });
+  const res = await fetch(input, { ...fetchInit, headers });
   let payload = null;
   try {
     payload = await res.json();
@@ -54,6 +58,7 @@ export async function apiFetch(input, init = {}) {
     const err = new Error(message);
     err.status = res.status;
     err.payload = payload;
+    if (payload?.hint && typeof payload.hint === "string") err.hint = payload.hint;
     throw err;
   }
   return payload;

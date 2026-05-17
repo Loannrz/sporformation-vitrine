@@ -13,6 +13,7 @@
 import { Router } from "express";
 import { createClient } from "@supabase/supabase-js";
 import multer from "multer";
+import { attachInscriptionAdminRoutes } from "./inscription-forms.js";
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -44,7 +45,7 @@ function buildAdminRouter({ supabaseUrl, supabaseServiceKey, supabaseAnonKey }) 
     router.use((_req, res) => {
       res.status(503).json({
         error:
-          "Supabase non configuré (SUPABASE_URL et SUPABASE_SERVICE_ROLE_KEY requis dans .env.local).",
+          "Supabase non configuré (SUPABASE_URL ou VITE_SUPABASE_URL, et SUPABASE_SERVICE_ROLE_KEY requis dans .env.local).",
       });
     });
     return router;
@@ -110,6 +111,12 @@ function buildAdminRouter({ supabaseUrl, supabaseServiceKey, supabaseAnonKey }) 
       "superadmin",
       "super-administrateur",
       "superadministrateur",
+      "super-administrator",
+      "superuser",
+      "super-user",
+      "administrateur-principal",
+      "admin-principal",
+      "administrateur-general",
     ]);
     const EDITOR = new Set([
       "admin",
@@ -119,10 +126,27 @@ function buildAdminRouter({ supabaseUrl, supabaseServiceKey, supabaseAnonKey }) 
       "editor",
       "editeur",
       "modificateur-du-site",
+      "modificateur-de-site",
+      "modificateur-site",
       "modification-du-site",
       "administrateur",
       "administrateur-site",
+      "administrateur-du-site",
       "webmaster",
+      "moderateur",
+      "moderateur-du-site",
+      "moderateur-de-site",
+      "moderateur-site",
+      "gestionnaire-contenu",
+      "gestionnaire-de-contenu",
+      "charge-de-contenu",
+      "chargee-de-contenu",
+      "redacteur",
+      "redactrice",
+      "contributeur",
+      "contributrice",
+      "cms-editor",
+      "cms",
     ]);
     const GC = new Set([
       "gestion-candidatures",
@@ -155,10 +179,33 @@ function buildAdminRouter({ supabaseUrl, supabaseServiceKey, supabaseAnonKey }) 
       return "site-editor";
     }
     if (
+      x.startsWith("modificateur-") ||
+      x.startsWith("moderateur-") ||
+      x === "moderateur" ||
+      x === "gestionnaire-contenu" ||
+      x === "gestionnaire-de-contenu" ||
+      x === "charge-de-contenu" ||
+      x === "chargee-de-contenu" ||
+      x === "redacteur" ||
+      x === "redactrice" ||
+      x === "contributeur" ||
+      x === "contributrice" ||
+      x === "cms-editor" ||
+      x === "cms"
+    ) {
+      return "site-editor";
+    }
+    if (
       x === "super-admin" ||
       x === "superadmin" ||
       x === "super-administrateur" ||
-      x === "superadministrateur"
+      x === "superadministrateur" ||
+      x === "super-administrator" ||
+      x === "superuser" ||
+      x === "super-user" ||
+      x === "administrateur-principal" ||
+      x === "admin-principal" ||
+      x === "administrateur-general"
     ) {
       return "super-admin";
     }
@@ -171,6 +218,13 @@ function buildAdminRouter({ supabaseUrl, supabaseServiceKey, supabaseAnonKey }) 
       return "gestion-candidatures";
     }
     return "site-editor";
+  }
+
+  function escapeIlikeExact(value) {
+    return String(value ?? "")
+      .replace(/\\/g, "\\\\")
+      .replace(/%/g, "\\%")
+      .replace(/_/g, "\\_");
   }
 
   const upload = multer({
@@ -195,25 +249,35 @@ function buildAdminRouter({ supabaseUrl, supabaseServiceKey, supabaseAnonKey }) 
       const userId = userRes.user.id;
       const userEmail = (userRes.user.email || "").trim().toLowerCase();
 
-      let { data: rawAdminRow, error: adminErr } = await supabaseAdmin
+      let { data: rowsById, error: adminErr } = await supabaseAdmin
         .from(ADMINS_TABLE)
         .select(ADMINS_SELECT)
         .eq(ADMINS_COL.userId, userId)
-        .maybeSingle();
+        .limit(1);
       if (adminErr) {
-        return res.status(500).json({ error: adminErr.message });
+        console.error("[admin/me] lecture table", ADMINS_TABLE, "par user_id:", adminErr.message);
+        const hint =
+          /does not exist|schema cache|could not find/i.test(adminErr.message || "")
+            ? `Contrôlez SUPABASE_ADMINS_TABLE (nom actuel : « ${ADMINS_TABLE} ») et que la table est exposée à l’API PostgREST.`
+            : undefined;
+        return res.status(500).json({ error: adminErr.message, hint });
       }
-      let adminRow = shapeAdminRow(rawAdminRow);
+      let adminRow = shapeAdminRow(rowsById?.[0] ?? null);
 
       // Ligne créée avec un mauvais user_id mais le bon e-mail (recréation Auth, copie d’UUID erronée…)
       if (!adminRow && userEmail) {
-        const { data: rawByEmail, error: emailErr } = await supabaseAdmin
+        const { data: rowsByEmail, error: emailErr } = await supabaseAdmin
           .from(ADMINS_TABLE)
           .select(ADMINS_SELECT)
-          .eq(ADMINS_COL.email, userEmail)
-          .maybeSingle();
+          .ilike(ADMINS_COL.email, escapeIlikeExact(userEmail))
+          .limit(1);
+        if (emailErr) {
+          console.error("[admin/me] lecture table", ADMINS_TABLE, "par email:", emailErr.message);
+          return res.status(500).json({ error: emailErr.message });
+        }
+        const rawByEmail = rowsByEmail?.[0] ?? null;
         const byEmail = shapeAdminRow(rawByEmail);
-        if (!emailErr && byEmail) {
+        if (byEmail) {
           if (byEmail.user_id !== userId) {
             const { error: syncErr } = await supabaseAdmin
               .from(ADMINS_TABLE)
@@ -272,6 +336,13 @@ function buildAdminRouter({ supabaseUrl, supabaseServiceKey, supabaseAnonKey }) 
     }
     next();
   }
+
+  /* Tôt dans le routeur : évite qu’une copie tronquée du fichier (sans le bas du fichier) omette ces routes. */
+  attachInscriptionAdminRoutes(router, {
+    supabaseAdmin,
+    requireAdmin,
+    requireCms,
+  });
 
   router.get("/me", requireAdmin, (req, res) => {
     res.json({

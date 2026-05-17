@@ -22,6 +22,7 @@ import {
   resolveSuccessRateTrim,
   DEFAULT_SUCCESS_LABEL,
 } from "../modules/formation-sidebar-display.js";
+import { initInscriptionTab } from "./inscription-tab.js";
 
 // ───── Helpers DOM ───────────────────────────────────────────────────────────
 function el(tag, attrs = {}, ...children) {
@@ -105,7 +106,7 @@ async function ensureAdminOrRedirect() {
     if (!me?.ok) throw new Error("not-admin");
     return me.admin;
   } catch (_e) {
-    window.location.replace("/login.html");
+    window.location.replace("/login");
     return null;
   }
 }
@@ -150,6 +151,12 @@ function applyConsoleLayout(perms) {
   const candPanel = document.getElementById("tab-candidatures-placeholder");
   const adminPanel = document.querySelector(".admin-panel");
 
+  const inscriptionLink = document.querySelector('.admin-sidebar__main a[data-tab="inscription"]');
+  if (inscriptionLink) {
+    inscriptionLink.classList.toggle("hidden", !p.cms);
+    inscriptionLink.setAttribute("aria-hidden", p.cms ? "false" : "true");
+  }
+
   if (usersLink) {
     usersLink.classList.toggle("hidden", !p.users);
     usersLink.setAttribute("aria-hidden", p.users ? "false" : "true");
@@ -185,6 +192,7 @@ function initTabs(onTabChange) {
     equipe: document.getElementById("tab-equipe"),
     partenaires: document.getElementById("tab-partenaires"),
     utilisateurs: document.getElementById("tab-utilisateurs"),
+    inscription: document.getElementById("tab-inscription"),
   };
   links.forEach((a) => {
     a.addEventListener("click", () => {
@@ -1277,6 +1285,11 @@ function buildFormationDocsSection(slug, ville, docsDetailOpenKeys) {
 
 let otherDocsUploadCache = null;
 
+/** Grille « documents hors formation » : libellé + contrôle (TEP, Handicap, etc.). */
+function formationDocControlField(label, control) {
+  return el("div", { class: "admin-field" }, el("label", {}, label), control);
+}
+
 function renderOtherPagesDocs() {
   const host = document.getElementById("other-pages-docs-panel");
   if (!host) return;
@@ -2347,7 +2360,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     `${admin.email} · ${formatConsoleRoleLabel(admin.role)}`;
   document.getElementById("admin-logout").addEventListener("click", async () => {
     await supabase.auth.signOut();
-    window.location.replace("/login.html");
+    window.location.replace("/login");
   });
 
   usersState.meId = admin.user_id || "";
@@ -2357,8 +2370,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       bootAuthUsersTab().catch((e) => reportError("Utilisateurs", e));
     }
   });
-
   if (perms.cms) {
+    initInscriptionTab({ el, flash, reportError, getFormationKeys, FORMATION_LABELS });
     bindOtherPagesDocs();
     bindEquipeTab();
     bindPartenairesTab();

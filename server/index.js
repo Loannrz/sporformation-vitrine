@@ -20,6 +20,7 @@ import {
   resendConfigured,
 } from "./resend-mail.js";
 import { buildAdminRouter, buildPublicContentHandler } from "./admin-routes.js";
+import { buildPortalRouter } from "./portal-routes.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, "..");
@@ -152,7 +153,10 @@ const insertPrepaTep = db.prepare(`
  * Les noms de tables/champs miroient ceux de SQLite + database/schema.postgresql.sql.
  * ────────────────────────────────────────────────────────────────── */
 const supabaseUrl = (
-  process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || ""
+  process.env.SUPABASE_URL ||
+  process.env.VITE_SUPABASE_URL ||
+  process.env.NEXT_PUBLIC_SUPABASE_URL ||
+  ""
 )
   .toString()
   .trim();
@@ -165,6 +169,7 @@ const supabaseServiceKey = (
   .trim();
 const supabaseAnonKey = (
   process.env.SUPABASE_ANON_KEY ||
+  process.env.VITE_SUPABASE_ANON_KEY ||
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
   ""
 )
@@ -184,6 +189,22 @@ const supabasePublic =
         auth: { autoRefreshToken: false, persistSession: false },
       })
     : null;
+
+const portalSessionSecret = (
+  process.env.PORTAL_SESSION_SECRET ||
+  process.env.PORTAL_SECRET ||
+  process.env.FORMS_API_SECRET ||
+  ""
+)
+  .toString()
+  .trim();
+const portalOtpPepper = (
+  process.env.PORTAL_OTP_PEPPER ||
+  portalSessionSecret ||
+  "portal-otp-change-me"
+)
+  .toString()
+  .trim();
 
 function supabaseConfigured() {
   return Boolean(supabaseAdmin);
@@ -303,15 +324,40 @@ const app = express();
 app.use(
   cors({
     origin: true,
-    methods: ["GET", "POST", "PATCH", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "x-api-key"],
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-api-key"],
   })
 );
 app.use(express.json({ limit: "96kb" }));
 
+const adminRouter = buildAdminRouter({ supabaseUrl, supabaseServiceKey, supabaseAnonKey });
+if (supabaseUrl && supabaseServiceKey) {
+  const hasInscriptionPost = (adminRouter.stack || []).some(
+    (layer) =>
+      layer.route &&
+      layer.route.path === "/inscription-templates" &&
+      layer.route.methods &&
+      layer.route.methods.post
+  );
+  if (!hasInscriptionPost) {
+    console.error(
+      "[sporformation-forms] ERREUR FATALE : la route POST /api/admin/inscription-templates est absente."
+    );
+    console.error(
+      "          → Vérifiez que server/admin-routes.js appelle attachInscriptionAdminRoutes(), puis redémarrez (npm run dev)."
+    );
+    process.exit(1);
+  }
+}
+app.use("/api/admin", adminRouter);
+
 app.use(
-  "/api/admin",
-  buildAdminRouter({ supabaseUrl, supabaseServiceKey, supabaseAnonKey })
+  "/api/portal",
+  buildPortalRouter({
+    supabaseAdmin,
+    portalSessionSecret,
+    portalOtpPepper,
+  })
 );
 
 app.get(
@@ -764,9 +810,24 @@ app.post("/api/forms/employer", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`[sporformation-forms] http://127.0.0.1:${PORT}`);
   console.log(
+    "[admin] CRUD inscription (formulaires portail) : POST|GET|PUT|DELETE /api/admin/inscription-templates — redémarrez ce serveur après toute mise à jour des routes."
+  );
+  console.log(
     `[resend] ${resendConfigured() ? "prêt (emails formulaires)" : "NON configuré — renseignez RESEND_API_KEY, EMAIL_FROM, DIRECTOR_EMAIL"}`
   );
   console.log(
     `[supabase] ${supabaseConfigured() ? "prêt (formulaires + métriques)" : "NON configuré — renseignez SUPABASE_URL et SUPABASE_SERVICE_ROLE_KEY"}`
   );
+  const portalOk = Boolean(supabaseAdmin && portalSessionSecret);
+  console.log(
+    `[portail] ${portalOk ? "prêt (/api/portal)" : "NON configuré — détail ci-dessous (sans afficher les secrets)"}`
+  );
+  if (!portalOk) {
+    console.log(
+      `         → client Supabase service_role : ${supabaseAdmin ? "OK" : "manquant — SUPABASE_URL (ou VITE_*) + SUPABASE_SERVICE_ROLE_KEY dans .env.local à la racine du projet"}`
+    );
+    console.log(
+      `         → PORTAL_SESSION_SECRET / FORMS_API_SECRET : ${portalSessionSecret ? "OK" : "manquant — ajoutez une longue chaîne aléatoire et redémarrez le serveur"}`
+    );
+  }
 });

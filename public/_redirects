@@ -1,0 +1,8 @@
+# Netlify / Cloudflare Pages : servir les HTML sous des URLs courtes
+/admin   /admin.html   200
+/login   /login.html   200
+/portail   /portail.html   200
+/portail/verifier   /portail-verifier.html   200
+/compte/tableau-de-bord   /compte-tableau-de-bord.html   200
+/compte/inscription   /compte-inscription.html   200
+/compte/parametres   /compte-parametres.html   200

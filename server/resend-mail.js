@@ -390,6 +390,33 @@ async function sendResendEmail({ to, subject, html, text, replyTo }) {
   return res.json();
 }
 
+/** Code à 6 chiffres — confirmation compte portail vitrine (destinataire = l’internaute). */
+export async function sendPortalVerificationEmail(toEmail, code) {
+  const safeCode = escapeHtml(code);
+  const content = `
+    <p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:${BRAND.text};">
+      Utilisez ce code sur la page <strong>Confirmer l’e-mail</strong> du site SporFormation. Il expire dans environ <strong>25 minutes</strong>.
+    </p>
+    <div style="margin:28px 0;text-align:center;font-family:'Courier New',Consolas,monospace;font-size:34px;font-weight:700;letter-spacing:10px;color:${BRAND.primary};">
+      ${safeCode}
+    </div>
+    <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:${BRAND.textMuted};">
+      Si vous n’avez pas demandé ce message, ignorez-le.
+    </p>
+  `;
+  await sendResendEmail({
+    to: [String(toEmail).trim()],
+    subject: `${code} — Confirmez votre compte SporFormation`,
+    html: renderEmailShell({
+      accentLabel: "Portail",
+      title: "Votre code de confirmation",
+      subtitle: "Saisissez ces six chiffres sur le site pour activer votre espace.",
+      contentHtml: content,
+    }),
+    text: `Code SporFormation : ${code}\n\nCe code expire dans environ 25 minutes.`,
+  });
+}
+
 export async function notifyCandidature(data) {
   const to = resolveRecipients();
   const subject = `Contact — ${data.prenom} ${data.nom} — ${data.formationSouhaitee}`;

@@ -1305,6 +1305,38 @@ button, input, select, textarea { font-family: inherit; font-size: inherit; colo
   color: var(--admin-text);
 }
 
+.admin-profile-password-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 6px 0 10px;
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--admin-text);
+  background: rgba(255, 149, 0, 0.22);
+  border-radius: 10px;
+  border: 1px solid rgba(217, 119, 6, 0.35);
+}
+.admin-profile-password-note__icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: rgba(217, 119, 6, 0.92);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 18px;
+  text-align: center;
+  font-family: system-ui, sans-serif;
+}
+.admin-profile-password-note__text {
+  flex: 1;
+  min-width: 0;
+}
+
 .admin-modal {
   position: fixed;
   inset: 0;
@@ -1382,4 +1414,648 @@ button, input, select, textarea { font-family: inherit; font-size: inherit; colo
   min-width: 12.5rem;
   max-width: 100%;
   padding: 8px 10px;
+}
+
+/* ── Formulaires d’inscription (constructeur + aperçu portail) ─────────────── */
+.admin-inscription-page-host {
+  min-height: 200px;
+}
+/* Colonne 1 = liste modèles (compacte), col 2 = atelier : l’éditeur doit pouvoir s’étaler */
+.admin-inscription-shell {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
+  align-items: start;
+  @media (max-width: 1180px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Éditeur = priorité largeur ; aperçu = bande fixe à droite (ne mange pas tout l’horizontal) */
+.admin-inscription-workbench {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+  align-items: start;
+  min-width: 0;
+  @media (max-width: 1180px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.admin-inscription-list--rail {
+  position: sticky;
+  top: calc(var(--admin-topbar-height) + 16px);
+  align-self: start;
+  z-index: 2;
+  max-height: calc(100vh - var(--admin-topbar-height) - 32px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 16px 14px;
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-line);
+  border-radius: var(--admin-radius);
+  box-shadow: var(--admin-shadow-sm);
+}
+
+.admin-inscription-rail-head {
+  margin-bottom: 14px;
+}
+.admin-inscription-rail-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 17px;
+  margin: 0 0 8px;
+  color: var(--admin-text);
+  letter-spacing: -0.02em;
+}
+.admin-inscription-rail-lead {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--admin-muted);
+}
+
+.admin-inscription-new-btn {
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  font-weight: 700;
+}
+
+.admin-inscription-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.admin-inscription-card__slug {
+  font-size: 12px;
+  color: var(--admin-muted);
+  font-family: ui-monospace, monospace;
+  word-break: break-all;
+}
+.admin-inscription-status {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--admin-surface-2);
+  color: var(--admin-muted);
+  border: 1px solid var(--admin-line);
+}
+.admin-inscription-status--live {
+  background: rgba(22, 163, 74, 0.1);
+  color: #15803d;
+  border-color: rgba(22, 163, 74, 0.35);
+}
+
+.admin-inscription-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+  width: 100%;
+}
+.admin-inscription-editor-empty {
+  padding: 28px;
+  text-align: center;
+  background: var(--admin-surface-2);
+  border-radius: var(--admin-radius);
+  border: 1px dashed var(--admin-line-strong);
+}
+
+.admin-inscription-meta-card,
+.admin-inscription-builder-card {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-line);
+  border-radius: var(--admin-radius);
+  padding: 26px 28px;
+  box-shadow: var(--admin-shadow-md);
+}
+.admin-inscription-meta-card {
+  border-left: 4px solid var(--admin-accent);
+}
+.admin-inscription-builder-card {
+  border-left: 4px solid #4f46e5;
+}
+.admin-inscription-panel-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 17px;
+  margin: 0 0 18px;
+  color: var(--admin-text);
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--admin-line);
+}
+.admin-inscription-meta-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px 22px;
+}
+.admin-inscription-pub-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(249, 65, 68, 0.06), rgba(26, 26, 46, 0.04));
+  border: 1px solid rgba(249, 65, 68, 0.15);
+  font-weight: 600;
+  cursor: pointer;
+}
+.admin-inscription-pub-row input {
+  accent-color: var(--admin-accent);
+  width: 18px;
+  height: 18px;
+}
+
+.admin-inscription-targets-field {
+  margin-top: 14px;
+}
+
+.admin-inscription-targets-hint {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.admin-inscription-targets {
+  display: grid;
+  gap: 6px;
+  max-height: 220px;
+  overflow: auto;
+  border: 1px solid var(--admin-line);
+  padding: 12px;
+  border-radius: 12px;
+  margin-top: 8px;
+  background: var(--admin-surface-2);
+}
+.admin-inscription-target-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.admin-inscription-target-row--blocked {
+  opacity: 0.58;
+  cursor: not-allowed;
+  color: var(--admin-muted);
+}
+
+.admin-inscription-target-row--blocked input {
+  cursor: not-allowed;
+}
+
+.admin-inscription-target-row__content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.admin-inscription-target-row__line {
+  line-height: 1.35;
+}
+
+.admin-inscription-target-row__blocked-note {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--admin-muted);
+  line-height: 1.35;
+}
+
+.admin-inscription-title-warn {
+  margin: 8px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  font-weight: 600;
+  color: #b45309;
+}
+
+.admin-inscription-slug-hint {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.admin-inscription-steps {
+  margin-top: 4px;
+}
+
+.admin-insc-builder-hint {
+  margin: 0 0 14px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--admin-muted);
+  padding: 12px 14px;
+  background: rgba(37, 99, 235, 0.06);
+  border-radius: 10px;
+  border: 1px solid rgba(37, 99, 235, 0.12);
+}
+
+.admin-insc-wizard-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  margin-bottom: 16px;
+  padding: 14px 16px;
+  background: linear-gradient(180deg, var(--admin-surface-2), var(--admin-surface));
+  border-radius: 12px;
+  border: 1px solid var(--admin-line);
+  box-shadow: var(--admin-shadow-sm);
+}
+.admin-insc-wizard-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--admin-text);
+  flex: 1;
+  min-width: 180px;
+}
+.admin-insc-wizard-dots {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex: 1;
+  justify-content: center;
+  min-width: 120px;
+}
+.admin-insc-step-dot {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  border-radius: 10px;
+  border: 1px solid var(--admin-line-strong);
+  background: var(--admin-surface);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--admin-text);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s, opacity 0.15s;
+}
+.admin-insc-step-dot:hover:not(:disabled) {
+  border-color: var(--admin-accent);
+  color: var(--admin-accent-dark);
+}
+.admin-insc-step-dot.is-active {
+  background: var(--admin-accent);
+  border-color: var(--admin-accent);
+  color: #fff;
+}
+.admin-insc-step-dot.is-locked:not(.is-active) {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.admin-insc-block-shell {
+  margin-top: 12px;
+  padding: 16px 18px;
+  padding-top: 18px;
+  border-radius: 12px;
+  border: 1px solid var(--admin-line);
+  background: var(--admin-surface-2);
+  border-left: 4px solid var(--admin-line-strong);
+}
+.admin-insc-block-shell--title {
+  border-left-color: var(--admin-accent);
+  background: linear-gradient(90deg, rgba(249, 65, 68, 0.06), var(--admin-surface-2));
+}
+.admin-insc-block-shell--desc {
+  border-left-color: #2563eb;
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.06), var(--admin-surface-2));
+}
+.admin-insc-block-shell--field {
+  border-left-color: #7c3aed;
+  background: linear-gradient(90deg, rgba(124, 58, 237, 0.06), var(--admin-surface-2));
+}
+.admin-insc-block-shell--info {
+  border-left-color: var(--admin-muted);
+}
+
+.admin-insc-add-blocks-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.admin-insc-step-editor-card.admin-card {
+  margin-bottom: 0;
+  border: 1px solid var(--admin-line);
+  box-shadow: var(--admin-shadow-sm);
+}
+
+.admin-inscription-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding-top: 4px;
+}
+
+/* Colonne aperçu — bande droite plus étroite pour libérer l’éditeur */
+.admin-inscription-preview-col {
+  position: sticky;
+  top: calc(var(--admin-topbar-height) + 16px);
+  align-self: start;
+  min-width: 0;
+  width: 100%;
+  max-width: 320px;
+  justify-self: end;
+  @media (max-width: 1180px) {
+    max-width: none;
+    justify-self: stretch;
+  }
+}
+.admin-insc-preview-sticky {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 100%;
+}
+.admin-insc-preview-header {
+  padding: 12px 14px 10px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d3258 100%);
+  border-radius: var(--admin-radius) var(--admin-radius) 0 0;
+  color: #fff;
+}
+.admin-insc-preview-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(249, 65, 68, 0.25);
+  border: 1px solid rgba(249, 65, 68, 0.45);
+  margin-bottom: 8px;
+}
+.admin-insc-preview-heading {
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  margin: 0 0 4px;
+}
+.admin-insc-preview-sub {
+  margin: 0;
+  font-size: 11px;
+  opacity: 0.82;
+  line-height: 1.4;
+}
+
+.admin-insc-browser-chrome {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #eceff4;
+  border-left: 1px solid var(--admin-line);
+  border-right: 1px solid var(--admin-line);
+}
+.admin-insc-browser-dots {
+  display: flex;
+  gap: 6px;
+}
+.admin-insc-browser-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d1d5db;
+}
+.admin-insc-browser-dots .admin-insc-browser-dot:nth-child(1) {
+  background: #e63946;
+}
+.admin-insc-browser-dots .admin-insc-browser-dot:nth-child(2) {
+  background: #f59e0b;
+}
+.admin-insc-browser-dots .admin-insc-browser-dot:nth-child(3) {
+  background: #22c55e;
+}
+.admin-insc-browser-url {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--admin-muted);
+  font-family: ui-monospace, monospace;
+}
+
+.admin-insc-site-preview {
+  padding: 16px;
+  background: linear-gradient(180deg, #eef0f5 0%, #f4f5f8 40%, #f4f5f8 100%);
+  border: 1px solid var(--admin-line);
+  border-top: none;
+  border-radius: 0 0 var(--admin-radius) var(--admin-radius);
+  box-shadow: var(--admin-shadow-md);
+  --insc-navy: #1a1a2e;
+  --insc-accent: #e63946;
+  --insc-accent-soft: rgba(230, 57, 70, 0.12);
+
+  .portal-insc-panel {
+    background: #fff;
+    border-radius: 20px;
+    padding: clamp(18px, 2.5vw, 24px);
+    border: 1px solid rgba(26, 26, 46, 0.06);
+    box-shadow: 0 8px 30px rgba(26, 26, 46, 0.07);
+    margin-bottom: 0;
+  }
+  .portal-insc-head {
+    margin-bottom: 16px;
+  }
+  .portal-insc-step-title {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.15rem;
+    color: var(--insc-navy);
+    margin: 0 0 14px;
+  }
+  .portal-insc-progress-track {
+    --pct: 33%;
+    height: 10px;
+    border-radius: 999px;
+    background: #e8ecf2;
+    overflow: hidden;
+  }
+  .portal-insc-progress-fill {
+    display: block;
+    height: 100%;
+    width: var(--pct);
+    border-radius: inherit;
+    background: linear-gradient(90deg, #f97316, #e63946);
+    transition: width 0.35s ease;
+  }
+  .portal-insc-progress-track[data-tier="mid"] .portal-insc-progress-fill {
+    background: linear-gradient(90deg, #f59e0b, #f97316);
+  }
+  .portal-insc-progress-track[data-tier="high"] .portal-insc-progress-fill {
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+  }
+  .portal-insc-progress-label {
+    margin: 6px 0 0;
+    font-size: 11px;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .portal-insc-field-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #4b5563;
+    margin-bottom: 6px;
+  }
+  .portal-input,
+  .portal-insc-file {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #d8dde4;
+    font-size: 15px;
+    background: #f9fafb;
+    color: #6b7280;
+  }
+  .portal-insc-field {
+    margin-bottom: 18px;
+  }
+  .portal-insc-field-help {
+    margin: 0 0 8px;
+    font-size: 13px;
+    color: #6b7280;
+  }
+  .portal-insc-info {
+    padding: 14px 16px;
+    background: #f6f7fa;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #374151;
+    margin-bottom: 16px;
+    white-space: pre-wrap;
+  }
+  .portal-insc-block-title {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--insc-navy);
+    margin: 18px 0 10px;
+  }
+  .portal-insc-block-title:first-child {
+    margin-top: 0;
+  }
+  .portal-insc-block-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #5c6370;
+    margin: 0 0 16px;
+    white-space: pre-wrap;
+  }
+  .portal-insc-btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .btn.btn--choice {
+    border: 2px solid #e5e7eb;
+    background: #fff;
+    color: #374151;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 10px;
+    cursor: not-allowed;
+    opacity: 0.92;
+  }
+  .portal-insc-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    margin-bottom: 8px;
+    cursor: default;
+    color: #4b5563;
+  }
+  .portal-insc-file-name {
+    font-size: 13px;
+    color: #4b5563;
+    margin: 0 0 6px;
+  }
+  .portal-insc-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #eef1f5;
+  }
+  .portal-insc-actions .admin-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.admin-insc-preview-placeholder {
+  padding: 32px 22px;
+  text-align: center;
+  background: var(--admin-surface);
+  border: 2px dashed var(--admin-line-strong);
+  border-radius: var(--admin-radius);
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--admin-shadow-sm);
+}
+.admin-insc-preview-placeholder__label {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--admin-accent);
+  margin-bottom: 10px;
+}
+.admin-insc-preview-placeholder__title {
+  font-family: "Poppins", sans-serif;
+  margin: 0 0 10px;
+  font-size: 17px;
+  color: var(--admin-text);
+}
+.admin-insc-preview-placeholder__text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--admin-muted);
+  max-width: 280px;
+}
+
+/* Cartes modèles (liste) */
+.admin-inscription-card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--admin-line);
+  background: var(--admin-surface);
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.12s;
+}
+.admin-inscription-card:hover {
+  border-color: var(--admin-line-strong);
+  box-shadow: var(--admin-shadow-sm);
+  transform: translateY(-1px);
+}
+.admin-inscription-card.is-active {
+  border-color: var(--admin-accent);
+  box-shadow: 0 0 0 2px rgba(249, 65, 68, 0.2);
+  background: linear-gradient(180deg, #fff, rgba(249, 65, 68, 0.04));
+}
+.admin-inscription-card__title {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--admin-text);
 }
